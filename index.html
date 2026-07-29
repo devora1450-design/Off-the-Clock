@@ -155,12 +155,25 @@ body {
 
 .dreams-board .dream-item { display: inline-block; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 0.8em; background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; font-weight: 600; }
 
-/* HOLIDAY CUSTOMIZER */
+/* HOLIDAY CUSTOMIZER SWITCHES */
 .holiday-customizer { margin-top: 12px; max-height: 240px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px; background: #ffffff; }
 .hol-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 6px; border-bottom: 1px solid #f1f5f9; font-size: 0.82em; }
 .hol-item:last-child { border: none; }
 .hol-item .hol-info { flex: 1; color: #1e293b; }
 .hol-item .hol-info .hol-type { font-size: 0.75em; color: #64748b; margin-left: 6px; }
+
+.hol-toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+.hol-toggle input { opacity: 0; width: 0; height: 0; }
+.hol-toggle .slider { position: absolute; inset: 0; background: #cbd5e1; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+.hol-toggle .slider:before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px; background: #ffffff; border-radius: 50%; transition: 0.3s; }
+.hol-toggle input:checked + .slider { background: #0d9488; }
+.hol-toggle input:checked + .slider:before { transform: translateX(20px); }
+
+.hol-legend { display: flex; gap: 12px; margin-top: 8px; font-size: 0.72em; color: #64748b; }
+.hol-legend span { display: flex; align-items: center; gap: 4px; }
+.hol-legend .dot { width: 8px; height: 8px; border-radius: 50%; }
+.hol-legend .dot.off { background: #0d9488; }
+.hol-legend .dot.work { background: #cbd5e1; }
 
 /* UTILITY / ADS / OVERLAYS */
 .settings-btn { position: fixed; top: 16px; right: 16px; background: #ffffff; border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
@@ -290,6 +303,10 @@ body {
   </div>
   <div class="form-group hidden" id="holidayCustomizerGroup">
     <label>Holidays — toggle which ones are days off for you</label>
+    <div class="hol-legend">
+      <span><span class="dot off"></span> Day off (counts toward holidays)</span>
+      <span><span class="dot work"></span> Working day (observance only)</span>
+    </div>
     <div class="holiday-customizer" id="holidayCustomizer"></div>
   </div>
   <div class="form-group">
@@ -394,12 +411,14 @@ const COUNTRIES = {
 
 // RELIGIOUS HOLIDAY DATABASE
 const RELIGIOUS_HOLIDAYS = {
-  jewish: (y) => [{m:8,d:12,n:'Rosh Hashana',off:true},{m:8,d:13,n:'Rosh Hashana',off:true},{m:8,d:21,n:'Yom Kippur',off:true},{m:8,d:26,n:'Sukkot',off:true},{m:9,d:3,n:'Simchat Torah',off:true},{m:3,d:2,n:'Passover 1st',off:true},{m:3,d:8,n:'Passover 7th',off:true},{m:4,d:22,n:'Shavuot',off:true},{m:11,d:4,n:'Hanukkah',off:false},{m:2,d:5,n:'Purim',off:false}],
+  jewish: (y) => [{m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:13,name:'Rosh Hashana',off:true},{m:8,d:21,name:'Yom Kippur',off:true},{m:8,d:26,name:'Sukkot',off:true},{m:9,d:3,name:'Simchat Torah',off:true},{m:3,d:2,name:'Passover 1st',off:true},{m:3,d:8,name:'Passover 7th',off:true},{m:4,d:22,name:'Shavuot',off:true},{m:11,d:4,name:'Hanukkah',off:false},{m:2,d:5,name:'Purim',off:false}],
   christian: (y) => [{m:11,d:25,name:'Christmas',off:true},{m:11,d:24,name:'Christmas Eve',off:false}],
   muslim: (y) => [{m:2,d:20,name:'Eid al-Fitr',off:true},{m:4,d:27,name:'Eid al-Adha',off:true}],
   hindu: (y) => [{m:10,d:8,name:'Diwali',off:true},{m:2,d:4,name:'Holi',off:false}],
   buddhist: (y) => [{m:4,d:1,name:'Vesak',off:true}]
 };
+
+const holidayOverrides = {};
 
 // INITIALIZATION
 const setupScreen = document.getElementById('setupScreen');
@@ -442,10 +461,11 @@ dreamTags.forEach(tag => {
   });
 });
 
-// RELIGION PICKER
+// RELIGION PICKER LOGIC & CUSTOMIZER BUILDER
 const religionPicker = document.getElementById('religionPicker');
 const religionTags = religionPicker.querySelectorAll('.dream-tag');
 const selectedReligions = new Set();
+
 religionTags.forEach(tag => {
   tag.addEventListener('click', () => {
     const rel = tag.dataset.religion;
@@ -460,8 +480,42 @@ religionTags.forEach(tag => {
       if (selectedReligions.has(rel)) { selectedReligions.delete(rel); tag.classList.remove('selected'); }
       else { selectedReligions.add(rel); tag.classList.add('selected'); }
     }
+    populateHolidayCustomizer();
   });
 });
+
+function populateHolidayCustomizer() {
+  const container = document.getElementById('holidayCustomizer');
+  const group = document.getElementById('holidayCustomizerGroup');
+  container.innerHTML = '';
+  Object.keys(holidayOverrides).forEach(k => delete holidayOverrides[k]);
+  
+  const hasReligions = selectedReligions.size > 0 && !selectedReligions.has('none');
+  if (!hasReligions) { group.classList.add('hidden'); return; }
+  group.classList.remove('hidden');
+
+  const y = new Date().getFullYear();
+  let hols = [];
+  selectedReligions.forEach(rel => {
+    if (RELIGIOUS_HOLIDAYS[rel]) {
+      hols = hols.concat(RELIGIOUS_HOLIDAYS[rel](y));
+    }
+  });
+
+  const seen = new Set();
+  hols.forEach(h => {
+    if (seen.has(h.name)) return;
+    seen.add(h.name);
+    const item = document.createElement('div');
+    item.className = 'hol-item';
+    const typeLabel = h.off ? 'Official day off' : 'Observance (working day)';
+    item.innerHTML = '<span class="hol-info">' + h.name + '<span class="hol-type">' + typeLabel + '</span></span>' +
+      '<label class="hol-toggle"><input type="checkbox" ' + (h.off ? 'checked' : '') + ' data-hol="' + h.name + '"><span class="slider"></span></label>';
+    container.appendChild(item);
+    const cb = item.querySelector('input');
+    cb.addEventListener('change', () => { holidayOverrides[h.name] = cb.checked; });
+  });
+}
 
 function checkReady() { btnStart.disabled = !(getBirthdayValue() && inputCountry.value); }
 inputCountry.addEventListener('change', checkReady);
@@ -495,7 +549,8 @@ btnStart.addEventListener('click', () => {
     vacDays: parseInt(inputVacation.value, 10) || cd.vacDays,
     careerStart: inputCareerStart.value || null,
     dreams: dreamsArr,
-    religions: [...selectedReligions].filter(r => r !== 'none')
+    religions: [...selectedReligions].filter(r => r !== 'none'),
+    holOverrides: Object.keys(holidayOverrides).length > 0 ? {...holidayOverrides} : null
   };
   localStorage.setItem('freedomclock_config', JSON.stringify(config));
   localStorage.setItem('freedomclock_startDate', new Date().toISOString().slice(0,10));
@@ -514,6 +569,38 @@ function startApp(config) {
 
   function isWeekend(d){ return weekendDays.includes(d.getDay()); }
 
+  // HOLIDAY EVALUATION ENGINE
+  const configReligions = config.religions || [];
+  const holOverrides = config.holOverrides || {};
+  
+  function getYearHolidays(y) {
+    let hols = (COUNTRIES[config.country] && COUNTRIES[config.country].holidays) ? COUNTRIES[config.country].holidays(y) : [];
+    const seen = new Set(hols.map(h => h.name));
+    configReligions.forEach(rel => {
+      if (RELIGIOUS_HOLIDAYS[rel]) {
+        RELIGIOUS_HOLIDAYS[rel](y).forEach(h => {
+          if (!seen.has(h.name)) { seen.add(h.name); hols.push(h); }
+        });
+      }
+    });
+    return hols;
+  }
+
+  function isHolDayOff(h) {
+    if (holOverrides.hasOwnProperty(h.name)) return holOverrides[h.name];
+    return h.off !== false;
+  }
+
+  let totalHolidaysLeft = 0;
+  for (let y = today.getFullYear(); y <= RETIREMENT_DATE.getFullYear(); y++) {
+    const hols = getYearHolidays(y);
+    hols.forEach(h => {
+      if (!isHolDayOff(h)) return;
+      const hd = new Date(y, h.m, h.d);
+      if (hd >= today && hd < RETIREMENT_DATE && !isWeekend(hd)) totalHolidaysLeft++;
+    });
+  }
+
   // COUNTS
   const workDaysLeft = Math.round(calDaysLeft * (7 - weekendDays.length) / 7);
   const yearsLeft = calDaysLeft / 365.25;
@@ -524,7 +611,7 @@ function startApp(config) {
   document.getElementById('heroDate').textContent = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   document.getElementById('calDays').textContent = calDaysLeft.toLocaleString();
   document.getElementById('workDays').textContent = netWorkDays.toLocaleString();
-  document.getElementById('holDays').textContent = '12';
+  document.getElementById('holDays').textContent = totalHolidaysLeft;
   document.getElementById('vacDays').textContent = totalVacLeft;
 
   // STREAKS
@@ -594,6 +681,24 @@ function startApp(config) {
   document.getElementById('prevMonth').addEventListener('click', () => { viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; } renderCal(); });
   document.getElementById('nextMonth').addEventListener('click', () => { viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; } renderCal(); });
   renderCal();
+
+  // UPCOMING HOLIDAYS LIST
+  const upList = document.getElementById('upcomingList');
+  const upcoming = [];
+  for (let y = today.getFullYear(); y <= RETIREMENT_DATE.getFullYear(); y++) {
+    const hols = getYearHolidays(y);
+    hols.forEach(h => {
+      const hd = new Date(y, h.m, h.d);
+      if (hd > today && hd < RETIREMENT_DATE) upcoming.push({ name: h.name, date: hd, off: isHolDayOff(h) });
+    });
+  }
+  upcoming.sort((a,b) => a.date - b.date);
+  upList.innerHTML = upcoming.slice(0, 8).map(h => {
+    const ds = h.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const da = Math.floor((h.date - today) / 86400000);
+    const badge = h.off ? '<span style="font-size:0.7em;background:#0d9488;color:#ffffff;padding:1px 6px;border-radius:8px;margin-left:4px">OFF</span>' : '<span style="font-size:0.7em;background:#e2e8f0;color:#64748b;padding:1px 6px;border-radius:8px;margin-left:4px">WORK</span>';
+    return '<div class="upcoming-item"><span class="hol-name">' + h.name + badge + '</span><span class="hol-date">' + ds + ' (' + da + ' days)</span></div>';
+  }).join('');
 
   if (localStorage.getItem('fc_premium') === 'true') { hideAds(); } else { showAds(); }
 }
