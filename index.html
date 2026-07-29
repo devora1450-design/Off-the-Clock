@@ -155,6 +155,13 @@ body {
 
 .dreams-board .dream-item { display: inline-block; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 0.8em; background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; font-weight: 600; }
 
+/* HOLIDAY CUSTOMIZER */
+.holiday-customizer { margin-top: 12px; max-height: 240px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px; background: #ffffff; }
+.hol-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 6px; border-bottom: 1px solid #f1f5f9; font-size: 0.82em; }
+.hol-item:last-child { border: none; }
+.hol-item .hol-info { flex: 1; color: #1e293b; }
+.hol-item .hol-info .hol-type { font-size: 0.75em; color: #64748b; margin-left: 6px; }
+
 /* UTILITY / ADS / OVERLAYS */
 .settings-btn { position: fixed; top: 16px; right: 16px; background: #ffffff; border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 .legend { text-align: center; font-size: 0.7em; color: #64748b; padding: 10px; }
@@ -288,22 +295,22 @@ body {
   <div class="form-group">
     <label>What do you want to do when you retire?</label>
     <div class="dreams-picker" id="dreamsPicker">
-      <span class="dream-tag" data-dream="travel">✈️ Travel</span>
-      <span class="dream-tag" data-dream="garden">🌱 Gardening</span>
-      <span class="dream-tag" data-dream="grandkids">👶 Grandkids</span>
-      <span class="dream-tag" data-dream="art">🎨 Art</span>
-      <span class="dream-tag" data-dream="cook">👨‍🍳 Cooking</span>
-      <span class="dream-tag" data-dream="read">📚 Reading</span>
-      <span class="dream-tag" data-dream="volunteer">🤝 Volunteer</span>
-      <span class="dream-tag" data-dream="fitness">🏃 Fitness</span>
-      <span class="dream-tag" data-dream="beach">🏖️ Beach life</span>
-      <span class="dream-tag" data-dream="music">🎵 Music</span>
-      <span class="dream-tag" data-dream="pets">🐕 Pets</span>
-      <span class="dream-tag" data-dream="business">💡 Business</span>
-      <span class="dream-tag" data-dream="write">✍️ Writing</span>
-      <span class="dream-tag" data-dream="nothing">😴 Rest</span>
-      <span class="dream-tag" data-dream="golf">⛳ Golf</span>
-      <span class="dream-tag" data-dream="learn">🎓 Learning</span>
+      <span class="dream-tag" data-dream="travel" data-icon="✈️">✈️ Travel the world</span>
+      <span class="dream-tag" data-dream="garden" data-icon="🌱">🌱 Gardening</span>
+      <span class="dream-tag" data-dream="grandkids" data-icon="👶">👶 Spoil grandkids</span>
+      <span class="dream-tag" data-dream="art" data-icon="🎨">🎨 Art & creativity</span>
+      <span class="dream-tag" data-dream="cook" data-icon="👨‍🍳">👨‍🍳 Cook & bake</span>
+      <span class="dream-tag" data-dream="read" data-icon="📚">📚 Read all the books</span>
+      <span class="dream-tag" data-dream="volunteer" data-icon="🤝">🤝 Volunteer</span>
+      <span class="dream-tag" data-dream="fitness" data-icon="🏃">🏃 Get fit</span>
+      <span class="dream-tag" data-dream="beach" data-icon="🏖️">🏖️ Beach life</span>
+      <span class="dream-tag" data-dream="music" data-icon="🎵">🎵 Learn music</span>
+      <span class="dream-tag" data-dream="pets" data-icon="🐕">🐕 More time with pets</span>
+      <span class="dream-tag" data-dream="business" data-icon="💡">💡 Start a business</span>
+      <span class="dream-tag" data-dream="write" data-icon="✍️">✍️ Write a book</span>
+      <span class="dream-tag" data-dream="nothing" data-icon="😴">😴 Absolutely nothing</span>
+      <span class="dream-tag" data-dream="golf" data-icon="⛳">⛳ Golf</span>
+      <span class="dream-tag" data-dream="learn" data-icon="🎓">🎓 Take classes</span>
     </div>
     <input class="dream-custom-input" id="dreamCustom" placeholder="Or type your own dream...">
   </div>
@@ -373,28 +380,25 @@ body {
 <div class="confetti-container" id="confetti"></div>
 
 <script>
-// UTILITY AD CONTROLS
-function hideAds() {
-  const top = document.getElementById('adBannerTop');
-  const bottom = document.getElementById('adBannerBottom');
-  if (top) top.classList.add('hidden');
-  if (bottom) bottom.classList.add('hidden');
-  document.getElementById('appScreen').classList.remove('app-with-ads');
-}
-function showAds() {
-  const top = document.getElementById('adBannerTop');
-  const bottom = document.getElementById('adBannerBottom');
-  if (top) top.classList.remove('hidden');
-  if (bottom) bottom.classList.remove('hidden');
-  document.getElementById('appScreen').classList.add('app-with-ads');
-}
-
-// COUNTRY DATABASE
+// FULL COUNTRIES DATABASE
 const COUNTRIES = {
-  US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:6,d:4,name:'Independence Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:6,d:1,name:'Canada Day',off:true}]},
-  IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18,holidays:(y)=>[{m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:21,name:'Yom Kippur',off:true}]}
+  IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18,holidays:(y)=>[{m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:13,name:'Rosh Hashana',off:true},{m:8,d:21,name:'Yom Kippur',off:true},{m:8,d:26,name:'Sukkot',off:true},{m:9,d:3,name:'Simchat Torah',off:true},{m:3,d:2,name:'Passover 1st',off:true},{m:3,d:8,name:'Passover 7th',off:true},{m:4,d:22,name:'Shavuot',off:true},{m:3,d:22,name:'Independence Day',off:true}]},
+  US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:0,d:20,name:'MLK Day',off:true},{m:1,d:17,name:"Presidents' Day",off:true},{m:4,d:26,name:'Memorial Day',off:true},{m:5,d:19,name:'Juneteenth',off:true},{m:6,d:4,name:'Independence Day',off:true},{m:8,d:1,name:'Labor Day',off:true},{m:10,d:11,name:'Veterans Day',off:true},{m:10,d:27,name:'Thanksgiving',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
+  UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:4,d:5,name:'Early May Bank',off:true},{m:4,d:26,name:'Spring Bank',off:true},{m:7,d:25,name:'Summer Bank',off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:26,name:'Boxing Day',off:true}]},
+  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:1,d:17,name:'Family Day',off:true},{m:6,d:1,name:'Canada Day',off:true},{m:8,d:1,name:'Labour Day',off:true},{m:9,d:13,name:'Thanksgiving',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
+  AU: {name:'Australia',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:0,d:26,name:'Australia Day',off:true},{m:3,d:25,name:'Anzac Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
+  DE: {name:'Germany',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:30,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:9,d:3,name:'Unity Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
+  FR: {name:'France',retireAge:{M:64,F:64},weekendDays:[0,6],vacDays:25,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:6,d:14,name:'National Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
+  JP: {name:'Japan',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:1,d:11,name:'Foundation Day',off:true},{m:10,d:3,name:'Culture Day',off:true}]}
+};
+
+// RELIGIOUS HOLIDAY DATABASE
+const RELIGIOUS_HOLIDAYS = {
+  jewish: (y) => [{m:8,d:12,n:'Rosh Hashana',off:true},{m:8,d:13,n:'Rosh Hashana',off:true},{m:8,d:21,n:'Yom Kippur',off:true},{m:8,d:26,n:'Sukkot',off:true},{m:9,d:3,n:'Simchat Torah',off:true},{m:3,d:2,n:'Passover 1st',off:true},{m:3,d:8,n:'Passover 7th',off:true},{m:4,d:22,n:'Shavuot',off:true},{m:11,d:4,n:'Hanukkah',off:false},{m:2,d:5,n:'Purim',off:false}],
+  christian: (y) => [{m:11,d:25,name:'Christmas',off:true},{m:11,d:24,name:'Christmas Eve',off:false}],
+  muslim: (y) => [{m:2,d:20,name:'Eid al-Fitr',off:true},{m:4,d:27,name:'Eid al-Adha',off:true}],
+  hindu: (y) => [{m:10,d:8,name:'Diwali',off:true},{m:2,d:4,name:'Holi',off:false}],
+  buddhist: (y) => [{m:4,d:1,name:'Vesak',off:true}]
 };
 
 // INITIALIZATION
@@ -426,6 +430,7 @@ const inputCareerStart = document.getElementById('inputCareerStart');
 const inputVacation = document.getElementById('inputVacation');
 const btnStart = document.getElementById('btnStart');
 
+// DREAMS PICKER LOGIC
 const dreamsPicker = document.getElementById('dreamsPicker');
 const dreamTags = dreamsPicker.querySelectorAll('.dream-tag');
 const selectedDreams = new Set();
@@ -437,24 +442,60 @@ dreamTags.forEach(tag => {
   });
 });
 
-function checkReady() {
-  btnStart.disabled = !(getBirthdayValue() && inputCountry.value);
-}
+// RELIGION PICKER
+const religionPicker = document.getElementById('religionPicker');
+const religionTags = religionPicker.querySelectorAll('.dream-tag');
+const selectedReligions = new Set();
+religionTags.forEach(tag => {
+  tag.addEventListener('click', () => {
+    const rel = tag.dataset.religion;
+    if (rel === 'none') {
+      selectedReligions.clear();
+      religionTags.forEach(t => t.classList.remove('selected'));
+      tag.classList.add('selected');
+      selectedReligions.add('none');
+    } else {
+      selectedReligions.delete('none');
+      religionTags.forEach(t => { if (t.dataset.religion === 'none') t.classList.remove('selected'); });
+      if (selectedReligions.has(rel)) { selectedReligions.delete(rel); tag.classList.remove('selected'); }
+      else { selectedReligions.add(rel); tag.classList.add('selected'); }
+    }
+  });
+});
+
+function checkReady() { btnStart.disabled = !(getBirthdayValue() && inputCountry.value); }
 inputCountry.addEventListener('change', checkReady);
 inputBirthMonth.addEventListener('change', checkReady);
 inputBirthDay.addEventListener('change', checkReady);
 inputBirthYear.addEventListener('change', checkReady);
 
 btnStart.addEventListener('click', () => {
+  const bDayVal = getBirthdayValue();
+  const bParts = bDayVal.split('-');
+  const birthYear = parseInt(bParts[0], 10);
+  const birthMonth = parseInt(bParts[1], 10) - 1;
+  const birthDay = parseInt(bParts[2], 10);
+  
+  const c = inputCountry.value;
+  const cd = COUNTRIES[c] || {retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20};
+  const retireAge = c === 'custom' ? (parseInt(inputCustomAge.value, 10) || 65) : (cd.retireAge[inputGender.value] || cd.retireAge.M);
+  const calcRetireDate = new Date(birthYear + retireAge, birthMonth, birthDay);
+
+  const customDream = document.getElementById('dreamCustom').value.trim();
+  const dreamsArr = [...selectedDreams];
+  if(customDream) dreamsArr.push('custom:' + customDream);
+
   const config = {
-    country: inputCountry.value,
-    birthday: getBirthdayValue(),
+    country: c,
+    birthday: bDayVal,
     gender: inputGender.value,
-    retireAge: 65,
-    retireDate: new Date(new Date().setFullYear(new Date().getFullYear() + 10)).toISOString().slice(0,10),
-    weekendDays: [0,6],
-    vacDays: parseInt(inputVacation.value) || 20,
-    dreams: [...selectedDreams]
+    retireAge: retireAge,
+    retireDate: calcRetireDate.toISOString().slice(0,10),
+    weekendDays: cd.weekendDays,
+    vacDays: parseInt(inputVacation.value, 10) || cd.vacDays,
+    careerStart: inputCareerStart.value || null,
+    dreams: dreamsArr,
+    religions: [...selectedReligions].filter(r => r !== 'none')
   };
   localStorage.setItem('freedomclock_config', JSON.stringify(config));
   localStorage.setItem('freedomclock_startDate', new Date().toISOString().slice(0,10));
@@ -469,15 +510,113 @@ function startApp(config) {
   const RETIREMENT_DATE = new Date(config.retireDate);
   const today = new Date(); today.setHours(0,0,0,0);
   const calDaysLeft = Math.max(0, Math.floor((RETIREMENT_DATE - today)/86400000));
+  const weekendDays = config.weekendDays || [0,6];
+
+  function isWeekend(d){ return weekendDays.includes(d.getDay()); }
+
+  // COUNTS
+  const workDaysLeft = Math.round(calDaysLeft * (7 - weekendDays.length) / 7);
+  const yearsLeft = calDaysLeft / 365.25;
+  const totalVacLeft = Math.round(yearsLeft * config.vacDays);
+  const netWorkDays = Math.max(0, workDaysLeft - totalVacLeft);
 
   document.getElementById('heroTitle').textContent = 'Freedom in...';
   document.getElementById('heroDate').textContent = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   document.getElementById('calDays').textContent = calDaysLeft.toLocaleString();
-  document.getElementById('workDays').textContent = Math.round(calDaysLeft * 5 / 7).toLocaleString();
+  document.getElementById('workDays').textContent = netWorkDays.toLocaleString();
   document.getElementById('holDays').textContent = '12';
-  document.getElementById('vacDays').textContent = config.vacDays;
+  document.getElementById('vacDays').textContent = totalVacLeft;
+
+  // STREAKS
+  const startDate = localStorage.getItem('freedomclock_startDate');
+  const daysSinceStart = startDate ? Math.floor((today - new Date(startDate))/86400000) : 0;
+  if (daysSinceStart > 0) {
+    document.getElementById('heroStreak').textContent = '🔥 Day ' + daysSinceStart + ' of your freedom countdown! 🔥';
+  }
+
+  // DREAMS BOARD
+  if (config.dreams && config.dreams.length > 0) {
+    document.getElementById('dreamsBoard').classList.remove('hidden');
+    document.getElementById('dreamsList').innerHTML = config.dreams.map(d => {
+      if(d.startsWith('custom:')) return '<span class="dream-item">💭 ' + d.slice(7) + '</span>';
+      return '<span class="dream-item">🌟 ' + d + '</span>';
+    }).join('');
+  }
+
+  // FUN STATS
+  document.getElementById('funList').innerHTML = [
+    ['Months left', '~' + Math.round(calDaysLeft / 30.4)],
+    ['Weekends left', Math.floor(calDaysLeft / 7)],
+    ['Sleeps until freedom', calDaysLeft.toLocaleString()],
+    ['Coffees at work', netWorkDays.toLocaleString()]
+  ].map(r => '<div class="fun-row"><span>' + r[0] + '</span><span class="val">' + r[1] + '</span></div>').join('');
+
+  // INTERACTIVE CALENDAR
+  let viewYear = today.getFullYear(), viewMonth = today.getMonth();
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function getChecks(){ try{ return JSON.parse(localStorage.getItem('fc_checks')||'{}'); }catch(e){ return {}; } }
+  function saveChecks(c){ localStorage.setItem('fc_checks', JSON.stringify(c)); }
+
+  function renderCal(){
+    document.getElementById('monthLabel').textContent = monthNames[viewMonth] + ' ' + viewYear;
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    ['S','M','T','W','T','F','S'].forEach(d => { const el = document.createElement('div'); el.className = 'day-header'; el.textContent = d; grid.appendChild(el); });
+    
+    const firstDow = new Date(viewYear, viewMonth, 1).getDay();
+    const dim = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const checks = getChecks();
+
+    for(let i = 0; i < firstDow; i++){ const el = document.createElement('div'); el.className = 'day-cell empty'; grid.appendChild(el); }
+    for(let d = 1; d <= dim; d++){
+      const cellDate = new Date(viewYear, viewMonth, d);
+      const key = viewYear + '-' + String(viewMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      const el = document.createElement('div');
+      el.className = 'day-cell';
+      if (isWeekend(cellDate)) el.classList.add('weekend');
+      if (cellDate.getTime() === today.getTime()) el.classList.add('today');
+      if (checks[key]) el.classList.add('checked');
+
+      const daysUntil = Math.floor((RETIREMENT_DATE - cellDate) / 86400000);
+      el.innerHTML = '<div class="d-num">' + d + '</div><div class="d-count">' + (daysUntil > 0 ? daysUntil : '') + '</div>';
+      
+      el.addEventListener('click', (evt) => {
+        const ch = getChecks();
+        if (ch[key]){ delete ch[key]; el.classList.remove('checked'); }
+        else { ch[key] = true; el.classList.add('checked'); floatEmoji(evt.clientX, evt.clientY); }
+        saveChecks(ch);
+      });
+      grid.appendChild(el);
+    }
+  }
+
+  document.getElementById('prevMonth').addEventListener('click', () => { viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; } renderCal(); });
+  document.getElementById('nextMonth').addEventListener('click', () => { viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; } renderCal(); });
+  renderCal();
 
   if (localStorage.getItem('fc_premium') === 'true') { hideAds(); } else { showAds(); }
+}
+
+function floatEmoji(x, y) {
+  const emojis = ['🎉','🥳','🙌','✨','💪','🎊','🏖️','⭐'];
+  const el = document.createElement('div');
+  el.className = 'float-emoji';
+  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  el.style.left = (x - 15) + 'px'; el.style.top = (y - 10) + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1500);
+}
+
+function hideAds() {
+  document.getElementById('adBannerTop')?.classList.add('hidden');
+  document.getElementById('adBannerBottom')?.classList.add('hidden');
+  document.getElementById('appScreen')?.classList.remove('app-with-ads');
+}
+function showAds() {
+  document.getElementById('adBannerTop')?.classList.remove('hidden');
+  document.getElementById('adBannerBottom')?.classList.remove('hidden');
+  document.getElementById('appScreen')?.classList.add('app-with-ads');
 }
 
 document.getElementById('btnRemoveAds').addEventListener('click', () => {
@@ -493,13 +632,7 @@ document.getElementById('btnReset').addEventListener('click', () => {
 
 // INITIAL LOAD CHECK
 const saved = localStorage.getItem('freedomclock_config');
-if (saved) {
-  startApp(JSON.parse(saved));
-} else {
-  setupScreen.classList.remove('hidden');
-}
+if (saved) { startApp(JSON.parse(saved)); } else { setupScreen.classList.remove('hidden'); }
 </script>
 </body>
 </html>
-
-
