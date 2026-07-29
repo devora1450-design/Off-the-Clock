@@ -21,14 +21,10 @@ body {
   padding-top: env(safe-area-inset-top, 16px);
   background-attachment: fixed;
   background-image: 
-    /* Radiant Sunshine Glow top right */
     radial-gradient(circle at 85% 12%, rgba(254, 240, 138, 0.95) 0%, rgba(253, 224, 71, 0.6) 12%, rgba(251, 146, 60, 0.3) 25%, rgba(255, 255, 255, 0) 50%),
-    /* Soft Clouds */
     radial-gradient(circle at 20% 8%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 14%),
     radial-gradient(circle at 60% 18%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 12%),
-    /* SVG Ocean Horizon & Waves */
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230284c7" fill-opacity="0.4" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,149.3C672,160,768,224,864,229.3C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path><path fill="%230d9488" fill-opacity="0.3" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,213.3C840,203,960,149,1080,149.3C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>'),
-    /* Sky, Sunset Coral & Sand Shoreline Gradient */
     linear-gradient(180deg, #38bdf8 0%, #7dd3fc 25%, #fdba74 48%, #0284c7 68%, #0284c7 82%, #fde047 88%, #fef08a 100%);
   background-repeat: no-repeat;
   background-size: cover;
@@ -37,7 +33,6 @@ body {
 
 .hidden { display: none !important; }
 
-/* CONTAINERS WITH FROSTED GLASS EFFECT */
 .setup, .app { max-width: 440px; margin: 0 auto; }
 
 .setup h1 {
@@ -51,13 +46,13 @@ body {
 
 .setup .tagline {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   font-size: 0.9em;
   color: #0369a1;
   font-weight: 600;
 }
 
-.form-group { margin-bottom: 18px; }
+.form-group { margin-bottom: 16px; }
 .form-group label { display: block; font-size: 0.85em; font-weight: 700; margin-bottom: 6px; color: #0284c7; }
 .form-group input, .form-group select {
   width: 100%;
@@ -128,10 +123,6 @@ body {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
-.celebration { border: 2px solid #f59e0b; text-align: center; }
-.celebration .milestone { font-size: 1.3em; font-weight: 800; color: #d97706; margin-bottom: 6px; }
-.celebration .sub { font-size: 0.88em; color: #64748b; }
-
 .progress-section h2, .calendar-section h2, .upcoming h2, .fun-stats h2, .dreams-board h2, .finance-section h2 {
   font-size: 0.9em;
   margin-bottom: 12px;
@@ -147,7 +138,7 @@ body {
 
 /* FINANCIAL CALCULATOR STYLES */
 .calc-card { background: rgba(255, 255, 255, 0.95); border-radius: 14px; padding: 14px; border: 1px solid #bae6fd; }
-.calc-result { text-align: center; margin-top: 14px; padding: 12px; background: #e0f2fe; border-radius: 12px; border: 1px solid #7dd3fc; }
+.calc-result { text-align: center; margin-top: 12px; padding: 12px; background: #e0f2fe; border-radius: 12px; border: 1px solid #7dd3fc; }
 .calc-result .big-date { font-size: 1.3em; font-weight: 800; color: #0284c7; margin: 4px 0; }
 .calc-result .sub-text { font-size: 0.8em; color: #0369a1; }
 .btn-sync { background: #0d9488; color: #ffffff; border: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85em; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%; }
@@ -224,9 +215,6 @@ body {
 .ad-banner-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-top: 1px solid #cbd5e1; padding: 8px; text-align: center; z-index: 99; }
 .app-with-ads { padding-bottom: 66px; }
 
-.confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
-.confetti-piece { position: absolute; top: -20px; animation: confetti-fall 3s ease-out forwards; }
-@keyframes confetti-fall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
 .float-emoji { position: fixed; pointer-events: none; font-size: 2em; z-index: 10000; animation: float-up 1.5s ease-out forwards; }
 @keyframes float-up { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
 </style>
@@ -237,6 +225,35 @@ body {
 <div class="setup" id="setupScreen">
   <h1>FreedomClock</h1>
   <p class="tagline">Count down to the rest of your life</p>
+  
+  <!-- FINANCIAL FREEDOM CALCULATOR ON SETUP SCREEN -->
+  <div class="form-group" style="background: rgba(255,255,255,0.95); padding: 14px; border-radius: 14px; border: 1px solid #bae6fd;">
+    <label style="color:#0284c7; font-size:0.9em; font-weight:800; margin-bottom:8px; display:block;">💰 Road to $1 Million Financial Freedom</label>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px;">
+      <div>
+        <label style="font-size:0.75em; font-weight:700; color:#0369a1;">Starting Balance</label>
+        <select id="setupStartBalance">
+          <option value="1000">$1,000</option>
+          <option value="5000">$5,000</option>
+          <option value="10000" selected>$10,000</option>
+          <option value="25000">$25,000</option>
+          <option value="50000">$50,000</option>
+          <option value="100000">$100,000</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:0.75em; font-weight:700; color:#0369a1;">Monthly Savings</label>
+        <input type="number" id="setupMonthlySave" value="500" step="50" min="0">
+      </div>
+    </div>
+    <div style="font-size:0.72em; color:#64748b; text-align:center; margin-bottom:8px;">Assumes 7% average annual market return</div>
+    <div style="text-align:center; padding:10px; background:#e0f2fe; border-radius:10px; border:1px solid #7dd3fc;">
+      <div style="font-size:0.78em; color:#0369a1;">Target $1,000,000 Date:</div>
+      <div id="setupMillionDate" style="font-size:1.25em; font-weight:800; color:#0284c7; margin:2px 0;">-</div>
+      <div id="setupMillionSub" style="font-size:0.75em; color:#0369a1;"></div>
+    </div>
+  </div>
+
   <div class="form-group">
     <label>Your Birthday</label>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
@@ -373,10 +390,6 @@ body {
     <h2>What I'm Counting Down To</h2>
     <div id="dreamsList"></div>
   </div>
-  <div class="celebration hidden" id="celebrationBox">
-    <div class="milestone" id="celebMilestone"></div>
-    <div class="sub" id="celebSub"></div>
-  </div>
   <div class="cards">
     <div class="card calendar"><div class="number" id="calDays">--</div><div class="label">Calendar Days</div></div>
     <div class="card workdays"><div class="number" id="workDays">--</div><div class="label">Work Days</div></div>
@@ -384,7 +397,7 @@ body {
     <div class="card vacation"><div class="number" id="vacDays">--</div><div class="label">Vacation Days</div></div>
   </div>
 
-  <!-- WORK TO $1 MILLION CALCULATOR MODULE -->
+  <!-- WORK TO $1 MILLION CALCULATOR MODULE ON DASHBOARD -->
   <div class="finance-section">
     <h2>💰 Road to $1 Million Freedom</h2>
     <div class="calc-card">
@@ -410,7 +423,7 @@ body {
         <div>Work to $1,000,000 date:</div>
         <div class="big-date" id="calcMillionDate">Calculating...</div>
         <div class="sub-text" id="calcMillionSub"></div>
-        <button class="btn-sync" id="btnSyncMillion">🎯 Set Retirement Date to $1M Goal Date</button>
+        <button class="btn-sync" id="btnSyncMillion">🎯 Set Countdown to $1M Goal Date</button>
       </div>
     </div>
   </div>
@@ -453,10 +466,8 @@ body {
   <div class="ad-content" id="adSlotBottom">Ad space</div>
 </div>
 
-<div class="confetti-container" id="confetti"></div>
-
 <script>
-// DYNAMIC EASTER ALGORITHMS
+// EASTER DYNAMIC ALGORITHMS
 function getWesternEaster(year) {
   const a = year % 19, b = Math.floor(year / 100), c = year % 100;
   const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
@@ -501,7 +512,6 @@ function getLastDayOfMonth(year, month, dayOfWeek) {
   return lastDay;
 }
 
-// FULL SECULAR NATIONAL HOLIDAYS ENGINE
 const COUNTRY_SECULAR_HOLIDAYS = {
   US: (y) => [
     {m:0, d:1, name:"New Year's Day", off:true},
@@ -545,7 +555,6 @@ const COUNTRIES = {
   CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15}
 };
 
-// RELIGIOUS HOLIDAY CALCULATOR ENGINE
 const RELIGIOUS_HOLIDAYS = {
   jewish: (y) => [
     {m:8,d:12,name:'Rosh Hashana 1st Day',off:true},
@@ -615,7 +624,7 @@ const RELIGIOUS_HOLIDAYS = {
 
 const holidayOverrides = {};
 
-// INITIALIZATION
+// SETUP ELEMENTS
 const setupScreen = document.getElementById('setupScreen');
 const appScreen = document.getElementById('appScreen');
 const inputCountry = document.getElementById('inputCountry');
@@ -727,6 +736,69 @@ inputBirthMonth.addEventListener('change', checkReady);
 inputBirthDay.addEventListener('change', checkReady);
 inputBirthYear.addEventListener('change', checkReady);
 
+// FINANCIAL MILLIONAIRE CALCULATOR LOGIC (Runs on setup & dashboard)
+let computedMillionDate = null;
+
+function runFinancialCalculator(startVal, monthlyVal) {
+  const startP = parseFloat(startVal) || 10000;
+  const monthlyP = parseFloat(monthlyVal) || 500;
+  const targetGoal = 1000000;
+  const annualRate = 0.07;
+  const monthlyRate = annualRate / 12;
+
+  let balance = startP;
+  let months = 0;
+
+  while (balance < targetGoal && months < 1200) {
+    balance = balance * (1 + monthlyRate) + monthlyP;
+    months++;
+  }
+
+  const targetDate = new Date();
+  targetDate.setMonth(targetDate.getMonth() + months);
+  computedMillionDate = targetDate;
+
+  const years = Math.floor(months / 12);
+  const remMonths = months % 12;
+
+  const dateStr = targetDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const subStr = 'Takes ~' + years + ' yrs, ' + remMonths + ' mos saving $' + monthlyP + '/mo';
+
+  // Update Setup Screen UI
+  const sDate = document.getElementById('setupMillionDate');
+  const sSub = document.getElementById('setupMillionSub');
+  if (sDate) sDate.textContent = dateStr;
+  if (sSub) sSub.textContent = subStr;
+
+  // Update Dashboard UI
+  const dDate = document.getElementById('calcMillionDate');
+  const dSub = document.getElementById('calcMillionSub');
+  if (dDate) dDate.textContent = dateStr;
+  if (dSub) dSub.textContent = subStr;
+}
+
+function updateFromSetupCalc() {
+  const startVal = document.getElementById('setupStartBalance').value;
+  const monthlyVal = document.getElementById('setupMonthlySave').value;
+  runFinancialCalculator(startVal, monthlyVal);
+}
+
+function updateFromDashCalc() {
+  const startVal = document.getElementById('calcStartBalance').value;
+  const monthlyVal = document.getElementById('calcMonthlySave').value;
+  runFinancialCalculator(startVal, monthlyVal);
+}
+
+// Bind Calculator Listeners
+document.getElementById('setupStartBalance').addEventListener('change', updateFromSetupCalc);
+document.getElementById('setupMonthlySave').addEventListener('input', updateFromSetupCalc);
+
+document.getElementById('calcStartBalance').addEventListener('change', updateFromDashCalc);
+document.getElementById('calcMonthlySave').addEventListener('input', updateFromDashCalc);
+
+// Initial calc run
+runFinancialCalculator(10000, 500);
+
 btnStart.addEventListener('click', () => {
   const bDayVal = getBirthdayValue();
   const bParts = bDayVal.split('-');
@@ -760,38 +832,6 @@ btnStart.addEventListener('click', () => {
   location.reload();
 });
 
-// FINANCIAL MILLIONAIRE CALCULATOR LOGIC
-let computedMillionDate = null;
-
-function calculateMillionDate() {
-  const startP = parseFloat(document.getElementById('calcStartBalance').value) || 10000;
-  const monthlyP = parseFloat(document.getElementById('calcMonthlySave').value) || 500;
-  const targetGoal = 1000000;
-  const annualRate = 0.07;
-  const monthlyRate = annualRate / 12;
-
-  let balance = startP;
-  let months = 0;
-
-  while (balance < targetGoal && months < 1200) {
-    balance = balance * (1 + monthlyRate) + monthlyP;
-    months++;
-  }
-
-  const targetDate = new Date();
-  targetDate.setMonth(targetDate.getMonth() + months);
-  computedMillionDate = targetDate;
-
-  const years = Math.floor(months / 12);
-  const remMonths = months % 12;
-
-  document.getElementById('calcMillionDate').textContent = targetDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  document.getElementById('calcMillionSub').textContent = 'Takes approximately ' + years + ' yrs, ' + remMonths + ' mos saving $' + monthlyP + '/mo';
-}
-
-document.getElementById('calcStartBalance').addEventListener('change', calculateMillionDate);
-document.getElementById('calcMonthlySave').addEventListener('input', calculateMillionDate);
-
 document.getElementById('btnSyncMillion').addEventListener('click', () => {
   if (!computedMillionDate) return;
   const saved = localStorage.getItem('freedomclock_config');
@@ -808,7 +848,7 @@ function startApp(config) {
   setupScreen.classList.add('hidden');
   appScreen.classList.remove('hidden');
 
-  calculateMillionDate();
+  updateFromDashCalc();
 
   const RETIREMENT_DATE = new Date(config.retireDate);
   const today = new Date(); today.setHours(0,0,0,0);
@@ -817,7 +857,6 @@ function startApp(config) {
 
   function isWeekend(d){ return weekendDays.includes(d.getDay()); }
 
-  // HOLIDAY DYNAMIC ENGINE (Secular + Religious)
   const configReligions = config.religions || [];
   const holOverrides = config.holOverrides || {};
   
@@ -852,7 +891,6 @@ function startApp(config) {
     });
   }
 
-  // COUNTS (Workdays - Total Vacation Days - Total Secular/Religious Holidays)
   const workDaysLeftRaw = Math.round(calDaysLeft * (7 - weekendDays.length) / 7);
   const yearsLeft = calDaysLeft / 365.25;
   const totalVacLeft = Math.round(yearsLeft * config.vacDays);
@@ -865,14 +903,6 @@ function startApp(config) {
   document.getElementById('holDays').textContent = totalHolidaysLeft;
   document.getElementById('vacDays').textContent = totalVacLeft;
 
-  // STREAKS
-  const startDate = localStorage.getItem('freedomclock_startDate');
-  const daysSinceStart = startDate ? Math.floor((today - new Date(startDate))/86400000) : 0;
-  if (daysSinceStart > 0) {
-    document.getElementById('heroStreak').textContent = '🔥 Day ' + daysSinceStart + ' of your freedom countdown! 🔥';
-  }
-
-  // DREAMS BOARD
   if (config.dreams && config.dreams.length > 0) {
     document.getElementById('dreamsBoard').classList.remove('hidden');
     document.getElementById('dreamsList').innerHTML = config.dreams.map(d => {
@@ -881,7 +911,6 @@ function startApp(config) {
     }).join('');
   }
 
-  // FUN STATS
   document.getElementById('funList').innerHTML = [
     ['Months left', '~' + Math.round(calDaysLeft / 30.4)],
     ['Weekends left', Math.floor(calDaysLeft / 7)],
@@ -889,12 +918,8 @@ function startApp(config) {
     ['Coffees at work', netWorkDays.toLocaleString()]
   ].map(r => '<div class="fun-row"><span>' + r[0] + '</span><span class="val">' + r[1] + '</span></div>').join('');
 
-  // INTERACTIVE CALENDAR
   let viewYear = today.getFullYear(), viewMonth = today.getMonth();
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-  function getChecks(){ try{ return JSON.parse(localStorage.getItem('fc_checks')||'{}'); }catch(e){ return {}; } }
-  function saveChecks(c){ localStorage.setItem('fc_checks', JSON.stringify(c)); }
 
   function renderCal(){
     document.getElementById('monthLabel').textContent = monthNames[viewMonth] + ' ' + viewYear;
@@ -904,27 +929,17 @@ function startApp(config) {
     
     const firstDow = new Date(viewYear, viewMonth, 1).getDay();
     const dim = new Date(viewYear, viewMonth + 1, 0).getDate();
-    const checks = getChecks();
 
     for(let i = 0; i < firstDow; i++){ const el = document.createElement('div'); el.className = 'day-cell empty'; grid.appendChild(el); }
     for(let d = 1; d <= dim; d++){
       const cellDate = new Date(viewYear, viewMonth, d);
-      const key = viewYear + '-' + String(viewMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
       const el = document.createElement('div');
       el.className = 'day-cell';
       if (isWeekend(cellDate)) el.classList.add('weekend');
       if (cellDate.getTime() === today.getTime()) el.classList.add('today');
-      if (checks[key]) el.classList.add('checked');
 
       const daysUntil = Math.floor((RETIREMENT_DATE - cellDate) / 86400000);
       el.innerHTML = '<div class="d-num">' + d + '</div><div class="d-count">' + (daysUntil > 0 ? daysUntil : '') + '</div>';
-      
-      el.addEventListener('click', (evt) => {
-        const ch = getChecks();
-        if (ch[key]){ delete ch[key]; el.classList.remove('checked'); }
-        else { ch[key] = true; el.classList.add('checked'); floatEmoji(evt.clientX, evt.clientY); }
-        saveChecks(ch);
-      });
       grid.appendChild(el);
     }
   }
@@ -933,7 +948,6 @@ function startApp(config) {
   document.getElementById('nextMonth').addEventListener('click', () => { viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; } renderCal(); });
   renderCal();
 
-  // UPCOMING HOLIDAYS LIST
   const upList = document.getElementById('upcomingList');
   const upcoming = [];
   for (let y = today.getFullYear(); y <= RETIREMENT_DATE.getFullYear(); y++) {
@@ -950,43 +964,13 @@ function startApp(config) {
     const badge = h.off ? '<span style="font-size:0.7em;background:#0d9488;color:#ffffff;padding:1px 6px;border-radius:8px;margin-left:4px">OFF</span>' : '<span style="font-size:0.7em;background:#e2e8f0;color:#64748b;padding:1px 6px;border-radius:8px;margin-left:4px">WORK</span>';
     return '<div class="upcoming-item"><span class="hol-name">' + h.name + badge + '</span><span class="hol-date">' + ds + ' (' + da + ' days)</span></div>';
   }).join('');
-
-  if (localStorage.getItem('fc_premium') === 'true') { hideAds(); } else { showAds(); }
 }
-
-function floatEmoji(x, y) {
-  const emojis = ['🎉','🥳','🙌','✨','💪','🎊','🏖️','⭐'];
-  const el = document.createElement('div');
-  el.className = 'float-emoji';
-  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  el.style.left = (x - 15) + 'px'; el.style.top = (y - 10) + 'px';
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 1500);
-}
-
-function hideAds() {
-  document.getElementById('adBannerTop')?.classList.add('hidden');
-  document.getElementById('adBannerBottom')?.classList.add('hidden');
-  document.getElementById('appScreen')?.classList.remove('app-with-ads');
-}
-function showAds() {
-  document.getElementById('adBannerTop')?.classList.remove('hidden');
-  document.getElementById('adBannerBottom')?.classList.remove('hidden');
-  document.getElementById('appScreen')?.classList.add('app-with-ads');
-}
-
-document.getElementById('btnRemoveAds').addEventListener('click', () => {
-  localStorage.setItem('fc_premium', 'true');
-  hideAds();
-  alert('🎉 Ads removed! Enjoy your clean countdown.');
-});
 
 document.getElementById('btnReset').addEventListener('click', () => {
   localStorage.clear();
   location.reload();
 });
 
-// INITIAL LOAD CHECK
 const saved = localStorage.getItem('freedomclock_config');
 if (saved) { startApp(JSON.parse(saved)); } else { setupScreen.classList.remove('hidden'); }
 </script>
