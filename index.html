@@ -92,7 +92,7 @@ body {
   box-shadow: 0 10px 25px rgba(2, 132, 199, 0.3);
   backdrop-filter: blur(8px);
 }
-.hero h1 { font-size: 1.4em; margin-bottom: 4px; color: #ffffff; }
+.hero h1 { font-size: 1.6em; margin-bottom: 4px; color: #ffffff; font-weight: 800; }
 .hero .retire-date { font-size: 0.9em; color: #e0f2fe; }
 .hero .streak { margin-top: 10px; font-size: 1em; color: #fef08a; font-weight: 600; }
 
@@ -113,7 +113,7 @@ body {
 .card.holidays .number { color: #d97706; }
 .card.vacation .number { color: #0d9488; }
 
-.setup, .celebration, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board, .finance-section {
+.setup, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board, .finance-section {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   border-radius: 18px;
@@ -142,6 +142,18 @@ body {
 .calc-result .big-date { font-size: 1.3em; font-weight: 800; color: #0284c7; margin: 4px 0; }
 .calc-result .sub-text { font-size: 0.8em; color: #0369a1; }
 .btn-sync { background: #0d9488; color: #ffffff; border: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85em; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%; }
+
+/* MODAL POPUP FOR FINANCIAL INPUT */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 16px;
+}
+.modal-content {
+  background: #ffffff; width: 100%; max-width: 380px; border-radius: 20px; padding: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #bae6fd;
+}
+.modal-content h3 { font-size: 1.1em; color: #0284c7; margin-bottom: 12px; text-align: center; }
+.btn-modal-close { background: #0284c7; color: #ffffff; border: none; padding: 10px; border-radius: 10px; width: 100%; font-weight: 700; margin-top: 12px; cursor: pointer; }
 
 /* HOLIDAY CUSTOMIZER SWITCHES */
 .holiday-customizer { margin-top: 10px; max-height: 220px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px; background: #ffffff; }
@@ -229,33 +241,12 @@ body {
 <div class="setup" id="setupScreen">
   <h1>FreedomClock</h1>
   <p class="tagline">Count down to the rest of your life</p>
-  
-  <!-- FINANCIAL FREEDOM CALCULATOR ON SETUP SCREEN -->
-  <div class="form-group" style="background: rgba(255,255,255,0.95); padding: 14px; border-radius: 14px; border: 1px solid #bae6fd;">
-    <label style="color:#0284c7; font-size:0.9em; font-weight:800; margin-bottom:8px; display:block;">💰 Road to $1 Million Financial Freedom</label>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px;">
-      <div>
-        <label style="font-size:0.75em; font-weight:700; color:#0369a1;">Starting Balance</label>
-        <select id="setupStartBalance">
-          <option value="1000">$1,000</option>
-          <option value="5000">$5,000</option>
-          <option value="10000" selected>$10,000</option>
-          <option value="25000">$25,000</option>
-          <option value="50000">$50,000</option>
-          <option value="100000">$100,000</option>
-        </select>
-      </div>
-      <div>
-        <label style="font-size:0.75em; font-weight:700; color:#0369a1;">Monthly Savings</label>
-        <input type="number" id="setupMonthlySave" value="500" step="50" min="0">
-      </div>
-    </div>
-    <div style="font-size:0.72em; color:#64748b; text-align:center; margin-bottom:8px;">Assumes 7% average annual market return</div>
-    <div style="text-align:center; padding:10px; background:#e0f2fe; border-radius:10px; border:1px solid #7dd3fc;">
-      <div style="font-size:0.78em; color:#0369a1;">Target $1,000,000 Date:</div>
-      <div id="setupMillionDate" style="font-size:1.25em; font-weight:800; color:#0284c7; margin:2px 0;">-</div>
-      <div id="setupMillionSub" style="font-size:0.75em; color:#0369a1;"></div>
-    </div>
+
+  <!-- FINANCIAL POPUP TRIGGER BUTTON -->
+  <div class="form-group">
+    <button id="btnOpenFinancialModal" style="width:100%; padding:12px; background:#e0f2fe; border:1px solid #7dd3fc; color:#0284c7; border-radius:12px; font-weight:700; cursor:pointer;">
+      💰 Optional: Enter Financial Goal Amounts
+    </button>
   </div>
 
   <div class="form-group">
@@ -386,11 +377,34 @@ body {
   <button class="btn-start" id="btnStart" disabled>Start My Countdown</button>
 </div>
 
+<!-- FINANCIAL POPUP MODAL -->
+<div class="modal-overlay hidden" id="financialModal">
+  <div class="modal-content">
+    <h3>Enter Financial Amounts</h3>
+    <div class="form-group">
+      <label>Starting Balance</label>
+      <select id="setupStartBalance">
+        <option value="1000">$1,000</option>
+        <option value="5000">$5,000</option>
+        <option value="10000" selected>$10,000</option>
+        <option value="25000">$25,000</option>
+        <option value="50000">$50,000</option>
+        <option value="100000">$100,000</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Monthly Savings Amount</label>
+      <input type="number" id="setupMonthlySave" value="500" step="50" min="0" placeholder="Enter monthly savings">
+    </div>
+    <button class="btn-modal-close" id="btnCloseFinancialModal">Done</button>
+  </div>
+</div>
+
 <!-- MAIN APP SCREEN -->
 <div class="app hidden" id="appScreen">
   <button class="settings-btn" id="btnSettings">&#9881;</button>
   <div class="hero">
-    <h1 id="heroTitle">Retirement Countdown</h1>
+    <h1>Off the Clock</h1>
     <div class="retire-date" id="heroDate"></div>
     <div class="streak" id="heroStreak"></div>
   </div>
@@ -405,14 +419,32 @@ body {
     <div class="card vacation"><div class="number" id="vacDays">--</div><div class="label">Vacation Days</div></div>
   </div>
 
-  <!-- CAREER PROGRESS BAR SLIDER -->
   <div class="progress-section">
     <h2>Career Progress</h2>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-text" id="progressText">0% Complete</div>
   </div>
 
-  <!-- WORK TO $1 MILLION CALCULATOR MODULE ON DASHBOARD -->
+  <div class="fun-stats" id="funStats">
+    <h2>Freedom Milestones</h2>
+    <div id="funList"></div>
+  </div>
+  
+  <div class="calendar-section">
+    <div class="cal-nav">
+      <button id="prevMonth">&lt;</button>
+      <span class="month-label" id="monthLabel"></span>
+      <button id="nextMonth">&gt;</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+
+  <div class="upcoming" id="upcomingSection">
+    <h2>Upcoming Holidays</h2>
+    <div id="upcomingList"></div>
+  </div>
+
+  <!-- WORK TO $1 MILLION CALCULATOR MODULE AT THE VERY BOTTOM -->
   <div class="finance-section">
     <h2>💰 Road to $1 Million Freedom</h2>
     <div class="calc-card">
@@ -443,22 +475,6 @@ body {
     </div>
   </div>
 
-  <div class="fun-stats" id="funStats">
-    <h2>Freedom Milestones</h2>
-    <div id="funList"></div>
-  </div>
-  <div class="calendar-section">
-    <div class="cal-nav">
-      <button id="prevMonth">&lt;</button>
-      <span class="month-label" id="monthLabel"></span>
-      <button id="nextMonth">&gt;</button>
-    </div>
-    <div class="cal-grid" id="calGrid"></div>
-  </div>
-  <div class="upcoming" id="upcomingSection">
-    <h2>Upcoming Holidays</h2>
-    <div id="upcomingList"></div>
-  </div>
   <div class="legend">Orange = calendar days left | Blue = work days left</div>
   <div style="text-align:center;margin-top:20px;padding-bottom:20px">
     <button id="btnReset" class="btn-fresh">🔄 Start Fresh</button>
@@ -477,6 +493,15 @@ function floatEmoji(x, y) {
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 1200);
 }
+
+// FINANCIAL MODAL CONTROLS
+const financialModal = document.getElementById('financialModal');
+document.getElementById('btnOpenFinancialModal').addEventListener('click', () => {
+  financialModal.classList.remove('hidden');
+});
+document.getElementById('btnCloseFinancialModal').addEventListener('click', () => {
+  financialModal.classList.add('hidden');
+});
 
 // EASTER DYNAMIC ALGORITHMS
 function getWesternEaster(year) {
@@ -776,18 +801,13 @@ function runFinancialCalculator(startVal, monthlyVal) {
   const dateStr = targetDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   const subStr = 'Takes ~' + years + ' yrs, ' + remMonths + ' mos saving $' + monthlyP + '/mo';
 
-  const sDate = document.getElementById('setupMillionDate');
-  const sSub = document.getElementById('setupMillionSub');
-  if (sDate) sDate.textContent = dateStr;
-  if (sSub) sSub.textContent = subStr;
-
   const dDate = document.getElementById('calcMillionDate');
   const dSub = document.getElementById('calcMillionSub');
   if (dDate) dDate.textContent = dateStr;
   if (dSub) dSub.textContent = subStr;
 }
 
-function updateFromSetupCalc() {
+function updateFromModalCalc() {
   const startVal = document.getElementById('setupStartBalance').value;
   const monthlyVal = document.getElementById('setupMonthlySave').value;
   runFinancialCalculator(startVal, monthlyVal);
@@ -799,8 +819,8 @@ function updateFromDashCalc() {
   runFinancialCalculator(startVal, monthlyVal);
 }
 
-document.getElementById('setupStartBalance').addEventListener('change', updateFromSetupCalc);
-document.getElementById('setupMonthlySave').addEventListener('input', updateFromSetupCalc);
+document.getElementById('setupStartBalance').addEventListener('change', updateFromModalCalc);
+document.getElementById('setupMonthlySave').addEventListener('input', updateFromModalCalc);
 
 document.getElementById('calcStartBalance').addEventListener('change', updateFromDashCalc);
 document.getElementById('calcMonthlySave').addEventListener('input', updateFromDashCalc);
@@ -864,13 +884,12 @@ function startApp(config) {
   const calDaysLeft = Math.max(0, Math.floor((RETIREMENT_DATE - today)/86400000));
   const weekendDays = config.weekendDays || [0,6];
 
-  // CAREER PROGRESS BAR PERCENTAGE CALCULATION
   let startDate;
   if (config.careerStart) {
     startDate = new Date(config.careerStart);
   } else if (config.birthday) {
     const bParts = config.birthday.split('-');
-    startDate = new Date(parseInt(bParts[0], 10) + 22, parseInt(bParts[1], 10) - 1, parseInt(bParts[2], 10)); // default career start at age 22
+    startDate = new Date(parseInt(bParts[0], 10) + 22, parseInt(bParts[1], 10) - 1, parseInt(bParts[2], 10));
   } else {
     startDate = new Date(today.getFullYear() - 25, 0, 1);
   }
@@ -925,7 +944,6 @@ function startApp(config) {
   const totalVacLeft = Math.round(yearsLeft * config.vacDays);
   const netWorkDays = Math.max(0, workDaysLeftRaw - totalVacLeft - totalHolidaysLeft);
 
-  document.getElementById('heroTitle').textContent = 'Freedom in...';
   document.getElementById('heroDate').textContent = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   document.getElementById('calDays').textContent = calDaysLeft.toLocaleString();
   document.getElementById('workDays').textContent = netWorkDays.toLocaleString();
