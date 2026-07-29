@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f2f5f3">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.svg">
+<title>Off-the-Clock - Retirement Countdown</title>
+<style>
+/* --- GLOBAL RESETS & FOREST MOUNTAIN THEME --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f2f5f3;
+  background-image: linear-gradient(180deg, #e8efea 0%, #f2f5f3 100%);
+  color: #1c2e24;
+  min-height: 100vh;
+  padding: 16px;
+  padding-top: env(safe-area-inset-top, 16px);
+}
+
+.hidden { display: none !important; }
+
+/* SETUP & CONTAINERS */
+.setup, .app { max-width: 440px; margin: 0 auto; }
+
+.setup h1 {
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: #1b4332;
+}
+
+.setup .tagline {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 0.9em;
+  color: #526358;
+}
+
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 0.85em; font-weight: 600; margin-bottom: 6px; color: #1b4332; }
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d1dcd5;
+  background: #ffffff;
+  color: #1c2e24;
+  font-size: 0.95em;
+  outline: none;
+}
+
+.btn-start {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1b4332, #40916c);
+  color: #ffffff;
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.2);
+}
+.btn-start:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+/* CARDS & PANELS */
+.hero {
+  text-align: center;
+  padding: 24px 12px;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+  border-radius: 20px;
+  margin-bottom: 16px;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(27, 67, 50, 0.25);
+}
+.hero h1 { font-size: 1.4em; margin-bottom: 4px; color: #ffffff; }
+.hero .retire-date { font-size: 0.9em; color: #d8f3dc; }
+.hero .streak { margin-top: 10px; font-size: 1em; color: #fef08a; font-weight: 600; }
+
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.08);
+  border: 1px solid #d1dcd5;
+}
+.card .number { font-size: 1.8em; font-weight: 800; margin-bottom: 2px; }
+.card .label { font-size: 0.7em; color: #526358; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.card.calendar .number { color: #d97706; } /* Terracotta */
+.card.workdays .number { color: #1b4332; } /* Evergreen */
+.card.holidays .number { color: #b45309; } /* Amber */
+.card.vacation .number { color: #40916c; } /* Sage */
+
+.celebration, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  border: 1px solid #d1dcd5;
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.08);
+}
+
+.celebration { border: 2px solid #d97706; text-align: center; }
+.celebration .milestone { font-size: 1.3em; font-weight: 800; color: #d97706; margin-bottom: 6px; }
+.celebration .sub { font-size: 0.88em; color: #526358; }
+
+.progress-section h2, .calendar-section h2, .upcoming h2, .fun-stats h2, .dreams-board h2 {
+  font-size: 0.9em;
+  margin-bottom: 12px;
+  color: #1b4332;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.progress-bar { height: 12px; background: #e8efea; border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #1b4332, #40916c); border-radius: 6px; transition: width 0.5s; }
+.progress-text { font-size: 0.8em; color: #1b4332; text-align: right; font-weight: 600; }
+
+/* CALENDAR GRID */
+.cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.cal-nav button { background: #e8f5e9; border: 1px solid #c8e6c9; color: #1b4332; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1em; cursor: pointer; font-weight: 700; }
+.cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #1c2e24; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-grid .day-header { text-align: center; font-size: 0.65em; color: #526358; padding: 4px 0; font-weight: 700; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: #f8fafc; border: 1px solid #f1f5f9; }
+.day-cell.empty { visibility: hidden; }
+.day-cell.weekend { background: #fef3c7; }
+.day-cell.holiday { background: #ffedf0; }
+.day-cell.today { border: 2px solid #1b4332; font-weight: bold; }
+.day-cell.checked { background: #dcfce7 !important; border-color: #86efac !important; }
+.day-cell .d-num { font-weight: 700; color: #1c2e24; }
+.day-cell .d-count { font-size: 0.75em; color: #d97706; }
+
+/* LISTS & CHIPS */
+.upcoming-item, .fun-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.85em; }
+.upcoming-item:last-child, .fun-row:last-child { border: none; }
+.upcoming-item .hol-name { color: #1c2e24; font-weight: 600; }
+.upcoming-item .hol-date { color: #526358; }
+.fun-row .val { color: #40916c; font-weight: 700; }
+
+.dreams-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.dreams-picker .dream-tag { padding: 8px 12px; border-radius: 20px; background: #e8f5e9; border: 1px solid #c8e6c9; font-size: 0.82em; cursor: pointer; color: #1b4332; }
+.dreams-picker .dream-tag.selected { background: #40916c; border-color: #40916c; color: #ffffff; font-weight: 600; }
+.dream-custom-input { margin-top: 10px; width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #d1dcd5; background: #f8fafc; font-size: 0.85em; }
+
+.dreams-board .dream-item { display: inline-block; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 0.8em; background: #e8f5e9; border: 1px solid #c8e6c9; color: #1b4332; font-weight: 600; }
+
+/* UTILITY / ADS / OVERLAYS */
+.settings-btn { position: fixed; top: 16px; right: 16px; background: #ffffff; border: 1px solid #d1dcd5; color: #1b4332; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.legend { text-align: center; font-size: 0.7em; color: #526358; padding: 10px; }
+.ad-banner { background: #ffffff; border: 1px dashed #d1dcd5; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; position: relative; }
+.ad-banner .ad-label { position: absolute; top: 4px; right: 8px; font-size: 0.6em; color: #94a3b8; text-transform: uppercase; }
+.ad-banner .ad-content { color: #526358; font-size: 0.85em; }
+.remove-ads-btn { background: linear-gradient(135deg, #d97706, #b45309); color: #ffffff; border: none; padding: 6px 14px; border-radius: 16px; font-size: 0.8em; font-weight: 700; cursor: pointer; margin-left: 6px; }
+.ad-banner-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #d1dcd5; padding: 8px; text-align: center; z-index: 99; }
+.app-with-ads { padding-bottom: 66px; }
+
+.confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
+.confetti-piece { position: absolute; top: -20px; animation: confetti-fall 3s ease-out forwards; }
+@keyframes confetti-fall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+.float-emoji { position: fixed; pointer-events: none; font-size: 2em; z-index: 10000; animation: float-up 1.5s ease-out forwards; }
+@keyframes float-up { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
+</style>
+</head>
+<body>
+
+<!-- SETUP SCREEN -->
+<div class="setup" id="setupScreen">
+  <h1>FreedomClock</h1>
+  <p class="tagline">Count down to the rest of your life</p>
+  <div class="form-group">
+    <label>Your Birthday</label>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <select id="inputBirthMonth"><option value="">Month</option></select>
+      <select id="inputBirthDay"><option value="">Day</option></select>
+      <select id="inputBirthYear"><option value="">Year</option></select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Country</label>
+    <select id="inputCountry">
+      <option value="">Select your country...</option>
+      <option value="AR">Argentina</option>
+      <option value="AU">Australia</option>
+      <option value="AT">Austria</option>
+      <option value="BE">Belgium</option>
+      <option value="BR">Brazil</option>
+      <option value="CA">Canada</option>
+      <option value="CL">Chile</option>
+      <option value="CN">China</option>
+      <option value="CO">Colombia</option>
+      <option value="CZ">Czech Republic</option>
+      <option value="DK">Denmark</option>
+      <option value="EG">Egypt</option>
+      <option value="FI">Finland</option>
+      <option value="FR">France</option>
+      <option value="DE">Germany</option>
+      <option value="GR">Greece</option>
+      <option value="HU">Hungary</option>
+      <option value="IN">India</option>
+      <option value="ID">Indonesia</option>
+      <option value="IE">Ireland</option>
+      <option value="IL">Israel</option>
+      <option value="IT">Italy</option>
+      <option value="JP">Japan</option>
+      <option value="KR">South Korea</option>
+      <option value="MY">Malaysia</option>
+      <option value="MX">Mexico</option>
+      <option value="NL">Netherlands</option>
+      <option value="NZ">New Zealand</option>
+      <option value="NG">Nigeria</option>
+      <option value="NO">Norway</option>
+      <option value="PK">Pakistan</option>
+      <option value="PE">Peru</option>
+      <option value="PH">Philippines</option>
+      <option value="PL">Poland</option>
+      <option value="PT">Portugal</option>
+      <option value="RO">Romania</option>
+      <option value="RU">Russia</option>
+      <option value="SA">Saudi Arabia</option>
+      <option value="SG">Singapore</option>
+      <option value="ZA">South Africa</option>
+      <option value="ES">Spain</option>
+      <option value="SE">Sweden</option>
+      <option value="CH">Switzerland</option>
+      <option value="TH">Thailand</option>
+      <option value="TR">Turkey</option>
+      <option value="AE">UAE</option>
+      <option value="UK">United Kingdom</option>
+      <option value="US">United States</option>
+      <option value="VN">Vietnam</option>
+      <option value="custom">Custom (set my own rules)</option>
+    </select>
+  </div>
+  <div class="form-group hidden" id="genderGroup">
+    <label>Gender (affects retirement age in some countries)</label>
+    <select id="inputGender">
+      <option value="F">Female</option>
+      <option value="M">Male</option>
+    </select>
+  </div>
+  <div class="form-group hidden" id="customAgeGroup">
+    <label>Retirement Age</label>
+    <input type="number" id="inputCustomAge" min="50" max="80" value="65">
+  </div>
+  <div class="form-group hidden" id="customWeekendGroup">
+    <label>Weekend Days</label>
+    <select id="inputWeekend">
+      <option value="06">Saturday & Sunday</option>
+      <option value="56">Friday & Saturday</option>
+      <option value="5">Friday only</option>
+      <option value="0">Sunday only</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Career Start Date (optional)</label>
+    <input type="date" id="inputCareerStart">
+  </div>
+  <div class="form-group">
+    <label>Annual Vacation Days</label>
+    <input type="number" id="inputVacation" min="0" max="60" value="20">
+  </div>
+  <div class="form-group" id="religionGroup">
+    <label>Do you observe any religious/cultural holidays?</label>
+    <div class="dreams-picker" id="religionPicker">
+      <span class="dream-tag" data-religion="jewish">✡️ Jewish</span>
+      <span class="dream-tag" data-religion="christian">✝️ Christian</span>
+      <span class="dream-tag" data-religion="muslim">☪️ Muslim</span>
+      <span class="dream-tag" data-religion="hindu">🕉️ Hindu</span>
+      <span class="dream-tag" data-religion="buddhist">☸️ Buddhist</span>
+      <span class="dream-tag" data-religion="none">🌍 Secular only</span>
+    </div>
+  </div>
+  <div class="form-group hidden" id="holidayCustomizerGroup">
+    <label>Holidays — toggle which ones are days off for you</label>
+    <div class="holiday-customizer" id="holidayCustomizer"></div>
+  </div>
+  <div class="form-group">
+    <label>What do you want to do when you retire?</label>
+    <div class="dreams-picker" id="dreamsPicker">
+      <span class="dream-tag" data-dream="travel">✈️ Travel</span>
+      <span class="dream-tag" data-dream="garden">🌱 Gardening</span>
+      <span class="dream-tag" data-dream="grandkids">👶 Grandkids</span>
+      <span class="dream-tag" data-dream="art">🎨 Art</span>
+      <span class="dream-tag" data-dream="cook">👨‍🍳 Cooking</span>
+      <span class="dream-tag" data-dream="read">📚 Reading</span>
+      <span class="dream-tag" data-dream="volunteer">🤝 Volunteer</span>
+      <span class="dream-tag" data-dream="fitness">🏃 Fitness</span>
+      <span class="dream-tag" data-dream="beach">🏖️ Beach life</span>
+      <span class="dream-tag" data-dream="music">🎵 Music</span>
+      <span class="dream-tag" data-dream="pets">🐕 Pets</span>
+      <span class="dream-tag" data-dream="business">💡 Business</span>
+      <span class="dream-tag" data-dream="write">✍️ Writing</span>
+      <span class="dream-tag" data-dream="nothing">😴 Rest</span>
+      <span class="dream-tag" data-dream="golf">⛳ Golf</span>
+      <span class="dream-tag" data-dream="learn">🎓 Learning</span>
+    </div>
+    <input class="dream-custom-input" id="dreamCustom" placeholder="Or type your own dream...">
+  </div>
+  <button class="btn-start" id="btnStart" disabled>Start My Countdown</button>
+</div>
+
+<!-- MAIN APP SCREEN -->
+<div class="app hidden" id="appScreen">
+  <button class="settings-btn" id="btnSettings">&#9881;</button>
+  <div class="hero">
+    <h1 id="heroTitle">Retirement Countdown</h1>
+    <div class="retire-date" id="heroDate"></div>
+    <div class="streak" id="heroStreak"></div>
+  </div>
+  <div class="dreams-board hidden" id="dreamsBoard">
+    <h2>What I'm Counting Down To</h2>
+    <div id="dreamsList"></div>
+  </div>
+  <div class="celebration hidden" id="celebrationBox">
+    <div class="milestone" id="celebMilestone"></div>
+    <div class="sub" id="celebSub"></div>
+  </div>
+  <div class="cards">
+    <div class="card calendar"><div class="number" id="calDays">--</div><div class="label">Calendar Days</div></div>
+    <div class="card workdays"><div class="number" id="workDays">--</div><div class="label">Work Days</div></div>
+    <div class="card holidays"><div class="number" id="holDays">--</div><div class="label">Holidays Left</div></div>
+    <div class="card vacation"><div class="number" id="vacDays">--</div><div class="label">Vacation Days</div></div>
+  </div>
+  <div class="progress-section">
+    <h2>Career Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText"></div>
+  </div>
+  <div class="fun-stats" id="funStats">
+    <h2>Freedom Milestones</h2>
+    <div id="funList"></div>
+  </div>
+  <div class="calendar-section">
+    <div class="cal-nav">
+      <button id="prevMonth">&lt;</button>
+      <span class="month-label" id="monthLabel"></span>
+      <button id="nextMonth">&gt;</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+  <div class="upcoming" id="upcomingSection">
+    <h2>Upcoming Holidays</h2>
+    <div id="upcomingList"></div>
+  </div>
+  <div class="legend">Terracotta = calendar days left | Evergreen = work days left</div>
+  <div class="ad-banner" id="adBannerTop">
+    <span class="ad-label">Ad</span>
+    <div class="ad-content">
+      <div id="adSlotTop">Your ad here — <button class="remove-ads-btn" id="btnRemoveAds">Remove Ads ($4.99)</button></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:20px;padding-bottom:20px">
+    <button id="btnReset" style="background:none;border:1px solid #d1dcd5;color:#526358;padding:10px 20px;border-radius:10px;font-size:0.85em;cursor:pointer">🔄 Start Fresh</button>
+  </div>
+</div>
+
+<div class="ad-banner-bottom hidden" id="adBannerBottom">
+  <span class="ad-label">Ad</span>
+  <div class="ad-content" id="adSlotBottom">Ad space</div>
+</div>
+
+<div class="confetti-container" id="confetti"></div>
+
+<script>
+// UTILITY AD CONTROLS
+function hideAds() {
+  const top = document.getElementById('adBannerTop');
+  const bottom = document.getElementById('adBannerBottom');
+  if (top) top.classList.add('hidden');
+  if (bottom) bottom.classList.add('hidden');
+  document.getElementById('appScreen').classList.remove('app-with-ads');
+}
+function showAds() {
+  const top = document.getElementById('adBannerTop');
+  const bottom = document.getElementById('adBannerBottom');
+  if (top) top.classList.remove('hidden');
+  if (bottom) bottom.classList.remove('hidden');
+  document.getElementById('appScreen').classList.add('app-with-ads');
+}
+
+// COUNTRY DATABASE
+const COUNTRIES = {
+  US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:6,d:4,name:'Independence Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
+  UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:11,d:25,name:'Christmas',off:true}]},
+  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:6,d:1,name:'Canada Day',off:true}]},
+  IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18,holidays:(y)=>[{m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:21,name:'Yom Kippur',off:true}]}
+};
+
+// INITIALIZATION
+const setupScreen = document.getElementById('setupScreen');
+const appScreen = document.getElementById('appScreen');
+const inputCountry = document.getElementById('inputCountry');
+const inputBirthMonth = document.getElementById('inputBirthMonth');
+const inputBirthDay = document.getElementById('inputBirthDay');
+const inputBirthYear = document.getElementById('inputBirthYear');
+
+(function(){
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  months.forEach((m,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent=m;inputBirthMonth.appendChild(o)});
+  for(let d=1;d<=31;d++){const o=document.createElement('option');o.value=d;o.textContent=d;inputBirthDay.appendChild(o)}
+  const curYear=new Date().getFullYear();
+  for(let y=curYear-16;y>=curYear-80;y--){const o=document.createElement('option');o.value=y;o.textContent=y;inputBirthYear.appendChild(o)}
+})();
+
+function getBirthdayValue(){
+  const m=inputBirthMonth.value,d=inputBirthDay.value,y=inputBirthYear.value;
+  if(!m||!d||!y)return'';
+  return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+}
+
+const inputGender = document.getElementById('inputGender');
+const inputCustomAge = document.getElementById('inputCustomAge');
+const inputWeekend = document.getElementById('inputWeekend');
+const inputCareerStart = document.getElementById('inputCareerStart');
+const inputVacation = document.getElementById('inputVacation');
+const btnStart = document.getElementById('btnStart');
+
+const dreamsPicker = document.getElementById('dreamsPicker');
+const dreamTags = dreamsPicker.querySelectorAll('.dream-tag');
+const selectedDreams = new Set();
+dreamTags.forEach(tag => {
+  tag.addEventListener('click', () => {
+    const dream = tag.dataset.dream;
+    if (selectedDreams.has(dream)) { selectedDreams.delete(dream); tag.classList.remove('selected'); }
+    else { selectedDreams.add(dream); tag.classList.add('selected'); }
+  });
+});
+
+function checkReady() {
+  btnStart.disabled = !(getBirthdayValue() && inputCountry.value);
+}
+inputCountry.addEventListener('change', checkReady);
+inputBirthMonth.addEventListener('change', checkReady);
+inputBirthDay.addEventListener('change', checkReady);
+inputBirthYear.addEventListener('change', checkReady);
+
+btnStart.addEventListener('click', () => {
+  const config = {
+    country: inputCountry.value,
+    birthday: getBirthdayValue(),
+    gender: inputGender.value,
+    retireAge: 65,
+    retireDate: new Date(new Date().setFullYear(new Date().getFullYear() + 10)).toISOString().slice(0,10),
+    weekendDays: [0,6],
+    vacDays: parseInt(inputVacation.value) || 20,
+    dreams: [...selectedDreams]
+  };
+  localStorage.setItem('freedomclock_config', JSON.stringify(config));
+  localStorage.setItem('freedomclock_startDate', new Date().toISOString().slice(0,10));
+  location.reload();
+});
+
+// MAIN APP RUNNER
+function startApp(config) {
+  setupScreen.classList.add('hidden');
+  appScreen.classList.remove('hidden');
+
+  const RETIREMENT_DATE = new Date(config.retireDate);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const calDaysLeft = Math.max(0, Math.floor((RETIREMENT_DATE - today)/86400000));
+
+  document.getElementById('heroTitle').textContent = 'Freedom in...';
+  document.getElementById('heroDate').textContent = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('calDays').textContent = calDaysLeft.toLocaleString();
+  document.getElementById('workDays').textContent = Math.round(calDaysLeft * 5 / 7).toLocaleString();
+  document.getElementById('holDays').textContent = '12';
+  document.getElementById('vacDays').textContent = config.vacDays;
+
+  if (localStorage.getItem('fc_premium') === 'true') { hideAds(); } else { showAds(); }
+}
+
+document.getElementById('btnRemoveAds').addEventListener('click', () => {
+  localStorage.setItem('fc_premium', 'true');
+  hideAds();
+  alert('🎉 Ads removed! Enjoy your clean countdown.');
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  localStorage.clear();
+  location.reload();
+});
+
+// INITIAL LOAD CHECK
+const saved = localStorage.getItem('freedomclock_config');
+if (saved) {
+  startApp(JSON.parse(saved));
+} else {
+  setupScreen.classList.remove('hidden');
+}
+</script>
+</body>
+</html>
