@@ -24,7 +24,7 @@ body {
     radial-gradient(circle at 85% 12%, rgba(254, 240, 138, 0.95) 0%, rgba(253, 224, 71, 0.6) 12%, rgba(251, 146, 60, 0.3) 25%, rgba(255, 255, 255, 0) 50%),
     radial-gradient(circle at 20% 8%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 14%),
     radial-gradient(circle at 60% 18%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 12%),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230284c7" fill-opacity="0.4" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,149.3C672,160,768,224,864,229.3C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path><path fill="%230d9488" fill-opacity="0.3" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,213.3C840,203,960,149,1080,149.3C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>'),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230284c7" fill-opacity="0.4" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,149.3C672,160,768,224,864,229.3C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path><path fill="%230d9488" fill-opacity="0.3" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,213.3C840,203,960,149,1080,149.3C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>'),
     linear-gradient(180deg, #38bdf8 0%, #7dd3fc 25%, #fdba74 48%, #0284c7 68%, #0284c7 82%, #fde047 88%, #fef08a 100%);
   background-repeat: no-repeat;
   background-size: cover;
@@ -132,9 +132,9 @@ body {
   font-weight: 800;
 }
 
-.progress-bar { height: 12px; background: rgba(226, 232, 240, 0.8); border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #0d9488); border-radius: 6px; transition: width 0.5s; }
-.progress-text { font-size: 0.8em; color: #0284c7; text-align: right; font-weight: 700; }
+.progress-bar { height: 14px; background: rgba(226, 232, 240, 0.8); border-radius: 7px; overflow: hidden; margin-bottom: 8px; border: 1px solid rgba(2, 132, 199, 0.2); }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #0d9488); border-radius: 7px; transition: width 0.6s ease-in-out; }
+.progress-text { font-size: 0.85em; color: #0284c7; text-align: right; font-weight: 800; }
 
 /* FINANCIAL CALCULATOR STYLES */
 .calc-card { background: rgba(255, 255, 255, 0.95); border-radius: 14px; padding: 14px; border: 1px solid #bae6fd; }
@@ -169,7 +169,7 @@ body {
 .cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #0f172a; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .cal-grid .day-header { text-align: center; font-size: 0.65em; color: #64748b; padding: 4px 0; font-weight: 700; }
-.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; }
 .day-cell.empty { visibility: hidden; }
 .day-cell.weekend { background: #fff7ed; }
 .day-cell.holiday { background: #fef3c7; }
@@ -205,18 +205,22 @@ body {
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25) !important;
 }
 
-/* UTILITY / ADS / OVERLAYS */
+/* EMOJI ANIMATIONS */
 .settings-btn { position: fixed; top: 16px; right: 16px; background: rgba(255,255,255,0.95); border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 .legend { text-align: center; font-size: 0.72em; color: #0284c7; font-weight: 700; padding: 10px; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
-.ad-banner { background: rgba(255,255,255,0.85); border: 1px dashed #cbd5e1; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; position: relative; }
-.ad-banner .ad-label { position: absolute; top: 4px; right: 8px; font-size: 0.6em; color: #94a3b8; text-transform: uppercase; }
-.ad-banner .ad-content { color: #64748b; font-size: 0.85em; }
-.remove-ads-btn { background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; border: none; padding: 6px 14px; border-radius: 16px; font-size: 0.8em; font-weight: 700; cursor: pointer; margin-left: 6px; }
-.ad-banner-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-top: 1px solid #cbd5e1; padding: 8px; text-align: center; z-index: 99; }
-.app-with-ads { padding-bottom: 66px; }
 
-.float-emoji { position: fixed; pointer-events: none; font-size: 2em; z-index: 10000; animation: float-up 1.5s ease-out forwards; }
-@keyframes float-up { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
+.float-emoji {
+  position: fixed;
+  pointer-events: none;
+  font-size: 2.2em;
+  z-index: 10000;
+  animation: float-up 1.2s ease-out forwards;
+}
+@keyframes float-up {
+  0% { opacity: 1; transform: translateY(0) scale(0.8); }
+  50% { opacity: 1; transform: translateY(-40px) scale(1.3); }
+  100% { opacity: 0; transform: translateY(-80px) scale(1); }
+}
 </style>
 </head>
 <body>
@@ -261,6 +265,10 @@ body {
       <select id="inputBirthDay"><option value="">Day</option></select>
       <select id="inputBirthYear"><option value="">Year</option></select>
     </div>
+  </div>
+  <div class="form-group">
+    <label>Career Start Date (optional)</label>
+    <input type="date" id="inputCareerStart">
   </div>
   <div class="form-group">
     <label>Country</label>
@@ -397,6 +405,13 @@ body {
     <div class="card vacation"><div class="number" id="vacDays">--</div><div class="label">Vacation Days</div></div>
   </div>
 
+  <!-- CAREER PROGRESS BAR SLIDER -->
+  <div class="progress-section">
+    <h2>Career Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0% Complete</div>
+  </div>
+
   <!-- WORK TO $1 MILLION CALCULATOR MODULE ON DASHBOARD -->
   <div class="finance-section">
     <h2>💰 Road to $1 Million Freedom</h2>
@@ -428,11 +443,6 @@ body {
     </div>
   </div>
 
-  <div class="progress-section">
-    <h2>Career Progress</h2>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="progress-text" id="progressText"></div>
-  </div>
   <div class="fun-stats" id="funStats">
     <h2>Freedom Milestones</h2>
     <div id="funList"></div>
@@ -450,23 +460,24 @@ body {
     <div id="upcomingList"></div>
   </div>
   <div class="legend">Orange = calendar days left | Blue = work days left</div>
-  <div class="ad-banner" id="adBannerTop">
-    <span class="ad-label">Ad</span>
-    <div class="ad-content">
-      <div id="adSlotTop">Your ad here — <button class="remove-ads-btn" id="btnRemoveAds">Remove Ads ($4.99)</button></div>
-    </div>
-  </div>
   <div style="text-align:center;margin-top:20px;padding-bottom:20px">
     <button id="btnReset" class="btn-fresh">🔄 Start Fresh</button>
   </div>
 </div>
 
-<div class="ad-banner-bottom hidden" id="adBannerBottom">
-  <span class="ad-label">Ad</span>
-  <div class="ad-content" id="adSlotBottom">Ad space</div>
-</div>
-
 <script>
+// FLOATING EMOJI ANIMATION ON CALENDAR CLICK
+function floatEmoji(x, y) {
+  const emojis = ['🎉','🥳','🙌','✨','💪','🎊','🏖️','⭐','🚀','🌴','🍹'];
+  const el = document.createElement('div');
+  el.className = 'float-emoji';
+  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  el.style.left = (x - 15) + 'px'; 
+  el.style.top = (y - 20) + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1200);
+}
+
 // EASTER DYNAMIC ALGORITHMS
 function getWesternEaster(year) {
   const a = year % 19, b = Math.floor(year / 100), c = year % 100;
@@ -631,6 +642,7 @@ const inputCountry = document.getElementById('inputCountry');
 const inputBirthMonth = document.getElementById('inputBirthMonth');
 const inputBirthDay = document.getElementById('inputBirthDay');
 const inputBirthYear = document.getElementById('inputBirthYear');
+const inputCareerStart = document.getElementById('inputCareerStart');
 
 (function(){
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -736,7 +748,7 @@ inputBirthMonth.addEventListener('change', checkReady);
 inputBirthDay.addEventListener('change', checkReady);
 inputBirthYear.addEventListener('change', checkReady);
 
-// FINANCIAL MILLIONAIRE CALCULATOR LOGIC (Runs on setup & dashboard)
+// FINANCIAL MILLIONAIRE CALCULATOR LOGIC
 let computedMillionDate = null;
 
 function runFinancialCalculator(startVal, monthlyVal) {
@@ -764,13 +776,11 @@ function runFinancialCalculator(startVal, monthlyVal) {
   const dateStr = targetDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   const subStr = 'Takes ~' + years + ' yrs, ' + remMonths + ' mos saving $' + monthlyP + '/mo';
 
-  // Update Setup Screen UI
   const sDate = document.getElementById('setupMillionDate');
   const sSub = document.getElementById('setupMillionSub');
   if (sDate) sDate.textContent = dateStr;
   if (sSub) sSub.textContent = subStr;
 
-  // Update Dashboard UI
   const dDate = document.getElementById('calcMillionDate');
   const dSub = document.getElementById('calcMillionSub');
   if (dDate) dDate.textContent = dateStr;
@@ -789,14 +799,12 @@ function updateFromDashCalc() {
   runFinancialCalculator(startVal, monthlyVal);
 }
 
-// Bind Calculator Listeners
 document.getElementById('setupStartBalance').addEventListener('change', updateFromSetupCalc);
 document.getElementById('setupMonthlySave').addEventListener('input', updateFromSetupCalc);
 
 document.getElementById('calcStartBalance').addEventListener('change', updateFromDashCalc);
 document.getElementById('calcMonthlySave').addEventListener('input', updateFromDashCalc);
 
-// Initial calc run
 runFinancialCalculator(10000, 500);
 
 btnStart.addEventListener('click', () => {
@@ -818,6 +826,7 @@ btnStart.addEventListener('click', () => {
   const config = {
     country: c,
     birthday: bDayVal,
+    careerStart: inputCareerStart.value || null,
     gender: inputGender.value,
     retireAge: retireAge,
     retireDate: calcRetireDate.toISOString().slice(0,10),
@@ -854,6 +863,26 @@ function startApp(config) {
   const today = new Date(); today.setHours(0,0,0,0);
   const calDaysLeft = Math.max(0, Math.floor((RETIREMENT_DATE - today)/86400000));
   const weekendDays = config.weekendDays || [0,6];
+
+  // CAREER PROGRESS BAR PERCENTAGE CALCULATION
+  let startDate;
+  if (config.careerStart) {
+    startDate = new Date(config.careerStart);
+  } else if (config.birthday) {
+    const bParts = config.birthday.split('-');
+    startDate = new Date(parseInt(bParts[0], 10) + 22, parseInt(bParts[1], 10) - 1, parseInt(bParts[2], 10)); // default career start at age 22
+  } else {
+    startDate = new Date(today.getFullYear() - 25, 0, 1);
+  }
+
+  const totalCareerDays = Math.max(1, Math.floor((RETIREMENT_DATE - startDate) / 86400000));
+  const daysCompleted = Math.max(0, Math.floor((today - startDate) / 86400000));
+  const progressPercent = Math.min(100, Math.max(0, Math.round((daysCompleted / totalCareerDays) * 100)));
+
+  const pFill = document.getElementById('progressFill');
+  const pText = document.getElementById('progressText');
+  if (pFill) pFill.style.width = progressPercent + '%';
+  if (pText) pText.textContent = progressPercent + '% Complete';
 
   function isWeekend(d){ return weekendDays.includes(d.getDay()); }
 
@@ -921,6 +950,9 @@ function startApp(config) {
   let viewYear = today.getFullYear(), viewMonth = today.getMonth();
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+  function getChecks(){ try{ return JSON.parse(localStorage.getItem('fc_checks')||'{}'); }catch(e){ return {}; } }
+  function saveChecks(c){ localStorage.setItem('fc_checks', JSON.stringify(c)); }
+
   function renderCal(){
     document.getElementById('monthLabel').textContent = monthNames[viewMonth] + ' ' + viewYear;
     const grid = document.getElementById('calGrid');
@@ -929,17 +961,34 @@ function startApp(config) {
     
     const firstDow = new Date(viewYear, viewMonth, 1).getDay();
     const dim = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const checks = getChecks();
 
     for(let i = 0; i < firstDow; i++){ const el = document.createElement('div'); el.className = 'day-cell empty'; grid.appendChild(el); }
     for(let d = 1; d <= dim; d++){
       const cellDate = new Date(viewYear, viewMonth, d);
+      const key = viewYear + '-' + String(viewMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
       const el = document.createElement('div');
       el.className = 'day-cell';
       if (isWeekend(cellDate)) el.classList.add('weekend');
       if (cellDate.getTime() === today.getTime()) el.classList.add('today');
+      if (checks[key]) el.classList.add('checked');
 
       const daysUntil = Math.floor((RETIREMENT_DATE - cellDate) / 86400000);
       el.innerHTML = '<div class="d-num">' + d + '</div><div class="d-count">' + (daysUntil > 0 ? daysUntil : '') + '</div>';
+      
+      el.addEventListener('click', (evt) => {
+        const ch = getChecks();
+        if (ch[key]){
+          delete ch[key];
+          el.classList.remove('checked');
+        } else {
+          ch[key] = true;
+          el.classList.add('checked');
+          floatEmoji(evt.clientX, evt.clientY);
+        }
+        saveChecks(ch);
+      });
+
       grid.appendChild(el);
     }
   }
