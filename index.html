@@ -136,6 +136,21 @@ body {
 .progress-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #0d9488); border-radius: 7px; transition: width 0.6s ease-in-out; }
 .progress-text { font-size: 0.85em; color: #0284c7; text-align: right; font-weight: 800; }
 
+/* EMOJI BADGES FOR MILESTONES */
+.fun-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6); font-size: 0.85em; }
+.fun-row:last-child { border: none; }
+.fun-row .label-group { display: flex; align-items: center; gap: 6px; }
+.fun-badge {
+  font-size: 0.72em;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #e0f2fe;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+.fun-row .val { color: #0d9488; font-weight: 700; }
+
 /* FINANCIAL CALCULATOR STYLES */
 .calc-card { background: rgba(255, 255, 255, 0.95); border-radius: 14px; padding: 14px; border: 1px solid #bae6fd; }
 .calc-result { text-align: center; margin-top: 12px; padding: 12px; background: #e0f2fe; border-radius: 12px; border: 1px solid #7dd3fc; }
@@ -191,11 +206,10 @@ body {
 .day-cell .d-count { font-size: 0.75em; color: #f97316; }
 
 /* LISTS & CHIPS */
-.upcoming-item, .fun-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6); font-size: 0.85em; }
-.upcoming-item:last-child, .fun-row:last-child { border: none; }
+.upcoming-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6); font-size: 0.85em; }
+.upcoming-item:last-child { border: none; }
 .upcoming-item .hol-name { color: #0f172a; font-weight: 600; }
 .upcoming-item .hol-date { color: #64748b; }
-.fun-row .val { color: #0d9488; font-weight: 700; }
 
 .dreams-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .dreams-picker .dream-tag { padding: 8px 12px; border-radius: 20px; background: #e0f2fe; border: 1px solid #bae6fd; font-size: 0.82em; cursor: pointer; color: #0369a1; }
@@ -241,13 +255,6 @@ body {
 <div class="setup" id="setupScreen">
   <h1>FreedomClock</h1>
   <p class="tagline">Count down to the rest of your life</p>
-
-  <!-- FINANCIAL POPUP TRIGGER BUTTON -->
-  <div class="form-group">
-    <button id="btnOpenFinancialModal" style="width:100%; padding:12px; background:#e0f2fe; border:1px solid #7dd3fc; color:#0284c7; border-radius:12px; font-weight:700; cursor:pointer;">
-      💰 Optional: Enter Financial Goal Amounts
-    </button>
-  </div>
 
   <div class="form-group">
     <label>Your Birthday</label>
@@ -326,11 +333,11 @@ body {
   </div>
   <div class="form-group hidden" id="customAgeGroup">
     <label>Retirement Age</label>
-    <input type="number" id="inputCustomAge" min="50" max="80" value="65">
+    <input type="number" id="inputCustomAge" min="50" max="80" placeholder="e.g. 65">
   </div>
   <div class="form-group">
     <label>Annual Vacation Days</label>
-    <input type="number" id="inputVacation" min="0" max="60" value="20">
+    <input type="number" id="inputVacation" min="0" max="60" placeholder="e.g. 20">
   </div>
   <div class="form-group" id="religionGroup">
     <label>Do you observe any religious/cultural holidays?</label>
@@ -374,27 +381,28 @@ body {
     </div>
     <input class="dream-custom-input" id="dreamCustom" placeholder="Or type your own dream...">
   </div>
+
+  <!-- FINANCIAL POPUP TRIGGER BUTTON (MOVED TO BOTTOM) -->
+  <div class="form-group" style="margin-top: 20px;">
+    <button id="btnOpenFinancialModal" style="width:100%; padding:12px; background:#e0f2fe; border:1px solid #7dd3fc; color:#0284c7; border-radius:12px; font-weight:700; cursor:pointer;">
+      💰 Optional: Enter Financial Goal Amounts
+    </button>
+  </div>
+
   <button class="btn-start" id="btnStart" disabled>Start My Countdown</button>
 </div>
 
-<!-- FINANCIAL POPUP MODAL -->
+<!-- FINANCIAL POPUP MODAL (CLEAN TEXT INPUTS, NO DROPDOWNS) -->
 <div class="modal-overlay hidden" id="financialModal">
   <div class="modal-content">
     <h3>Enter Financial Amounts</h3>
     <div class="form-group">
-      <label>Starting Balance</label>
-      <select id="setupStartBalance">
-        <option value="1000">$1,000</option>
-        <option value="5000">$5,000</option>
-        <option value="10000" selected>$10,000</option>
-        <option value="25000">$25,000</option>
-        <option value="50000">$50,000</option>
-        <option value="100000">$100,000</option>
-      </select>
+      <label>Starting Balance ($)</label>
+      <input type="number" id="setupStartBalance" min="0" placeholder="e.g. 10000">
     </div>
     <div class="form-group">
-      <label>Monthly Savings Amount</label>
-      <input type="number" id="setupMonthlySave" value="500" step="50" min="0" placeholder="Enter monthly savings">
+      <label>Monthly Savings Amount ($)</label>
+      <input type="number" id="setupMonthlySave" min="0" placeholder="e.g. 500">
     </div>
     <button class="btn-modal-close" id="btnCloseFinancialModal">Done</button>
   </div>
@@ -450,25 +458,18 @@ body {
     <div class="calc-card">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div>
-          <label style="font-size:0.75em;font-weight:700;color:#0284c7">Starting Balance</label>
-          <select id="calcStartBalance">
-            <option value="1000">$1,000</option>
-            <option value="5000">$5,000</option>
-            <option value="10000" selected>$10,000</option>
-            <option value="25000">$25,000</option>
-            <option value="50000">$50,000</option>
-            <option value="100000">$100,000</option>
-          </select>
+          <label style="font-size:0.75em;font-weight:700;color:#0284c7">Starting Balance ($)</label>
+          <input type="number" id="calcStartBalance" placeholder="e.g. 10000">
         </div>
         <div>
-          <label style="font-size:0.75em;font-weight:700;color:#0284c7">Monthly Savings</label>
-          <input type="number" id="calcMonthlySave" value="500" step="50" min="0">
+          <label style="font-size:0.75em;font-weight:700;color:#0284c7">Monthly Savings ($)</label>
+          <input type="number" id="calcMonthlySave" placeholder="e.g. 500">
         </div>
       </div>
       <div style="font-size:0.72em;color:#64748b;text-align:center">Assumes average 7% annual compound return</div>
       <div class="calc-result" id="calcResult">
         <div>Work to $1,000,000 date:</div>
-        <div class="big-date" id="calcMillionDate">Calculating...</div>
+        <div class="big-date" id="calcMillionDate">Enter numbers above</div>
         <div class="sub-text" id="calcMillionSub"></div>
         <button class="btn-sync" id="btnSyncMillion">🎯 Set Countdown to $1M Goal Date</button>
       </div>
@@ -777,8 +778,19 @@ inputBirthYear.addEventListener('change', checkReady);
 let computedMillionDate = null;
 
 function runFinancialCalculator(startVal, monthlyVal) {
-  const startP = parseFloat(startVal) || 10000;
-  const monthlyP = parseFloat(monthlyVal) || 500;
+  const startP = parseFloat(startVal);
+  const monthlyP = parseFloat(monthlyVal);
+
+  const dDate = document.getElementById('calcMillionDate');
+  const dSub = document.getElementById('calcMillionSub');
+
+  if (isNaN(startP) || isNaN(monthlyP) || monthlyP <= 0) {
+    if (dDate) dDate.textContent = "Enter numbers above";
+    if (dSub) dSub.textContent = "";
+    computedMillionDate = null;
+    return;
+  }
+
   const targetGoal = 1000000;
   const annualRate = 0.07;
   const monthlyRate = annualRate / 12;
@@ -801,8 +813,6 @@ function runFinancialCalculator(startVal, monthlyVal) {
   const dateStr = targetDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   const subStr = 'Takes ~' + years + ' yrs, ' + remMonths + ' mos saving $' + monthlyP + '/mo';
 
-  const dDate = document.getElementById('calcMillionDate');
-  const dSub = document.getElementById('calcMillionSub');
   if (dDate) dDate.textContent = dateStr;
   if (dSub) dSub.textContent = subStr;
 }
@@ -819,13 +829,11 @@ function updateFromDashCalc() {
   runFinancialCalculator(startVal, monthlyVal);
 }
 
-document.getElementById('setupStartBalance').addEventListener('change', updateFromModalCalc);
+document.getElementById('setupStartBalance').addEventListener('input', updateFromModalCalc);
 document.getElementById('setupMonthlySave').addEventListener('input', updateFromModalCalc);
 
-document.getElementById('calcStartBalance').addEventListener('change', updateFromDashCalc);
+document.getElementById('calcStartBalance').addEventListener('input', updateFromDashCalc);
 document.getElementById('calcMonthlySave').addEventListener('input', updateFromDashCalc);
-
-runFinancialCalculator(10000, 500);
 
 btnStart.addEventListener('click', () => {
   const bDayVal = getBirthdayValue();
@@ -958,12 +966,13 @@ function startApp(config) {
     }).join('');
   }
 
+  // RESTORED EMOJI BADGES FOR MILESTONES
   document.getElementById('funList').innerHTML = [
-    ['Months left', '~' + Math.round(calDaysLeft / 30.4)],
-    ['Weekends left', Math.floor(calDaysLeft / 7)],
-    ['Sleeps until freedom', calDaysLeft.toLocaleString()],
-    ['Coffees at work', netWorkDays.toLocaleString()]
-  ].map(r => '<div class="fun-row"><span>' + r[0] + '</span><span class="val">' + r[1] + '</span></div>').join('');
+    ['Months left', '~' + Math.round(calDaysLeft / 30.4), '🍼 Bye'],
+    ['Weekends left', Math.floor(calDaysLeft / 7), '🎉 Yay'],
+    ['Sleeps until freedom', calDaysLeft.toLocaleString(), '😴 Zzz'],
+    ['Coffees at work', netWorkDays.toLocaleString(), '☕ Gulp']
+  ].map(r => '<div class="fun-row"><div class="label-group"><span>' + r[0] + '</span><span class="fun-badge">' + r[2] + '</span></div><span class="val">' + r[1] + '</span></div>').join('');
 
   let viewYear = today.getFullYear(), viewMonth = today.getMonth();
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
