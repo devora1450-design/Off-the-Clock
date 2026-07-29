@@ -4,170 +4,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a2647">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f0f7f7">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.svg">
 <title>Off-the-Clock - Retirement Countdown</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a2647;color:#f0f8ff;min-height:100vh;padding:16px;padding-top:env(safe-area-inset-top,16px)}
-.hidden{display:none!important}
-/* SETUP SCREEN */
-.setup{max-width:420px;margin:0 auto;padding:20px}
-.setup h1{text-align:center;font-size:1.6em;margin-bottom:8px;background:linear-gradient(135deg,#00d4ff,#40e0d0);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.setup .tagline{text-align:center;opacity:0.8;margin-bottom:30px;font-size:0.9em;color:#87ceeb}
-.form-group{margin-bottom:20px}
-.form-group label{display:block;font-size:0.85em;margin-bottom:6px;color:#87ceeb}
-.form-group input,.form-group select{width:100%;padding:12px;border-radius:10px;border:1px solid #205080;background:#144272;color:#f0f8ff;font-size:1em}
-.form-group select option{background:#144272}
-.btn-start{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#00d4ff,#40e0d0);color:#0a2647;font-size:1.1em;font-weight:700;cursor:pointer;margin-top:10px}
-.btn-start:disabled{opacity:0.4;cursor:not-allowed}
-/* MAIN APP */
-.app{max-width:420px;margin:0 auto}
-.hero{text-align:center;padding:24px 10px;background:linear-gradient(135deg,#0077b6 0%,#00b4d8 50%,#48cae4 100%);border-radius:20px;margin-bottom:16px;box-shadow:0 8px 32px rgba(0,180,216,0.3)}
-.hero h1{font-size:1.3em;margin-bottom:4px;color:#fff}
-.hero .retire-date{font-size:0.85em;color:#caf0f8}
-.hero .streak{margin-top:10px;font-size:1.1em;color:#ffd700;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,0.3)}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.card{background:#144272;border-radius:14px;padding:16px 10px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);border:1px solid #205080}
-.card .number{font-size:2em;font-weight:800;margin-bottom:2px}
-.card .label{font-size:0.7em;color:#87ceeb;text-transform:uppercase;letter-spacing:0.5px}
-.card.calendar .number{color:#ff6b6b}
-.card.workdays .number{color:#48cae4}
-.card.holidays .number{color:#ffd166}
-.card.vacation .number{color:#06d6a0}
-/* CELEBRATION */
-.celebration{background:linear-gradient(135deg,#144272,#1a5c8a);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center;border:2px solid #ffd700;box-shadow:0 0 20px rgba(255,215,0,0.2)}
-.celebration .milestone{font-size:1.4em;font-weight:800;color:#ffd700;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.3)}
-.celebration .sub{font-size:0.9em;color:#87ceeb}
-/* PROGRESS */
-.progress-section{background:#144272;border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid #205080}
-.progress-section h2{font-size:0.85em;margin-bottom:10px;color:#87ceeb}
-.progress-bar{height:12px;background:#0a2647;border-radius:6px;overflow:hidden;margin-bottom:6px}
-.progress-fill{height:100%;background:linear-gradient(90deg,#00b4d8,#48cae4,#06d6a0);border-radius:6px;transition:width 0.5s}
-.progress-text{font-size:0.8em;color:#48cae4;text-align:right;font-weight:600}
-/* CALENDAR */
-.calendar-section{background:#144272;border-radius:14px;padding:14px;margin-bottom:16px;border:1px solid #205080}
-.cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.cal-nav button{background:#205080;border:none;color:#48cae4;width:34px;height:34px;border-radius:50%;font-size:1.1em;cursor:pointer}
-.cal-nav .month-label{font-size:0.95em;font-weight:600;color:#caf0f8}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.cal-grid .day-header{text-align:center;font-size:0.6em;color:#87ceeb;padding:3px 0}
-.cal-grid .day-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:7px;font-size:0.65em;cursor:pointer;transition:background 0.2s}
-.day-cell.empty{visibility:hidden}
-.day-cell.weekend{background:rgba(255,107,107,0.15)}
-.day-cell.holiday{background:rgba(255,209,102,0.2)}
-.day-cell.today{border:2px solid #48cae4}
-.day-cell.checked{background:rgba(6,214,160,0.3)!important}
-.day-cell .d-num{font-weight:700;font-size:1.1em;color:#f0f8ff}
-.day-cell .d-count{font-size:0.8em;color:#ff6b6b}
-.day-cell .d-work{font-size:0.75em;color:#48cae4}
-/* UPCOMING */
-.upcoming{background:#144272;border-radius:14px;padding:14px;margin-bottom:16px;border:1px solid #205080}
-.upcoming h2{font-size:0.85em;margin-bottom:10px;color:#87ceeb}
-.upcoming-item{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(72,202,228,0.1);font-size:0.8em}
-.upcoming-item:last-child{border:none}
-.upcoming-item .hol-name{color:#ffd166}
-.upcoming-item .hol-date{color:#87ceeb}
-/* FUN STATS */
-.fun-stats{background:#144272;border-radius:14px;padding:14px;margin-bottom:16px;border:1px solid #205080}
-.fun-stats h2{font-size:0.85em;margin-bottom:10px;color:#87ceeb}
-.fun-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.8em;border-bottom:1px solid rgba(72,202,228,0.1);color:#caf0f8}
-.fun-row:last-child{border:none}
-.fun-row .val{color:#06d6a0;font-weight:600}
-/* SETTINGS GEAR */
-.settings-btn{position:fixed;top:16px;right:16px;background:rgba(72,202,228,0.2);border:none;color:#48cae4;width:36px;height:36px;border-radius:50%;font-size:1.2em;cursor:pointer;z-index:100}
-/* CONFETTI */
-.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden}
-.confetti-piece{position:absolute;top:-20px;width:10px;height:10px;animation:confetti-fall 3s ease-out forwards}
-@keyframes confetti-fall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-.legend{text-align:center;font-size:0.65em;color:#4a8bb5;padding:10px}
-/* AD BANNER */
-.ad-banner{background:#1a3a5c;border:1px solid #205080;border-radius:10px;padding:12px;margin-bottom:16px;text-align:center;position:relative;min-height:60px;display:flex;align-items:center;justify-content:center}
-.ad-banner .ad-label{position:absolute;top:3px;right:8px;font-size:0.55em;color:#4a8bb5;text-transform:uppercase;letter-spacing:1px}
-.ad-banner .ad-content{color:#87ceeb;font-size:0.8em}
-.remove-ads-btn{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#0a2647;border:none;padding:10px 20px;border-radius:20px;font-size:0.85em;font-weight:700;cursor:pointer;margin-top:10px;display:inline-block}
-.remove-ads-btn:hover{transform:scale(1.05)}
-.ad-banner-bottom{position:fixed;bottom:0;left:0;right:0;background:#1a3a5c;border-top:1px solid #205080;padding:8px;text-align:center;z-index:99;min-height:50px;display:flex;align-items:center;justify-content:center}
-.ad-banner-bottom .ad-label{position:absolute;top:2px;right:8px;font-size:0.5em;color:#4a8bb5;text-transform:uppercase;letter-spacing:1px}
-.ad-banner-bottom .ad-content{color:#87ceeb;font-size:0.75em}
-.app-with-ads{padding-bottom:66px}
-/* DREAMS */
-.dreams-picker{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.dreams-picker .dream-tag{padding:8px 12px;border-radius:20px;background:#205080;border:1px solid #2a6090;font-size:0.8em;cursor:pointer;transition:all 0.2s;user-select:none;color:#caf0f8}
-.dreams-picker .dream-tag.selected{background:linear-gradient(135deg,#00b4d8,#48cae4);border-color:#48cae4;color:#0a2647;font-weight:600}
-.dreams-picker .dream-tag:hover{border-color:#48cae4}
-.dream-custom-input{margin-top:10px;width:100%;padding:10px;border-radius:10px;border:1px solid #205080;background:#144272;color:#f0f8ff;font-size:0.85em}
-.dreams-board{background:#144272;border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid #205080}
-.dreams-board h2{font-size:0.85em;margin-bottom:10px;color:#87ceeb}
-.dreams-board .dream-item{display:inline-block;padding:6px 12px;margin:4px;border-radius:16px;font-size:0.78em;background:linear-gradient(135deg,rgba(0,180,216,0.2),rgba(72,202,228,0.15));border:1px solid rgba(72,202,228,0.3);color:#caf0f8}
-.dreams-board .dream-item .dream-icon{margin-right:4px}
-/* HOLIDAY CUSTOMIZER */
-.holiday-customizer{margin-top:12px;max-height:280px;overflow-y:auto;border:1px solid #205080;border-radius:10px;padding:10px;background:#0a2647}
-.holiday-customizer::-webkit-scrollbar{width:6px}
-.holiday-customizer::-webkit-scrollbar-thumb{background:#205080;border-radius:3px}
-.hol-item{display:flex;align-items:center;justify-content:space-between;padding:8px 6px;border-bottom:1px solid rgba(72,202,228,0.1);font-size:0.82em}
-.hol-item:last-child{border:none}
-.hol-item .hol-info{flex:1;color:#caf0f8}
-.hol-item .hol-info .hol-type{font-size:0.75em;color:#87ceeb;margin-left:6px}
-.hol-toggle{position:relative;width:44px;height:24px;flex-shrink:0}
-.hol-toggle input{opacity:0;width:0;height:0}
-.hol-toggle .slider{position:absolute;inset:0;background:#205080;border-radius:12px;cursor:pointer;transition:0.3s}
-.hol-toggle .slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#87ceeb;border-radius:50%;transition:0.3s}
-.hol-toggle input:checked+.slider{background:#06d6a0}
-.hol-toggle input:checked+.slider:before{transform:translateX(20px);background:#fff}
-.hol-legend{display:flex;gap:12px;margin-top:8px;font-size:0.72em;color:#87ceeb}
-.hol-legend span{display:flex;align-items:center;gap:4px}
-.hol-legend .dot{width:8px;height:8px;border-radius:50%}
-.hol-legend .dot.off{background:#06d6a0}
-.hol-legend .dot.work{background:#205080}
-/* WOOHOO FLOATING EMOJI */
-.float-emoji{position:fixed;pointer-events:none;font-size:2.2em;z-index:10000;animation:float-up 1.5s ease-out forwards;text-shadow:0 2px 8px rgba(0,0,0,0.3)}
-@keyframes float-up{0%{opacity:1;transform:translateY(0) scale(1)}50%{opacity:1;transform:translateY(-60px) scale(1.4)}100%{opacity:0;transform:translateY(-120px) scale(0.8) rotate(20deg)}}
+/* --- GLOBAL RESETS & COASTAL BEACH THEME --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f0f7f7;
+  background-image: linear-gradient(180deg, #e0f2fe 0%, #f0f7f7 100%);
+  color: #1e293b;
+  min-height: 100vh;
+  padding: 16px;
+  padding-top: env(safe-area-inset-top, 16px);
+}
+
+.hidden { display: none !important; }
+
+/* SETUP & CONTAINERS */
+.setup, .app { max-width: 440px; margin: 0 auto; }
+
+.setup h1 {
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: #0369a1;
+}
+
+.setup .tagline {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 0.9em;
+  color: #64748b;
+}
+
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 0.85em; font-weight: 600; margin-bottom: 6px; color: #0369a1; }
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 0.95em;
+  outline: none;
+}
+
+.btn-start {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0284c7, #0d9488);
+  color: #ffffff;
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+}
+.btn-start:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+/* CARDS & PANELS */
+.hero {
+  text-align: center;
+  padding: 24px 12px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border-radius: 20px;
+  margin-bottom: 16px;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.25);
+}
+.hero h1 { font-size: 1.4em; margin-bottom: 4px; color: #ffffff; }
+.hero .retire-date { font-size: 0.9em; color: #e0f2fe; }
+.hero .streak { margin-top: 10px; font-size: 1em; color: #fef08a; font-weight: 600; }
+
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
+  border: 1px solid #cbd5e1;
+}
+.card .number { font-size: 1.8em; font-weight: 800; margin-bottom: 2px; }
+.card .label { font-size: 0.7em; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.card.calendar .number { color: #f97316; }
+.card.workdays .number { color: #0284c7; }
+.card.holidays .number { color: #d97706; }
+.card.vacation .number { color: #0d9488; }
+
+.celebration, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
+}
+
+.celebration { border: 2px solid #f59e0b; text-align: center; }
+.celebration .milestone { font-size: 1.3em; font-weight: 800; color: #d97706; margin-bottom: 6px; }
+.celebration .sub { font-size: 0.88em; color: #64748b; }
+
+.progress-section h2, .calendar-section h2, .upcoming h2, .fun-stats h2, .dreams-board h2 {
+  font-size: 0.9em;
+  margin-bottom: 12px;
+  color: #0369a1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.progress-bar { height: 12px; background: #e2e8f0; border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #0d9488); border-radius: 6px; transition: width 0.5s; }
+.progress-text { font-size: 0.8em; color: #0284c7; text-align: right; font-weight: 600; }
+
+/* CALENDAR GRID */
+.cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.cal-nav button { background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1em; cursor: pointer; font-weight: 700; }
+.cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #1e293b; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-grid .day-header { text-align: center; font-size: 0.65em; color: #64748b; padding: 4px 0; font-weight: 700; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: #f8fafc; border: 1px solid #f1f5f9; }
+.day-cell.empty { visibility: hidden; }
+.day-cell.weekend { background: #fff7ed; }
+.day-cell.holiday { background: #fef3c7; }
+.day-cell.today { border: 2px solid #0284c7; font-weight: bold; }
+.day-cell.checked { background: #dcfce7 !important; border-color: #86efac !important; }
+.day-cell .d-num { font-weight: 700; color: #1e293b; }
+.day-cell .d-count { font-size: 0.75em; color: #f97316; }
+
+/* LISTS & CHIPS */
+.upcoming-item, .fun-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.85em; }
+.upcoming-item:last-child, .fun-row:last-child { border: none; }
+.upcoming-item .hol-name { color: #1e293b; font-weight: 600; }
+.upcoming-item .hol-date { color: #64748b; }
+.fun-row .val { color: #0d9488; font-weight: 700; }
+
+.dreams-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.dreams-picker .dream-tag { padding: 8px 12px; border-radius: 20px; background: #e0f2fe; border: 1px solid #bae6fd; font-size: 0.82em; cursor: pointer; color: #0369a1; }
+.dreams-picker .dream-tag.selected { background: #0284c7; border-color: #0284c7; color: #ffffff; font-weight: 600; }
+.dream-custom-input { margin-top: 10px; width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 0.85em; }
+
+.dreams-board .dream-item { display: inline-block; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 0.8em; background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; font-weight: 600; }
+
+/* UTILITY / ADS / OVERLAYS */
+.settings-btn { position: fixed; top: 16px; right: 16px; background: #ffffff; border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.legend { text-align: center; font-size: 0.7em; color: #64748b; padding: 10px; }
+.ad-banner { background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; position: relative; }
+.ad-banner .ad-label { position: absolute; top: 4px; right: 8px; font-size: 0.6em; color: #94a3b8; text-transform: uppercase; }
+.ad-banner .ad-content { color: #64748b; font-size: 0.85em; }
+.remove-ads-btn { background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; border: none; padding: 6px 14px; border-radius: 16px; font-size: 0.8em; font-weight: 700; cursor: pointer; margin-left: 6px; }
+.ad-banner-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #cbd5e1; padding: 8px; text-align: center; z-index: 99; }
+.app-with-ads { padding-bottom: 66px; }
+
+.confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
+.confetti-piece { position: absolute; top: -20px; animation: confetti-fall 3s ease-out forwards; }
+@keyframes confetti-fall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+.float-emoji { position: fixed; pointer-events: none; font-size: 2em; z-index: 10000; animation: float-up 1.5s ease-out forwards; }
+@keyframes float-up { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
 </style>
-  <style>
-  /* --- Coastal Beach Theme Overlay --- */
-  body {
-    background-color: #f0f7f7 !important;
-    background-image: linear-gradient(180deg, #e0f2fe 0%, #f0f7f7 100%) !important;
-    color: #1e293b !important;
-  }
-
-  /* Main Container Cards */
-  .container, section, div[class*="card"], form {
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08) !important;
-  }
-
-  /* Headers */
-  h1, h2, h3 {
-    color: #0369a1 !important;
-  }
-
-  /* Form Elements & Buttons */
-  select, input {
-    background-color: #f8fafc !important;
-    border: 1px solid #cbd5e1 !important;
-    color: #1e293b !important;
-    border-radius: 10px !important;
-  }
-
-  /* Selection Badges / Chips */
-  span, .chip, .badge {
-    background-color: #e0f2fe !important;
-    border: 1px solid #bae6fd !important;
-    color: #0369a1 !important;
-  }
-
-  span.selected, .chip.selected {
-    background-color: #0284c7 !important;
-    color: #ffffff !important;
-  }
-</style>
-
 </head>
 <body>
 
@@ -268,50 +271,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <input type="number" id="inputVacation" min="0" max="60" value="20">
   </div>
   <div class="form-group" id="religionGroup">
-    <label>Do you observe any religious/cultural holidays? (select all that apply)</label>
+    <label>Do you observe any religious/cultural holidays?</label>
     <div class="dreams-picker" id="religionPicker">
       <span class="dream-tag" data-religion="jewish">✡️ Jewish</span>
       <span class="dream-tag" data-religion="christian">✝️ Christian</span>
       <span class="dream-tag" data-religion="muslim">☪️ Muslim</span>
       <span class="dream-tag" data-religion="hindu">🕉️ Hindu</span>
       <span class="dream-tag" data-religion="buddhist">☸️ Buddhist</span>
-      <span class="dream-tag" data-religion="none">🌍 None / Secular only</span>
+      <span class="dream-tag" data-religion="none">🌍 Secular only</span>
     </div>
   </div>
   <div class="form-group hidden" id="holidayCustomizerGroup">
     <label>Holidays — toggle which ones are days off for you</label>
-    <div class="hol-legend">
-      <span><span class="dot off"></span> Day off (counts toward holidays)</span>
-      <span><span class="dot work"></span> Working day (observance only)</span>
-    </div>
     <div class="holiday-customizer" id="holidayCustomizer"></div>
   </div>
   <div class="form-group">
-    <label>What do you want to do when you retire? (pick all that apply)</label>
+    <label>What do you want to do when you retire?</label>
     <div class="dreams-picker" id="dreamsPicker">
-      <span class="dream-tag" data-dream="travel" data-icon="✈️">✈️ Travel the world</span>
-      <span class="dream-tag" data-dream="garden" data-icon="🌱">🌱 Gardening</span>
-      <span class="dream-tag" data-dream="grandkids" data-icon="👶">👶 Spoil grandkids</span>
-      <span class="dream-tag" data-dream="art" data-icon="🎨">🎨 Art & creativity</span>
-      <span class="dream-tag" data-dream="cook" data-icon="👨‍🍳">👨‍🍳 Cook & bake</span>
-      <span class="dream-tag" data-dream="read" data-icon="📚">📚 Read all the books</span>
-      <span class="dream-tag" data-dream="volunteer" data-icon="🤝">🤝 Volunteer</span>
-      <span class="dream-tag" data-dream="fitness" data-icon="🏃">🏃 Get fit</span>
-      <span class="dream-tag" data-dream="beach" data-icon="🏖️">🏖️ Beach life</span>
-      <span class="dream-tag" data-dream="music" data-icon="🎵">🎵 Learn music</span>
-      <span class="dream-tag" data-dream="pets" data-icon="🐕">🐕 More time with pets</span>
-      <span class="dream-tag" data-dream="business" data-icon="💡">💡 Start a business</span>
-      <span class="dream-tag" data-dream="write" data-icon="✍️">✍️ Write a book</span>
-      <span class="dream-tag" data-dream="nothing" data-icon="😴">😴 Absolutely nothing</span>
-      <span class="dream-tag" data-dream="golf" data-icon="⛳">⛳ Golf</span>
-      <span class="dream-tag" data-dream="learn" data-icon="🎓">🎓 Take classes</span>
+      <span class="dream-tag" data-dream="travel">✈️ Travel</span>
+      <span class="dream-tag" data-dream="garden">🌱 Gardening</span>
+      <span class="dream-tag" data-dream="grandkids">👶 Grandkids</span>
+      <span class="dream-tag" data-dream="art">🎨 Art</span>
+      <span class="dream-tag" data-dream="cook">👨‍🍳 Cooking</span>
+      <span class="dream-tag" data-dream="read">📚 Reading</span>
+      <span class="dream-tag" data-dream="volunteer">🤝 Volunteer</span>
+      <span class="dream-tag" data-dream="fitness">🏃 Fitness</span>
+      <span class="dream-tag" data-dream="beach">🏖️ Beach life</span>
+      <span class="dream-tag" data-dream="music">🎵 Music</span>
+      <span class="dream-tag" data-dream="pets">🐕 Pets</span>
+      <span class="dream-tag" data-dream="business">💡 Business</span>
+      <span class="dream-tag" data-dream="write">✍️ Writing</span>
+      <span class="dream-tag" data-dream="nothing">😴 Rest</span>
+      <span class="dream-tag" data-dream="golf">⛳ Golf</span>
+      <span class="dream-tag" data-dream="learn">🎓 Learning</span>
     </div>
     <input class="dream-custom-input" id="dreamCustom" placeholder="Or type your own dream...">
   </div>
   <button class="btn-start" id="btnStart" disabled>Start My Countdown</button>
 </div>
 
-<!-- MAIN APP -->
+<!-- MAIN APP SCREEN -->
 <div class="app hidden" id="appScreen">
   <button class="settings-btn" id="btnSettings">&#9881;</button>
   <div class="hero">
@@ -354,18 +353,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <h2>Upcoming Holidays</h2>
     <div id="upcomingList"></div>
   </div>
-  <div class="legend">Red = calendar days left | Blue = work days left</div>
+  <div class="legend">Orange = calendar days left | Blue = work days left</div>
   <div class="ad-banner" id="adBannerTop">
     <span class="ad-label">Ad</span>
     <div class="ad-content">
-      <div id="adSlotTop">Your ad here — <button class="remove-ads-btn" id="btnRemoveAds">✨ Remove Ads — $4.99</button></div>
+      <div id="adSlotTop">Your ad here — <button class="remove-ads-btn" id="btnRemoveAds">Remove Ads ($4.99)</button></div>
     </div>
   </div>
   <div style="text-align:center;margin-top:20px;padding-bottom:20px">
-    <button id="btnReset" style="background:none;border:1px solid #205080;color:#87ceeb;padding:10px 20px;border-radius:10px;font-size:0.85em;cursor:pointer">🔄 Start Fresh</button>
+    <button id="btnReset" style="background:none;border:1px solid #cbd5e1;color:#64748b;padding:10px 20px;border-radius:10px;font-size:0.85em;cursor:pointer">🔄 Start Fresh</button>
   </div>
 </div>
-<div class="ad-banner-bottom" id="adBannerBottom">
+
+<div class="ad-banner-bottom hidden" id="adBannerBottom">
   <span class="ad-label">Ad</span>
   <div class="ad-content" id="adSlotBottom">Ad space</div>
 </div>
@@ -373,582 +373,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="confetti-container" id="confetti"></div>
 
 <script>
-// COUNTRY DATABASE
-const COUNTRIES = {
-  IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18,
-    holidays:(y)=>{const h={
-      2025:[{m:9,d:23,n:'Rosh Hashana',off:true},{m:9,d:24,n:'Rosh Hashana',off:true},{m:10,d:2,n:'Yom Kippur',off:true},{m:10,d:7,n:'Sukkot',off:true},{m:10,d:14,n:'Simchat Torah',off:true},{m:4,d:13,n:'Passover 1st',off:true},{m:4,d:19,n:'Passover 7th',off:true},{m:6,d:2,n:'Shavuot',off:true},{m:5,d:1,n:'Independence Day',off:true},{m:10,d:8,n:'Chol HaMoed Sukkot',off:false},{m:10,d:9,n:'Chol HaMoed Sukkot',off:false},{m:10,d:10,n:'Chol HaMoed Sukkot',off:false},{m:10,d:13,n:'Chol HaMoed Sukkot',off:false},{m:4,d:14,n:'Chol HaMoed Pesach',off:false},{m:4,d:15,n:'Chol HaMoed Pesach',off:false},{m:4,d:16,n:'Chol HaMoed Pesach',off:false},{m:4,d:17,n:'Chol HaMoed Pesach',off:false},{m:11,d:14,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:14,n:'Purim',off:false},{m:4,d:30,n:'Lag BaOmer',off:false},{m:7,d:13,n:'Tisha BAv',off:false}],
-      2026:[{m:8,d:12,n:'Rosh Hashana',off:true},{m:8,d:13,n:'Rosh Hashana',off:true},{m:8,d:21,n:'Yom Kippur',off:true},{m:8,d:26,n:'Sukkot',off:true},{m:9,d:3,n:'Simchat Torah',off:true},{m:3,d:2,n:'Passover 1st',off:true},{m:3,d:8,n:'Passover 7th',off:true},{m:4,d:22,n:'Shavuot',off:true},{m:3,d:22,n:'Independence Day',off:true},{m:8,d:27,n:'Chol HaMoed Sukkot',off:false},{m:8,d:28,n:'Chol HaMoed Sukkot',off:false},{m:8,d:29,n:'Chol HaMoed Sukkot',off:false},{m:8,d:30,n:'Chol HaMoed Sukkot',off:false},{m:3,d:3,n:'Chol HaMoed Pesach',off:false},{m:3,d:4,n:'Chol HaMoed Pesach',off:false},{m:3,d:5,n:'Chol HaMoed Pesach',off:false},{m:3,d:7,n:'Chol HaMoed Pesach',off:false},{m:11,d:4,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:5,n:'Purim',off:false},{m:4,d:19,n:'Lag BaOmer',off:false},{m:6,d:26,n:'Tisha BAv',off:false}],
-      2027:[{m:9,d:2,n:'Rosh Hashana',off:true},{m:9,d:3,n:'Rosh Hashana',off:true},{m:9,d:11,n:'Yom Kippur',off:true},{m:9,d:16,n:'Sukkot',off:true},{m:9,d:23,n:'Simchat Torah',off:true},{m:3,d:22,n:'Passover 1st',off:true},{m:3,d:28,n:'Passover 7th',off:true},{m:5,d:11,n:'Shavuot',off:true},{m:4,d:12,n:'Independence Day',off:true},{m:11,d:24,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:24,n:'Purim',off:false},{m:5,d:9,n:'Lag BaOmer',off:false},{m:7,d:15,n:'Tisha BAv',off:false}],
-      2028:[{m:8,d:21,n:'Rosh Hashana',off:true},{m:8,d:22,n:'Rosh Hashana',off:true},{m:8,d:30,n:'Yom Kippur',off:true},{m:9,d:5,n:'Sukkot',off:true},{m:9,d:12,n:'Simchat Torah',off:true},{m:3,d:11,n:'Passover 1st',off:true},{m:3,d:17,n:'Passover 7th',off:true},{m:4,d:31,n:'Shavuot',off:true},{m:4,d:2,n:'Independence Day',off:true},{m:11,d:12,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:14,n:'Purim',off:false},{m:4,d:28,n:'Lag BaOmer',off:false},{m:7,d:5,n:'Tisha BAv',off:false}],
-      2029:[{m:8,d:10,n:'Rosh Hashana',off:true},{m:8,d:11,n:'Rosh Hashana',off:true},{m:8,d:19,n:'Yom Kippur',off:true},{m:8,d:24,n:'Sukkot',off:true},{m:9,d:1,n:'Simchat Torah',off:true},{m:2,d:31,n:'Passover 1st',off:true},{m:3,d:6,n:'Passover 7th',off:true},{m:4,d:20,n:'Shavuot',off:true},{m:3,d:23,n:'Independence Day',off:true},{m:11,d:1,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:1,n:'Purim',off:false},{m:4,d:17,n:'Lag BaOmer',off:false},{m:6,d:24,n:'Tisha BAv',off:false}],
-      2030:[{m:8,d:28,n:'Rosh Hashana',off:true},{m:8,d:29,n:'Rosh Hashana',off:true},{m:9,d:7,n:'Yom Kippur',off:true},{m:9,d:12,n:'Sukkot',off:true},{m:9,d:19,n:'Simchat Torah',off:true},{m:3,d:18,n:'Passover 1st',off:true},{m:3,d:24,n:'Passover 7th',off:true},{m:5,d:7,n:'Shavuot',off:true},{m:4,d:10,n:'Independence Day',off:true},{m:11,d:21,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:21,n:'Purim',off:false},{m:5,d:7,n:'Lag BaOmer',off:false},{m:7,d:14,n:'Tisha BAv',off:false}],
-      2031:[{m:8,d:18,n:'Rosh Hashana',off:true},{m:8,d:19,n:'Rosh Hashana',off:true},{m:8,d:27,n:'Yom Kippur',off:true},{m:9,d:2,n:'Sukkot',off:true},{m:9,d:9,n:'Simchat Torah',off:true},{m:3,d:8,n:'Passover 1st',off:true},{m:3,d:14,n:'Passover 7th',off:true},{m:4,d:28,n:'Shavuot',off:true},{m:3,d:30,n:'Independence Day',off:true},{m:11,d:9,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:11,n:'Purim',off:false},{m:4,d:27,n:'Lag BaOmer',off:false},{m:7,d:3,n:'Tisha BAv',off:false}],
-      2032:[{m:9,d:6,n:'Rosh Hashana',off:true},{m:9,d:7,n:'Rosh Hashana',off:true},{m:9,d:15,n:'Yom Kippur',off:true},{m:9,d:20,n:'Sukkot',off:true},{m:9,d:27,n:'Simchat Torah',off:true},{m:3,d:27,n:'Passover 1st',off:true},{m:4,d:2,n:'Passover 7th',off:true},{m:5,d:16,n:'Shavuot',off:true},{m:4,d:19,n:'Independence Day',off:true},{m:10,d:28,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:1,n:'Purim',off:false},{m:4,d:16,n:'Lag BaOmer',off:false},{m:6,d:22,n:'Tisha BAv',off:false}],
-      2033:[{m:8,d:24,n:'Rosh Hashana',off:true},{m:8,d:25,n:'Rosh Hashana',off:true},{m:9,d:4,n:'Yom Kippur',off:true},{m:9,d:9,n:'Sukkot',off:true},{m:9,d:16,n:'Simchat Torah',off:true},{m:3,d:14,n:'Passover 1st',off:true},{m:3,d:20,n:'Passover 7th',off:true},{m:5,d:4,n:'Shavuot',off:true},{m:4,d:6,n:'Independence Day',off:true},{m:11,d:17,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:17,n:'Purim',off:false},{m:5,d:4,n:'Lag BaOmer',off:false},{m:7,d:11,n:'Tisha BAv',off:false}],
-      2034:[{m:8,d:14,n:'Rosh Hashana',off:true},{m:8,d:15,n:'Rosh Hashana',off:true},{m:8,d:23,n:'Yom Kippur',off:true},{m:8,d:28,n:'Sukkot',off:true},{m:9,d:5,n:'Simchat Torah',off:true},{m:3,d:4,n:'Passover 1st',off:true},{m:3,d:10,n:'Passover 7th',off:true},{m:4,d:24,n:'Shavuot',off:true},{m:3,d:26,n:'Independence Day',off:true},{m:11,d:6,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:7,n:'Purim',off:false},{m:4,d:23,n:'Lag BaOmer',off:false},{m:7,d:1,n:'Tisha BAv',off:false}],
-      2035:[{m:9,d:4,n:'Rosh Hashana',off:true},{m:9,d:5,n:'Rosh Hashana',off:true},{m:9,d:13,n:'Yom Kippur',off:true},{m:9,d:18,n:'Sukkot',off:true},{m:9,d:25,n:'Simchat Torah',off:true},{m:3,d:24,n:'Passover 1st',off:true},{m:3,d:30,n:'Passover 7th',off:true},{m:5,d:13,n:'Shavuot',off:true},{m:4,d:16,n:'Independence Day',off:true},{m:11,d:25,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:27,n:'Purim',off:false},{m:5,d:13,n:'Lag BaOmer',off:false},{m:7,d:20,n:'Tisha BAv',off:false}],
-      2036:[{m:8,d:22,n:'Rosh Hashana',off:true},{m:8,d:23,n:'Rosh Hashana',off:true},{m:9,d:1,n:'Yom Kippur',off:true},{m:9,d:6,n:'Sukkot',off:true},{m:9,d:13,n:'Simchat Torah',off:true},{m:3,d:12,n:'Passover 1st',off:true},{m:3,d:18,n:'Passover 7th',off:true},{m:5,d:1,n:'Shavuot',off:true},{m:4,d:4,n:'Independence Day',off:true},{m:11,d:14,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:14,n:'Purim',off:false},{m:5,d:1,n:'Lag BaOmer',off:false},{m:7,d:9,n:'Tisha BAv',off:false}]
-    };return (h[y]||[]).map(x=>({m:x.m,d:x.d,name:x.n,off:x.off}))}},
-  US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15,
-    holidays:(y)=>{const h=[{m:0,d:1,name:"New Year's Day",off:true},{m:0,d:20,name:'MLK Day',off:true},{m:1,d:17,name:"Presidents' Day",off:true},{m:4,d:26,name:'Memorial Day',off:true},{m:5,d:19,name:'Juneteenth',off:true},{m:6,d:4,name:'Independence Day',off:true},{m:8,d:1,name:'Labor Day',off:true},{m:10,d:11,name:'Veterans Day',off:true},{m:10,d:27,name:'Thanksgiving',off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:31,name:"New Year's Eve",off:false}];
-    const easters={2025:[2,20],2026:[3,5],2027:[2,28],2028:[3,16],2029:[3,1],2030:[3,21],2031:[3,13],2032:[2,28],2033:[3,17],2034:[3,9],2035:[2,25],2036:[3,13]};
-    const e=easters[y];if(e){h.push({m:e[0],d:e[1],name:'Easter Sunday',off:false});h.push({m:e[0],d:e[1]-2<1?e[0]-1:e[0],d:e[1]-2<1?28+e[1]-2:e[1]-2,name:'Good Friday',off:false})}
-    const diwalis={2025:[9,20],2026:[10,8],2027:[9,29],2028:[9,17],2029:[10,5],2030:[9,26],2031:[9,15],2032:[10,2],2033:[9,22],2034:[10,12],2035:[9,30],2036:[9,19]};
-    const dw=diwalis[y];if(dw)h.push({m:dw[0],d:dw[1],name:'Diwali (Festival of Lights)',off:false});
-    const cnys={2025:[0,29],2026:[1,17],2027:[1,6],2028:[0,26],2029:[1,13],2030:[1,3],2031:[0,23],2032:[1,11],2033:[0,31],2034:[1,19],2035:[1,8],2036:[0,28]};
-    const cn=cnys[y];if(cn)h.push({m:cn[0],d:cn[1],name:'Lunar New Year',off:false});
-    const eids={2025:[2,31],2026:[2,20],2027:[2,10],2028:[1,27],2029:[1,15],2030:[1,5],2031:[0,25],2032:[0,14],2033:[0,3],2034:[11,23],2035:[11,13],2036:[11,1]};
-    const ei=eids[y];if(ei)h.push({m:ei[0],d:ei[1],name:'Eid al-Fitr (Festival of Breaking Fast)',off:false});
-    return h}},
-  UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28,
-    holidays:(y)=>{const h=[{m:0,d:1,name:"New Year's Day",off:true},{m:4,d:5,name:'Early May Bank',off:true},{m:4,d:26,name:'Spring Bank',off:true},{m:7,d:25,name:'Summer Bank',off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:26,name:'Boxing Day',off:true}];
-    const easters={2025:[3,20],2026:[3,5],2027:[2,28],2028:[3,16],2029:[3,1],2030:[3,21],2031:[3,13],2032:[2,28],2033:[3,17],2034:[3,9],2035:[2,25],2036:[3,13]};
-    const e=easters[y];if(e){h.push({m:e[0],d:e[1]-2<1?e[0]-1:e[0],d:e[1]-2<1?28+e[1]-2:e[1]-2,name:'Good Friday',off:true});h.push({m:e[0],d:e[1]+1>30?0:e[1]+1,name:'Easter Monday',off:true})}
-    const diwalis={2025:[9,20],2026:[10,8],2027:[9,29],2028:[9,17],2029:[10,5],2030:[9,26],2031:[9,15],2032:[10,2],2033:[9,22],2034:[10,12],2035:[9,30],2036:[9,19]};
-    const dw=diwalis[y];if(dw)h.push({m:dw[0],d:dw[1],name:'Diwali (Festival of Lights)',off:false});
-    const eids={2025:[2,31],2026:[2,20],2027:[2,10],2028:[1,27],2029:[1,15],2030:[1,5],2031:[0,25],2032:[0,14],2033:[0,3],2034:[11,23],2035:[11,13],2036:[11,1]};
-    const ei=eids[y];if(ei)h.push({m:ei[0],d:ei[1],name:'Eid al-Fitr (Festival of Breaking Fast)',off:false});
-    return h}},
-  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,
-    holidays:(y)=>{const h=[{m:0,d:1,name:"New Year's Day",off:true},{m:1,d:17,name:'Family Day',off:true},{m:6,d:1,name:'Canada Day',off:true},{m:8,d:1,name:'Labour Day',off:true},{m:8,d:30,name:'Truth & Reconciliation Day',off:true},{m:9,d:13,name:'Thanksgiving',off:true},{m:10,d:11,name:'Remembrance Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:26,name:'Boxing Day',off:true}];
-    const easters={2025:[3,18],2026:[3,3],2027:[2,26],2028:[3,14],2029:[2,30],2030:[3,19],2031:[3,11],2032:[2,26],2033:[3,15],2034:[3,7],2035:[2,23],2036:[3,11]};
-    const e=easters[y];if(e)h.push({m:e[0],d:e[1],name:'Good Friday',off:true});
-    const diwalis={2025:[9,20],2026:[10,8],2027:[9,29],2028:[9,17],2029:[10,5],2030:[9,26],2031:[9,15],2032:[10,2],2033:[9,22],2034:[10,12],2035:[9,30],2036:[9,19]};
-    const dw=diwalis[y];if(dw)h.push({m:dw[0],d:dw[1],name:'Diwali (Festival of Lights)',off:false});
-    return h}},
-  AU: {name:'Australia',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20,
-    holidays:(y)=>{const h=[{m:0,d:1,name:"New Year's Day",off:true},{m:0,d:26,name:'Australia Day',off:true},{m:3,d:25,name:'Anzac Day',off:true},{m:5,d:9,name:"King's Birthday",off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:26,name:'Boxing Day',off:true}];
-    const easters={2025:[3,18],2026:[3,3],2027:[2,26],2028:[3,14],2029:[2,30],2030:[3,19],2031:[3,11],2032:[2,26],2033:[3,15],2034:[3,7],2035:[2,23],2036:[3,11]};
-    const e=easters[y];if(e){h.push({m:e[0],d:e[1],name:'Good Friday',off:true});h.push({m:e[0],d:e[1]+2>30?0:e[1]+2,name:'Easter Monday',off:true})}
-    const diwalis={2025:[9,20],2026:[10,8],2027:[9,29],2028:[9,17],2029:[10,5],2030:[9,26],2031:[9,15],2032:[10,2],2033:[9,22],2034:[10,12],2035:[9,30],2036:[9,19]};
-    const dw=diwalis[y];if(dw)h.push({m:dw[0],d:dw[1],name:'Diwali (Festival of Lights)',off:false});
-    return h}},
-  DE: {name:'Germany',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:30,
-    holidays:(y)=>{const h=[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:9,d:3,name:'Unity Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:26,name:'2nd Winter Holiday',off:true}];
-    const easters={2025:[3,20],2026:[3,5],2027:[2,28],2028:[3,16],2029:[3,1],2030:[3,21],2031:[3,13],2032:[2,28],2033:[3,17],2034:[3,9],2035:[2,25],2036:[3,13]};
-    const e=easters[y];if(e){h.push({m:e[0],d:e[1]-2<1?e[0]-1:e[0],d:e[1]-2<1?28+e[1]-2:e[1]-2,name:'Good Friday',off:true});h.push({m:e[0],d:e[1]+1>30?0:e[1]+1,name:'Easter Monday',off:true});h.push({m:e[0]+1>11?0:e[0]+1,d:e[1]+39>60?e[1]-21:e[1]+39,name:'Ascension Day',off:true})}
-    const eids={2025:[2,31],2026:[2,20],2027:[2,10],2028:[1,27],2029:[1,15],2030:[1,5],2031:[0,25],2032:[0,14],2033:[0,3],2034:[11,23],2035:[11,13],2036:[11,1]};
-    const ei=eids[y];if(ei)h.push({m:ei[0],d:ei[1],name:'Eid al-Fitr (Festival of Breaking Fast)',off:false});
-    return h}},
-  FR: {name:'France',retireAge:{M:64,F:64},weekendDays:[0,6],vacDays:25,
-    holidays:(y)=>{const h=[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:4,d:8,name:'Victory Day',off:true},{m:6,d:14,name:'National Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:10,d:1,name:'All Saints',off:true},{m:10,d:11,name:'Armistice',off:true},{m:11,d:25,name:'Winter Holiday',off:true}];
-    const easters={2025:[3,20],2026:[3,5],2027:[2,28],2028:[3,16],2029:[3,1],2030:[3,21],2031:[3,13],2032:[2,28],2033:[3,17],2034:[3,9],2035:[2,25],2036:[3,13]};
-    const e=easters[y];if(e){h.push({m:e[0],d:e[1]+1>30?0:e[1]+1,name:'Easter Monday',off:true})}
-    const eids={2025:[2,31],2026:[2,20],2027:[2,10],2028:[1,27],2029:[1,15],2030:[1,5],2031:[0,25],2032:[0,14],2033:[0,3],2034:[11,23],2035:[11,13],2036:[11,1]};
-    const ei=eids[y];if(ei)h.push({m:ei[0],d:ei[1],name:'Eid al-Fitr (Festival of Breaking Fast)',off:false});
-    return h}},
-  NL: {name:'Netherlands',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25,
-    holidays:(y)=>{const h=[{m:0,d:1,name:'New Year',off:true},{m:3,d:27,name:"King's Day",off:true},{m:4,d:5,name:'Liberation Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:26,name:'2nd Winter Holiday',off:true}];
-    const easters={2025:[3,20],2026:[3,5],2027:[2,28],2028:[3,16],2029:[3,1],2030:[3,21],2031:[3,13],2032:[2,28],2033:[3,17],2034:[3,9],2035:[2,25],2036:[3,13]};
-    const e=easters[y];if(e){h.push({m:e[0],d:e[1]+1>30?0:e[1]+1,name:'Easter Monday',off:true})}
-    const eids={2025:[2,31],2026:[2,20],2027:[2,10],2028:[1,27],2029:[1,15],2030:[1,5],2031:[0,25],2032:[0,14],2033:[0,3],2034:[11,23],2035:[11,13],2036:[11,1]};
-    const ei=eids[y];if(ei)h.push({m:ei[0],d:ei[1],name:'Eid al-Fitr (Festival of Breaking Fast)',off:false});
-    return h}},
-  JP: {name:'Japan',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20,
-    holidays:(y)=>{const h=[{m:0,d:1,name:'New Year',off:true},{m:0,d:13,name:'Coming of Age',off:true},{m:1,d:11,name:'Foundation Day',off:true},{m:2,d:20,name:'Vernal Equinox',off:true},{m:3,d:29,name:'Showa Day',off:true},{m:4,d:3,name:'Constitution Day',off:true},{m:4,d:5,name:"Children's Day",off:true},{m:7,d:11,name:'Mountain Day',off:true},{m:8,d:15,name:'Respect for the Aged',off:true},{m:8,d:22,name:'Autumn Equinox',off:true},{m:10,d:3,name:'Culture Day',off:true},{m:10,d:23,name:'Labour Thanksgiving',off:true}];
-    h.push({m:7,d:13,name:'Obon (Festival of Ancestors)',off:false});
-    const cnys={2025:[0,29],2026:[1,17],2027:[1,6],2028:[0,26],2029:[1,13],2030:[1,3],2031:[0,23],2032:[1,11],2033:[0,31],2034:[1,19],2035:[1,8],2036:[0,28]};
-    const cn=cnys[y];if(cn)h.push({m:cn[0],d:cn[1],name:'Lunar New Year',off:false});
-    return h}},
-  AR:{name:'Argentina',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:14,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:2,d:24,name:'Memory Day',off:true},{m:3,d:2,name:'Malvinas Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:4,d:25,name:'May Revolution',off:true},{m:5,d:20,name:'Flag Day',off:true},{m:6,d:9,name:'Independence Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  AT:{name:'Austria',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:25,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:6,name:'Epiphany',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:9,d:26,name:'National Day',off:true},{m:10,d:1,name:'All Saints',off:true},{m:11,d:8,name:'Immaculate Conception',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'St Stephen',off:true}]},
-  BE:{name:'Belgium',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:6,d:21,name:'National Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:10,d:1,name:'All Saints',off:true},{m:10,d:11,name:'Armistice',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  BR:{name:'Brazil',retireAge:{M:65,F:62},weekendDays:[0,6],vacDays:30,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:3,d:21,name:'Tiradentes',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:8,d:7,name:'Independence Day',off:true},{m:9,d:12,name:'Nossa Senhora',off:true},{m:10,d:2,name:'Finados',off:true},{m:10,d:15,name:'Republic Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  CL:{name:'Chile',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:4,d:21,name:'Navy Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:8,d:18,name:'Independence Day',off:true},{m:8,d:19,name:'Army Day',off:true},{m:9,d:12,name:'Columbus Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  CN:{name:'China',retireAge:{M:60,F:55},weekendDays:[0,6],vacDays:10,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:9,d:1,name:'National Day',off:true},{m:9,d:2,name:'National Day',off:true},{m:9,d:3,name:'National Day',off:true}]},
-  CO:{name:'Colombia',retireAge:{M:62,F:57},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:6,d:20,name:'Independence Day',off:true},{m:7,d:7,name:'Battle of Boyaca',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  CZ:{name:'Czech Republic',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:4,d:8,name:'Liberation Day',off:true},{m:6,d:5,name:'Cyril & Methodius',off:true},{m:6,d:6,name:'Jan Hus Day',off:true},{m:8,d:28,name:'Statehood Day',off:true},{m:9,d:28,name:'Independence Day',off:true},{m:11,d:24,name:'Christmas Eve',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'St Stephen',off:true}]},
-  DK:{name:'Denmark',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:5,d:5,name:'Constitution Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'2nd Christmas',off:true}]},
-  EG:{name:'Egypt',retireAge:{M:60,F:60},weekendDays:[5,6],vacDays:21,holidays:(y)=>[{m:0,d:7,name:'Coptic Christmas',off:true},{m:0,d:25,name:'Revolution Day',off:true},{m:3,d:25,name:'Sinai Liberation',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:6,d:23,name:'Revolution Day',off:true},{m:9,d:6,name:'Armed Forces Day',off:true}]},
-  FI:{name:'Finland',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:25,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:6,name:'Epiphany',off:true},{m:4,d:1,name:'May Day',off:true},{m:5,d:20,name:'Midsummer Eve',off:true},{m:11,d:6,name:'Independence Day',off:true},{m:11,d:24,name:'Christmas Eve',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'Boxing Day',off:true}]},
-  GR:{name:'Greece',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:6,name:'Epiphany',off:true},{m:2,d:25,name:'Independence Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:9,d:28,name:'Ochi Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  HU:{name:'Hungary',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:2,d:15,name:'Revolution Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:7,d:20,name:'St Stephen',off:true},{m:9,d:23,name:'Republic Day',off:true},{m:10,d:1,name:'All Saints',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'2nd Christmas',off:true}]},
-  IN:{name:'India',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:26,name:'Republic Day',off:true},{m:7,d:15,name:'Independence Day',off:true},{m:9,d:2,name:'Gandhi Jayanti',off:true},{m:4,d:1,name:'May Day',off:true}]},
-  ID:{name:'Indonesia',retireAge:{M:58,F:58},weekendDays:[0,6],vacDays:12,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:5,d:1,name:'Pancasila Day',off:true},{m:7,d:17,name:'Independence Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  IE:{name:'Ireland',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:1,d:3,name:'St Brigid',off:true},{m:2,d:17,name:'St Patrick',off:true},{m:4,d:5,name:'May Bank',off:true},{m:5,d:2,name:'June Bank',off:true},{m:7,d:4,name:'August Bank',off:true},{m:9,d:27,name:'October Bank',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'St Stephen',off:true}]},
-  IT:{name:'Italy',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:26,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:6,name:'Epiphany',off:true},{m:3,d:25,name:'Liberation Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:5,d:2,name:'Republic Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:10,d:1,name:'All Saints',off:true},{m:11,d:8,name:'Immaculate Conception',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'St Stephen',off:true}]},
-  KR:{name:'South Korea',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:2,d:1,name:'Independence Movement',off:true},{m:4,d:5,name:"Children's Day",off:true},{m:5,d:6,name:'Memorial Day',off:true},{m:7,d:15,name:'Liberation Day',off:true},{m:9,d:3,name:'National Foundation',off:true},{m:9,d:9,name:'Hangul Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  MY:{name:'Malaysia',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:14,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:1,d:1,name:'Federal Territory Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:5,d:3,name:"Yang di-Pertuan Agong Birthday",off:true},{m:7,d:31,name:'Merdeka Day',off:true},{m:8,d:16,name:'Malaysia Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  MX:{name:'Mexico',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:12,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:1,d:3,name:'Constitution Day',off:true},{m:2,d:17,name:'Benito Juarez',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:8,d:16,name:'Independence Day',off:true},{m:10,d:17,name:'Revolution Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  NZ:{name:'New Zealand',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:2,name:'Day After New Year',off:true},{m:1,d:6,name:'Waitangi Day',off:true},{m:3,d:25,name:'Anzac Day',off:true},{m:5,d:2,name:"King's Birthday",off:true},{m:9,d:28,name:'Labour Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'Boxing Day',off:true}]},
-  NG:{name:'Nigeria',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Workers Day',off:true},{m:5,d:12,name:'Democracy Day',off:true},{m:9,d:1,name:'Independence Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'Boxing Day',off:true}]},
-  NO:{name:'Norway',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:4,d:17,name:'Constitution Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'2nd Christmas',off:true}]},
-  PK:{name:'Pakistan',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:14,holidays:(y)=>[{m:2,d:23,name:'Pakistan Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:7,d:14,name:'Independence Day',off:true},{m:10,d:9,name:'Iqbal Day',off:true},{m:11,d:25,name:'Quaid-e-Azam Day',off:true}]},
-  PE:{name:'Peru',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:30,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:5,d:29,name:'St Peter & Paul',off:true},{m:6,d:28,name:'Independence Day',off:true},{m:6,d:29,name:'Independence Day',off:true},{m:7,d:30,name:'Santa Rosa',off:true},{m:9,d:8,name:'Battle of Angamos',off:true},{m:10,d:1,name:'All Saints',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  PH:{name:'Philippines',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:5,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:3,d:9,name:'Valor Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:5,d:12,name:'Independence Day',off:true},{m:7,d:21,name:'Ninoy Aquino',off:true},{m:7,d:26,name:'Heroes Day',off:true},{m:10,d:30,name:'Bonifacio Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:30,name:'Rizal Day',off:true}]},
-  PL:{name:'Poland',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:26,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:6,name:'Epiphany',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:4,d:3,name:'Constitution Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:10,d:1,name:'All Saints',off:true},{m:10,d:11,name:'Independence Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'2nd Christmas',off:true}]},
-  PT:{name:'Portugal',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:22,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:3,d:25,name:'Freedom Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:5,d:10,name:'Portugal Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:9,d:5,name:'Republic Day',off:true},{m:10,d:1,name:'All Saints',off:true},{m:11,d:1,name:'Independence Restoration',off:true},{m:11,d:8,name:'Immaculate Conception',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  RO:{name:'Romania',retireAge:{M:65,F:63},weekendDays:[0,6],vacDays:21,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:2,name:'New Year',off:true},{m:0,d:24,name:'Union Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:5,d:1,name:"Children's Day",off:true},{m:7,d:15,name:'Assumption',off:true},{m:10,d:30,name:'St Andrew',off:true},{m:11,d:1,name:'National Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'2nd Christmas',off:true}]},
-  RU:{name:'Russia',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:28,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:7,name:'Orthodox Christmas',off:true},{m:1,d:23,name:'Defender Day',off:true},{m:2,d:8,name:"Women's Day",off:true},{m:4,d:1,name:'Spring & Labour',off:true},{m:4,d:9,name:'Victory Day',off:true},{m:5,d:12,name:'Russia Day',off:true},{m:10,d:4,name:'Unity Day',off:true}]},
-  SA:{name:'Saudi Arabia',retireAge:{M:60,F:55},weekendDays:[5,6],vacDays:21,holidays:(y)=>[{m:8,d:23,name:'National Day',off:true}]},
-  SG:{name:'Singapore',retireAge:{M:63,F:63},weekendDays:[0,6],vacDays:14,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:7,d:9,name:'National Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  ZA:{name:'South Africa',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:2,d:21,name:'Human Rights Day',off:true},{m:3,d:27,name:'Freedom Day',off:true},{m:4,d:1,name:'Workers Day',off:true},{m:5,d:16,name:'Youth Day',off:true},{m:7,d:9,name:'Women\'s Day',off:true},{m:8,d:24,name:'Heritage Day',off:true},{m:11,d:16,name:'Reconciliation Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'Goodwill Day',off:true}]},
-  ES:{name:'Spain',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:22,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:6,name:'Epiphany',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:7,d:15,name:'Assumption',off:true},{m:9,d:12,name:'National Day',off:true},{m:10,d:1,name:'All Saints',off:true},{m:11,d:6,name:'Constitution Day',off:true},{m:11,d:8,name:'Immaculate Conception',off:true},{m:11,d:25,name:'Christmas',off:true}]},
-  SE:{name:'Sweden',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:0,d:6,name:'Epiphany',off:true},{m:4,d:1,name:'May Day',off:true},{m:5,d:6,name:'National Day',off:true},{m:5,d:21,name:'Midsummer Eve',off:true},{m:11,d:24,name:'Christmas Eve',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'Boxing Day',off:true}]},
-  CH:{name:'Switzerland',retireAge:{M:65,F:64},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:7,d:1,name:'National Day',off:true},{m:11,d:25,name:'Christmas',off:true},{m:11,d:26,name:'St Stephen',off:true}]},
-  TH:{name:'Thailand',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:6,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:3,d:6,name:'Chakri Day',off:true},{m:3,d:13,name:'Songkran',off:true},{m:3,d:14,name:'Songkran',off:true},{m:3,d:15,name:'Songkran',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:7,d:12,name:"Queen's Birthday",off:true},{m:9,d:13,name:'King Passing Day',off:true},{m:11,d:5,name:"King's Birthday",off:true},{m:11,d:31,name:'New Year Eve',off:true}]},
-  TR:{name:'Turkey',retireAge:{M:60,F:58},weekendDays:[0,6],vacDays:14,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:3,d:23,name:'Sovereignty Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:4,d:19,name:'Youth Day',off:true},{m:6,d:15,name:'Democracy Day',off:true},{m:7,d:30,name:'Victory Day',off:true},{m:9,d:29,name:'Republic Day',off:true}]},
-  AE:{name:'UAE',retireAge:{M:60,F:55},weekendDays:[0,6],vacDays:30,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:11,d:2,name:'National Day',off:true},{m:11,d:3,name:'National Day',off:true}]},
-  VN:{name:'Vietnam',retireAge:{M:62,F:60},weekendDays:[0,6],vacDays:12,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:3,d:30,name:'Reunification Day',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:8,d:2,name:'National Day',off:true}]}
-};
-
-// SETUP LOGIC
-const setupScreen = document.getElementById('setupScreen');
-const appScreen = document.getElementById('appScreen');
-const inputCountry = document.getElementById('inputCountry');
-const inputBirthMonth = document.getElementById('inputBirthMonth');
-const inputBirthDay = document.getElementById('inputBirthDay');
-const inputBirthYear = document.getElementById('inputBirthYear');
-
-// Populate birthday dropdowns
-(function(){
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  months.forEach((m,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent=m;inputBirthMonth.appendChild(o)});
-  for(let d=1;d<=31;d++){const o=document.createElement('option');o.value=d;o.textContent=d;inputBirthDay.appendChild(o)}
-  const curYear=new Date().getFullYear();
-  for(let y=curYear-16;y>=curYear-80;y--){const o=document.createElement('option');o.value=y;o.textContent=y;inputBirthYear.appendChild(o)}
-})();
-
-function getBirthdayValue(){
-  const m=inputBirthMonth.value,d=inputBirthDay.value,y=inputBirthYear.value;
-  if(!m||!d||!y)return'';
-  return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-}
-const inputGender = document.getElementById('inputGender');
-const inputCustomAge = document.getElementById('inputCustomAge');
-const inputWeekend = document.getElementById('inputWeekend');
-const inputCareerStart = document.getElementById('inputCareerStart');
-const inputVacation = document.getElementById('inputVacation');
-const btnStart = document.getElementById('btnStart');
-
-// DREAMS PICKER LOGIC
-const dreamsPicker = document.getElementById('dreamsPicker');
-const dreamTags = dreamsPicker.querySelectorAll('.dream-tag');
-const selectedDreams = new Set();
-dreamTags.forEach(tag => {
-  tag.addEventListener('click', () => {
-    const dream = tag.dataset.dream;
-    if (selectedDreams.has(dream)) { selectedDreams.delete(dream); tag.classList.remove('selected'); }
-    else { selectedDreams.add(dream); tag.classList.add('selected'); }
-  });
-});
-
-const holidayOverrides = {};
-
-// RELIGION PICKER LOGIC
-const religionPicker = document.getElementById('religionPicker');
-const religionTags = religionPicker.querySelectorAll('.dream-tag');
-const selectedReligions = new Set();
-religionTags.forEach(tag => {
-  tag.addEventListener('click', () => {
-    const rel = tag.dataset.religion;
-    if (rel === 'none') {
-      selectedReligions.clear();
-      religionTags.forEach(t => t.classList.remove('selected'));
-      tag.classList.add('selected');
-      selectedReligions.add('none');
-    } else {
-      selectedReligions.delete('none');
-      religionTags.forEach(t => { if (t.dataset.religion === 'none') t.classList.remove('selected'); });
-      if (selectedReligions.has(rel)) { selectedReligions.delete(rel); tag.classList.remove('selected'); }
-      else { selectedReligions.add(rel); tag.classList.add('selected'); }
-    }
-    populateHolidayCustomizer(inputCountry.value);
-  });
-});
-
-// RELIGIOUS HOLIDAY DATA (keyed by religion, returns holidays for given year)
-const RELIGIOUS_HOLIDAYS = {
-  jewish: (y) => {
-    const data = {
-      2025:[{m:9,d:23,n:'Rosh Hashana',off:true},{m:9,d:24,n:'Rosh Hashana',off:true},{m:10,d:2,n:'Yom Kippur',off:true},{m:10,d:7,n:'Sukkot',off:true},{m:10,d:14,n:'Simchat Torah',off:true},{m:4,d:13,n:'Passover 1st',off:true},{m:4,d:19,n:'Passover 7th',off:true},{m:6,d:2,n:'Shavuot',off:true},{m:11,d:14,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:14,n:'Purim',off:false},{m:4,d:30,n:'Lag BaOmer',off:false},{m:7,d:13,n:'Tisha BAv',off:false}],
-      2026:[{m:8,d:12,n:'Rosh Hashana',off:true},{m:8,d:13,n:'Rosh Hashana',off:true},{m:8,d:21,n:'Yom Kippur',off:true},{m:8,d:26,n:'Sukkot',off:true},{m:9,d:3,n:'Simchat Torah',off:true},{m:3,d:2,n:'Passover 1st',off:true},{m:3,d:8,n:'Passover 7th',off:true},{m:4,d:22,n:'Shavuot',off:true},{m:11,d:4,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:5,n:'Purim',off:false},{m:4,d:19,n:'Lag BaOmer',off:false},{m:6,d:26,n:'Tisha BAv',off:false}],
-      2027:[{m:9,d:2,n:'Rosh Hashana',off:true},{m:9,d:3,n:'Rosh Hashana',off:true},{m:9,d:11,n:'Yom Kippur',off:true},{m:9,d:16,n:'Sukkot',off:true},{m:9,d:23,n:'Simchat Torah',off:true},{m:3,d:22,n:'Passover 1st',off:true},{m:3,d:28,n:'Passover 7th',off:true},{m:5,d:11,n:'Shavuot',off:true},{m:11,d:24,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:24,n:'Purim',off:false},{m:5,d:9,n:'Lag BaOmer',off:false},{m:7,d:15,n:'Tisha BAv',off:false}],
-      2028:[{m:8,d:21,n:'Rosh Hashana',off:true},{m:8,d:22,n:'Rosh Hashana',off:true},{m:8,d:30,n:'Yom Kippur',off:true},{m:9,d:5,n:'Sukkot',off:true},{m:9,d:12,n:'Simchat Torah',off:true},{m:3,d:11,n:'Passover 1st',off:true},{m:3,d:17,n:'Passover 7th',off:true},{m:4,d:31,n:'Shavuot',off:true},{m:11,d:12,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:14,n:'Purim',off:false},{m:4,d:28,n:'Lag BaOmer',off:false},{m:7,d:5,n:'Tisha BAv',off:false}],
-      2029:[{m:8,d:10,n:'Rosh Hashana',off:true},{m:8,d:11,n:'Rosh Hashana',off:true},{m:8,d:19,n:'Yom Kippur',off:true},{m:8,d:24,n:'Sukkot',off:true},{m:9,d:1,n:'Simchat Torah',off:true},{m:2,d:31,n:'Passover 1st',off:true},{m:3,d:6,n:'Passover 7th',off:true},{m:4,d:20,n:'Shavuot',off:true},{m:11,d:1,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:1,n:'Purim',off:false},{m:4,d:17,n:'Lag BaOmer',off:false},{m:6,d:24,n:'Tisha BAv',off:false}],
-      2030:[{m:8,d:28,n:'Rosh Hashana',off:true},{m:8,d:29,n:'Rosh Hashana',off:true},{m:9,d:7,n:'Yom Kippur',off:true},{m:9,d:12,n:'Sukkot',off:true},{m:9,d:19,n:'Simchat Torah',off:true},{m:3,d:18,n:'Passover 1st',off:true},{m:3,d:24,n:'Passover 7th',off:true},{m:5,d:7,n:'Shavuot',off:true},{m:11,d:21,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:21,n:'Purim',off:false},{m:5,d:7,n:'Lag BaOmer',off:false},{m:7,d:14,n:'Tisha BAv',off:false}],
-      2031:[{m:8,d:18,n:'Rosh Hashana',off:true},{m:8,d:19,n:'Rosh Hashana',off:true},{m:8,d:27,n:'Yom Kippur',off:true},{m:9,d:2,n:'Sukkot',off:true},{m:9,d:9,n:'Simchat Torah',off:true},{m:3,d:8,n:'Passover 1st',off:true},{m:3,d:14,n:'Passover 7th',off:true},{m:4,d:28,n:'Shavuot',off:true},{m:11,d:9,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:11,n:'Purim',off:false},{m:4,d:27,n:'Lag BaOmer',off:false},{m:7,d:3,n:'Tisha BAv',off:false}],
-      2032:[{m:9,d:6,n:'Rosh Hashana',off:true},{m:9,d:7,n:'Rosh Hashana',off:true},{m:9,d:15,n:'Yom Kippur',off:true},{m:9,d:20,n:'Sukkot',off:true},{m:9,d:27,n:'Simchat Torah',off:true},{m:3,d:27,n:'Passover 1st',off:true},{m:4,d:2,n:'Passover 7th',off:true},{m:5,d:16,n:'Shavuot',off:true},{m:10,d:28,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:1,n:'Purim',off:false},{m:4,d:16,n:'Lag BaOmer',off:false},{m:6,d:22,n:'Tisha BAv',off:false}],
-      2033:[{m:8,d:24,n:'Rosh Hashana',off:true},{m:8,d:25,n:'Rosh Hashana',off:true},{m:9,d:4,n:'Yom Kippur',off:true},{m:9,d:9,n:'Sukkot',off:true},{m:9,d:16,n:'Simchat Torah',off:true},{m:3,d:14,n:'Passover 1st',off:true},{m:3,d:20,n:'Passover 7th',off:true},{m:5,d:4,n:'Shavuot',off:true},{m:11,d:17,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:17,n:'Purim',off:false},{m:5,d:4,n:'Lag BaOmer',off:false},{m:7,d:11,n:'Tisha BAv',off:false}],
-      2034:[{m:8,d:14,n:'Rosh Hashana',off:true},{m:8,d:15,n:'Rosh Hashana',off:true},{m:8,d:23,n:'Yom Kippur',off:true},{m:8,d:28,n:'Sukkot',off:true},{m:9,d:5,n:'Simchat Torah',off:true},{m:3,d:4,n:'Passover 1st',off:true},{m:3,d:10,n:'Passover 7th',off:true},{m:4,d:24,n:'Shavuot',off:true},{m:11,d:6,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:7,n:'Purim',off:false},{m:4,d:23,n:'Lag BaOmer',off:false},{m:7,d:1,n:'Tisha BAv',off:false}],
-      2035:[{m:9,d:4,n:'Rosh Hashana',off:true},{m:9,d:5,n:'Rosh Hashana',off:true},{m:9,d:13,n:'Yom Kippur',off:true},{m:9,d:18,n:'Sukkot',off:true},{m:9,d:25,n:'Simchat Torah',off:true},{m:3,d:24,n:'Passover 1st',off:true},{m:3,d:30,n:'Passover 7th',off:true},{m:5,d:13,n:'Shavuot',off:true},{m:11,d:25,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:27,n:'Purim',off:false},{m:5,d:13,n:'Lag BaOmer',off:false},{m:7,d:20,n:'Tisha BAv',off:false}],
-      2036:[{m:8,d:22,n:'Rosh Hashana',off:true},{m:8,d:23,n:'Rosh Hashana',off:true},{m:9,d:1,n:'Yom Kippur',off:true},{m:9,d:6,n:'Sukkot',off:true},{m:9,d:13,n:'Simchat Torah',off:true},{m:3,d:12,n:'Passover 1st',off:true},{m:3,d:18,n:'Passover 7th',off:true},{m:5,d:1,n:'Shavuot',off:true},{m:11,d:14,n:'Hanukkah (Festival of Lights)',off:false},{m:2,d:14,n:'Purim',off:false},{m:5,d:1,n:'Lag BaOmer',off:false},{m:7,d:9,n:'Tisha BAv',off:false}]
-    };
-    return (data[y]||[]).map(x=>({m:x.m,d:x.d,name:x.n,off:x.off}));
-  },
-  christian: (y) => {
-    const easters={2025:[3,20],2026:[3,5],2027:[2,28],2028:[3,16],2029:[3,1],2030:[3,21],2031:[3,13],2032:[2,28],2033:[3,17],2034:[3,9],2035:[2,25],2036:[3,13]};
-    const h = [{m:11,d:25,name:'Christmas',off:true},{m:11,d:24,name:'Christmas Eve',off:false}];
-    const e=easters[y];
-    if(e){h.push({m:e[0],d:e[1],name:'Easter Sunday',off:true});h.push({m:e[0],d:e[1]-2<1?e[0]-1:e[0],d:e[1]-2<1?28+e[1]-2:e[1]-2,name:'Good Friday',off:true})}
-    return h;
-  },
-  muslim: (y) => {
-    const eidFitr={2025:[2,31],2026:[2,20],2027:[2,10],2028:[1,27],2029:[1,15],2030:[1,5],2031:[0,25],2032:[0,14],2033:[0,3],2034:[11,23],2035:[11,13],2036:[11,1]};
-    const eidAdha={2025:[5,7],2026:[4,27],2027:[4,17],2028:[4,5],2029:[3,24],2030:[3,14],2031:[3,4],2032:[2,21],2033:[2,10],2034:[1,28],2035:[1,17],2036:[1,6]};
-    const h=[];
-    const ef=eidFitr[y];if(ef)h.push({m:ef[0],d:ef[1],name:'Eid al-Fitr (Festival of Breaking Fast)',off:true});
-    const ea=eidAdha[y];if(ea)h.push({m:ea[0],d:ea[1],name:'Eid al-Adha (Festival of Sacrifice)',off:true});
-    return h;
-  },
-  hindu: (y) => {
-    const diwalis={2025:[9,20],2026:[10,8],2027:[9,29],2028:[9,17],2029:[10,5],2030:[9,26],2031:[9,15],2032:[10,2],2033:[9,22],2034:[10,12],2035:[9,30],2036:[9,19]};
-    const holi={2025:[2,14],2026:[2,4],2027:[2,22],2028:[2,12],2029:[2,1],2030:[2,20],2031:[2,10],2032:[1,28],2033:[2,16],2034:[2,6],2035:[2,25],2036:[2,14]};
-    const h=[];
-    const dw=diwalis[y];if(dw)h.push({m:dw[0],d:dw[1],name:'Diwali (Festival of Lights)',off:true});
-    const ho=holi[y];if(ho)h.push({m:ho[0],d:ho[1],name:'Holi (Festival of Colors)',off:false});
-    return h;
-  },
-  buddhist: (y) => {
-    const vesak={2025:[4,12],2026:[4,1],2027:[4,20],2028:[4,9],2029:[4,28],2030:[4,17],2031:[4,7],2032:[3,25],2033:[4,14],2034:[4,3],2035:[4,22],2036:[4,11]};
-    const h=[];
-    const v=vesak[y];if(v)h.push({m:v[0],d:v[1],name:'Vesak (Buddha Day)',off:true});
-    return h;
-  }
-};
-
-inputCountry.addEventListener('change', () => {
-  const c = inputCountry.value;
-  const hasGender = COUNTRIES[c] && COUNTRIES[c].retireAge.M !== COUNTRIES[c].retireAge.F;
-  document.getElementById('genderGroup').classList.toggle('hidden', !hasGender);
-  document.getElementById('customAgeGroup').classList.toggle('hidden', c !== 'custom');
-  document.getElementById('customWeekendGroup').classList.toggle('hidden', c !== 'custom');
-  if (COUNTRIES[c]) inputVacation.value = COUNTRIES[c].vacDays;
-  populateHolidayCustomizer(c);
-  checkReady();
-});
-inputBirthMonth.addEventListener('change', checkReady);
-inputBirthDay.addEventListener('change', checkReady);
-inputBirthYear.addEventListener('change', checkReady);
-
-function populateHolidayCustomizer(countryCode) {
-  const container = document.getElementById('holidayCustomizer');
-  const group = document.getElementById('holidayCustomizerGroup');
-  container.innerHTML = '';
-  Object.keys(holidayOverrides).forEach(k => delete holidayOverrides[k]);
-  const hasReligions = selectedReligions.size > 0 && !selectedReligions.has('none');
-  if (!hasReligions) { group.classList.add('hidden'); return; }
-  group.classList.remove('hidden');
-  const y = new Date().getFullYear();
-  let hols = [];
-  const isDiasporaSetup = countryCode !== 'IL';
-  selectedReligions.forEach(rel => {
-    if (RELIGIOUS_HOLIDAYS[rel]) {
-      let relHols = RELIGIOUS_HOLIDAYS[rel](y);
-      if (rel === 'jewish' && isDiasporaSetup) {
-        const extra = [];
-        relHols.forEach(h => {
-          if (/Passover 1st|Passover 7th|Shavuot|Sukkot|Simchat Torah/.test(h.name)) {
-            const nd = new Date(y, h.m, h.d + 1);
-            extra.push({m: nd.getMonth(), d: nd.getDate(), name: h.name + ' (2nd day)', off: h.off});
-          }
-        });
-        relHols = relHols.concat(extra);
-      }
-      hols = hols.concat(relHols);
-    }
-  });
-  const seen = new Set();
-  hols.forEach(h => {
-    if (seen.has(h.name)) return;
-    seen.add(h.name);
-    const item = document.createElement('div');
-    item.className = 'hol-item';
-    const typeLabel = h.off ? 'Official day off' : 'Observance (working day)';
-    item.innerHTML = '<span class="hol-info">' + h.name + '<span class="hol-type">' + typeLabel + '</span></span>' +
-      '<label class="hol-toggle"><input type="checkbox" ' + (h.off ? 'checked' : '') + ' data-hol="' + h.name + '"><span class="slider"></span></label>';
-    container.appendChild(item);
-    const cb = item.querySelector('input');
-    cb.addEventListener('change', () => { holidayOverrides[h.name] = cb.checked; });
-  });
-}
-
-function checkReady() {
-  btnStart.disabled = !(getBirthdayValue() && inputCountry.value);
-}
-
-btnStart.addEventListener('click', () => {
-  const config = buildConfig();
-  localStorage.setItem('freedomclock_config', JSON.stringify(config));
-  localStorage.setItem('freedomclock_startDate', new Date().toISOString().slice(0,10));
-  startApp(config);
-});
-
-function buildConfig() {
-  const country = inputCountry.value;
-  const birthday = getBirthdayValue();
-  const gender = inputGender.value;
-  const cd = COUNTRIES[country];
-  let retireAge, weekendDays, holidays, vacDays, countryName;
-  if (country === 'custom') {
-    retireAge = parseInt(inputCustomAge.value) || 65;
-    weekendDays = inputWeekend.value.split('').map(Number);
-    holidays = () => [];
-    vacDays = parseInt(inputVacation.value) || 20;
-    countryName = 'Custom';
-  } else {
-    retireAge = cd.retireAge[gender] || cd.retireAge.M;
-    weekendDays = cd.weekendDays;
-    holidays = cd.holidays;
-    vacDays = parseInt(inputVacation.value) || cd.vacDays;
-    countryName = cd.name;
-  }
-  const bParts = birthday.split('-');
-  const retireDate = new Date(parseInt(bParts[0]) + retireAge, parseInt(bParts[1])-1, parseInt(bParts[2]));
-  const careerStart = inputCareerStart.value || null;
-  const dreams = [...selectedDreams];
-  const customDream = document.getElementById('dreamCustom').value.trim();
-  if (customDream) dreams.push('custom:' + customDream);
-  const holOverrides = Object.keys(holidayOverrides).length > 0 ? {...holidayOverrides} : null;
-  const religions = [...selectedReligions].filter(r => r !== 'none');
-  return {country, countryName, birthday, gender, retireAge, retireDate: retireDate.toISOString().slice(0,10), weekendDays, vacDays, careerStart, holidayFn: country, dreams, holOverrides, religions};
-}
-
-// MAIN APP FUNCTION
-function startApp(config) {
-  setupScreen.classList.add('hidden');
-  appScreen.classList.remove('hidden');
-
-  const RETIREMENT_DATE = new Date(config.retireDate);
-  const weekendDays = config.weekendDays;
-  const vacDays = config.vacDays;
-  const countryHolidayFn = config.holidayFn && COUNTRIES[config.holidayFn] ? COUNTRIES[config.holidayFn].holidays : ()=>[];
-  const configReligions = config.religions || [];
-  const isDiaspora = config.country !== 'IL';
-  const holidayFnRaw = (y) => {
-    let hols = countryHolidayFn(y);
-    const seen = new Set(hols.map(h=>h.name));
-    configReligions.forEach(rel => {
-      if (RELIGIOUS_HOLIDAYS[rel]) {
-        let relHols = RELIGIOUS_HOLIDAYS[rel](y);
-        if (rel === 'jewish' && isDiaspora) {
-          const extra = [];
-          relHols.forEach(h => {
-            if (/Passover 1st|Passover 7th|Shavuot|Sukkot|Simchat Torah/.test(h.name)) {
-              const nd = new Date(y, h.m, h.d + 1);
-              extra.push({m: nd.getMonth(), d: nd.getDate(), name: h.name + ' (2nd day)', off: h.off});
-            }
-          });
-          relHols = relHols.concat(extra);
-        }
-        relHols.forEach(h => {
-          if (!seen.has(h.name)) { seen.add(h.name); hols.push(h); }
-        });
-      }
-    });
-    return hols;
-  };
-  const holOverrides = config.holOverrides || {};
-
-  function isHolDayOff(h) {
-    if (holOverrides.hasOwnProperty(h.name)) return holOverrides[h.name];
-    return h.off !== false;
-  }
-
-  const today = new Date(); today.setHours(0,0,0,0);
-  const retireStr = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  document.getElementById('heroTitle').textContent = 'Freedom in...';
-  document.getElementById('heroDate').textContent = retireStr;
-
-  function isWeekend(d){return weekendDays.includes(d.getDay())}
-  function isHolidayOff(y,m,d){const hols=holidayFnRaw(y);for(let h of hols){if(h.m===m&&h.d===d&&isHolDayOff(h))return h.name}return null}
-  function isHolidayAny(y,m,d){const hols=holidayFnRaw(y);for(let h of hols){if(h.m===m&&h.d===d)return h}return null}
-
-  function countWorkdays(from,to){let c=0;const d=new Date(from);while(d<to){if(!isWeekend(d)&&!isHolidayOff(d.getFullYear(),d.getMonth(),d.getDate()))c++;d.setDate(d.getDate()+1)}return c}
-  function countHolidaysFrom(from){let c=0;for(let y=from.getFullYear();y<=RETIREMENT_DATE.getFullYear();y++){const hols=holidayFnRaw(y);for(let h of hols){if(!isHolDayOff(h))continue;const hd=new Date(y,h.m,h.d);if(hd>=from&&hd<RETIREMENT_DATE&&!isWeekend(hd))c++}}return c}
-
-  const calDaysLeft = Math.max(0, Math.floor((RETIREMENT_DATE - today)/86400000));
-  const workdaysRaw = countWorkdays(today, RETIREMENT_DATE);
-  const holidaysLeft = countHolidaysFrom(today);
-  const yearsLeft = calDaysLeft / 365.25;
-  const totalVacLeft = Math.round(yearsLeft * vacDays);
-  const netWorkDays = Math.max(0, workdaysRaw - totalVacLeft);
-
-  document.getElementById('calDays').textContent = calDaysLeft.toLocaleString();
-  document.getElementById('workDays').textContent = netWorkDays.toLocaleString();
-  document.getElementById('holDays').textContent = holidaysLeft;
-  document.getElementById('vacDays').textContent = totalVacLeft;
-
-  // PROGRESS BAR
-  const careerStart = config.careerStart ? new Date(config.careerStart) : new Date(new Date(config.birthday).getTime() + 22*365.25*86400000);
-  const totalCareer = RETIREMENT_DATE - careerStart;
-  const elapsed = today - careerStart;
-  const pct = Math.min(100, Math.max(0, elapsed/totalCareer*100)).toFixed(1);
-  document.getElementById('progressFill').style.width = pct+'%';
-  document.getElementById('progressText').textContent = pct+'% complete';
-
-  // STREAKS & CELEBRATIONS
-  const startDate = localStorage.getItem('freedomclock_startDate');
-  const daysSinceStart = startDate ? Math.floor((today - new Date(startDate))/86400000) : 0;
-  const weeksSinceStart = Math.floor(daysSinceStart/7);
-  const monthsSinceStart = Math.floor(daysSinceStart/30);
-
-  const streakEmojis = ['🎉','⭐','🔥','💪','🚀','🏆','✨','🎯','💫','🌟'];
-  let streakMsg = '';
-  if(daysSinceStart>0) streakMsg = streakEmojis[daysSinceStart%10]+' Day '+daysSinceStart+' of your freedom countdown! '+streakEmojis[(daysSinceStart+5)%10];
-  document.getElementById('heroStreak').textContent = streakMsg;
-
-  // MILESTONE CELEBRATIONS
-  const celebBox = document.getElementById('celebrationBox');
-  const celebMilestone = document.getElementById('celebMilestone');
-  const celebSub = document.getElementById('celebSub');
-  let showCeleb = false;
-
-  if(calDaysLeft%100===0 && calDaysLeft>0){celebMilestone.textContent='🎯 YAY! '+calDaysLeft+' Days - Nice Round Number! 🎯';celebSub.textContent='Every hundred closer is a VICTORY! 🥳';showCeleb=true;fireConfetti()}
-  else if(calDaysLeft===365){celebMilestone.textContent='🗓️ WOO! Exactly 1 Year Left! 🗓️';celebSub.textContent='The final lap begins! You got this! 💪';showCeleb=true;fireConfetti()}
-  else if(calDaysLeft===1000){celebMilestone.textContent='🏆 YAY! 1,000 Days to Go! 🏆';celebSub.textContent='Triple digits incoming soon! 🎊';showCeleb=true;fireConfetti()}
-  else if(daysSinceStart>0&&daysSinceStart%7===0){celebMilestone.textContent='🎉 YAY! Week '+weeksSinceStart+' Complete! 🎉';celebSub.textContent='Another week closer to FREEDOM! 🙌';showCeleb=true}
-  else if(daysSinceStart>0&&daysSinceStart%30===0){celebMilestone.textContent='🚀 WOOHOO! Month '+monthsSinceStart+' Done! 🚀';celebSub.textContent='Time flies when freedom calls! 🎊✨';showCeleb=true;fireConfetti()}
-  else if(daysSinceStart>0&&daysSinceStart%365===0){celebMilestone.textContent='💫 OMG! Year '+(daysSinceStart/365)+' Complete! 💫';celebSub.textContent='A WHOLE YEAR closer. You absolute LEGEND! 🏆🎉';showCeleb=true;fireConfetti()}
-
-  if(showCeleb) celebBox.classList.remove('hidden');
-
-  // DREAMS BOARD
-  const dreamIcons = {travel:'✈️',garden:'🌱',grandkids:'👶',art:'🎨',cook:'👨‍🍳',read:'📚',volunteer:'🤝',fitness:'🏃',beach:'🏖️',music:'🎵',pets:'🐕',business:'💡',write:'✍️',nothing:'😴',golf:'⛳',learn:'🎓'};
-  const dreamLabels = {travel:'Travel the world',garden:'Gardening',grandkids:'Spoil grandkids',art:'Art & creativity',cook:'Cook & bake',read:'Read all the books',volunteer:'Volunteer',fitness:'Get fit',beach:'Beach life',music:'Learn music',pets:'More time with pets',business:'Start a business',write:'Write a book',nothing:'Absolutely nothing',golf:'Golf',learn:'Take classes'};
-  if(config.dreams && config.dreams.length > 0) {
-    const board = document.getElementById('dreamsBoard');
-    const list = document.getElementById('dreamsList');
-    board.classList.remove('hidden');
-    list.innerHTML = config.dreams.map(d => {
-      if(d.startsWith('custom:')) {
-        const txt = d.slice(7);
-        return '<span class="dream-item"><span class="dream-icon">💭</span>'+txt+'</span>';
-      }
-      return '<span class="dream-item"><span class="dream-icon">'+(dreamIcons[d]||'🌟')+'</span>'+(dreamLabels[d]||d)+'</span>';
-    }).join('');
-  }
-
-  // FUN STATS
-  const funList = document.getElementById('funList');
-  const coffees = netWorkDays;
-  const weekendsLeft = Math.floor(calDaysLeft/7);
-  const sleeps = calDaysLeft;
-  const fridaysLeft = Math.floor(calDaysLeft/7);
-  const monthsLeft = Math.round(calDaysLeft/30.44);
-  funList.innerHTML = [
-    ['Months left','~'+monthsLeft],
-    ['Weekends left',weekendsLeft],
-    ['Fridays left',fridaysLeft],
-    ['Sleeps until freedom',sleeps.toLocaleString()],
-    ['Coffees at work',coffees.toLocaleString()],
-    ['% of career done',pct+'%'],
-    ['Countdown day #',daysSinceStart||'Just started!']
-  ].map(r=>'<div class="fun-row"><span>'+r[0]+'</span><span class="val">'+r[1]+'</span></div>').join('');
-
-  // CALENDAR
-  let viewYear=today.getFullYear(), viewMonth=today.getMonth();
-  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const dayLabels = weekendDays.includes(5) ? ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
-  function getChecks(){try{return JSON.parse(localStorage.getItem('fc_checks')||'{}')}catch(e){return{}}}
-  function saveChecks(c){localStorage.setItem('fc_checks',JSON.stringify(c))}
-
-  function renderCal(){
-    document.getElementById('monthLabel').textContent=monthNames[viewMonth]+' '+viewYear;
-    const grid=document.getElementById('calGrid');
-    grid.innerHTML='';
-    dayLabels.forEach(d=>{const el=document.createElement('div');el.className='day-header';el.textContent=d;grid.appendChild(el)});
-    const firstDow=new Date(viewYear,viewMonth,1).getDay();
-    const dim=new Date(viewYear,viewMonth+1,0).getDate();
-    const checks=getChecks();
-    for(let i=0;i<firstDow;i++){const el=document.createElement('div');el.className='day-cell empty';grid.appendChild(el)}
-    for(let d=1;d<=dim;d++){
-      const cellDate=new Date(viewYear,viewMonth,d);
-      const key=viewYear+'-'+String(viewMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-      const inRange=cellDate>=careerStart&&cellDate<RETIREMENT_DATE;
-      const el=document.createElement('div');
-      el.className='day-cell';
-      if(isWeekend(cellDate))el.classList.add('weekend');
-      const holInfo=isHolidayAny(viewYear,viewMonth,d);
-      if(holInfo)el.classList.add('holiday');
-      if(cellDate.getTime()===today.getTime())el.classList.add('today');
-      if(checks[key])el.classList.add('checked');
-      if(inRange&&cellDate>=today){
-        const daysUntil=Math.floor((RETIREMENT_DATE-cellDate)/86400000);
-        el.innerHTML='<div class="d-num">'+d+'</div><div class="d-count">'+daysUntil+'</div>';
-        el.addEventListener('click',(evt)=>{const ch=getChecks();if(ch[key]){delete ch[key];el.classList.remove('checked')}else{ch[key]=true;el.classList.add('checked');floatEmoji(evt.clientX,evt.clientY)}saveChecks(ch)});
-      } else {
-        el.innerHTML='<div class="d-num" style="opacity:0.4">'+d+'</div>';
-      }
-      grid.appendChild(el);
-    }
-  }
-  document.getElementById('prevMonth').addEventListener('click',()=>{viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--}renderCal()});
-  document.getElementById('nextMonth').addEventListener('click',()=>{viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++}renderCal()});
-  renderCal();
-
-  // UPCOMING HOLIDAYS
-  const upList=document.getElementById('upcomingList');
-  const upcoming=[];
-  for(let y=today.getFullYear();y<=RETIREMENT_DATE.getFullYear();y++){
-    const hols=holidayFnRaw(y);
-    for(let h of hols){const hd=new Date(y,h.m,h.d);if(hd>today&&hd<RETIREMENT_DATE)upcoming.push({name:h.name,date:hd,off:isHolDayOff(h)})}
-  }
-  upcoming.sort((a,b)=>a.date-b.date);
-  upList.innerHTML=upcoming.slice(0,8).map(h=>{
-    const ds=h.date.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    const da=Math.floor((h.date-today)/86400000);
-    const badge=h.off?'<span style="font-size:0.7em;background:#06d6a0;color:#0a2647;padding:1px 5px;border-radius:8px;margin-left:4px">OFF</span>':'<span style="font-size:0.7em;background:#205080;color:#87ceeb;padding:1px 5px;border-radius:8px;margin-left:4px">WORK</span>';
-    return '<div class="upcoming-item"><span class="hol-name">'+h.name+badge+'</span><span class="hol-date">'+ds+' ('+da+' days)</span></div>';
-  }).join('');
-}
-
-// FLOATING WOOHOO EMOJI
-function floatEmoji(x, y) {
-  const emojis = ['🎉','🥳','💃','🙌','✨','🔥','💪','🎊','🏖️','⭐','🚀','🏆','😎','🍾','👏','💫'];
-  const phrases = ['WOO!','YAY!','YES!','DONE!','BYE!','ONE LESS!','CLOSER!'];
-  const el = document.createElement('div');
-  el.className = 'float-emoji';
-  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  el.style.left = (x - 15) + 'px';
-  el.style.top = (y - 10) + 'px';
-  document.body.appendChild(el);
-  const txt = document.createElement('div');
-  txt.className = 'float-emoji';
-  txt.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-  txt.style.left = (x + 10) + 'px';
-  txt.style.top = (y - 20) + 'px';
-  txt.style.fontSize = '0.9em';
-  txt.style.color = '#ffd700';
-  txt.style.fontWeight = '800';
-  document.body.appendChild(txt);
-  setTimeout(() => { el.remove(); txt.remove(); }, 1600);
-}
-
-// CONFETTI
-function fireConfetti(){
-  const container=document.getElementById('confetti');
-  const colors=['#00d4ff','#48cae4','#ffd700','#06d6a0','#ff6b6b','#ffd166','#40e0d0','#00b4d8'];
-  for(let i=0;i<60;i++){
-    const piece=document.createElement('div');
-    piece.className='confetti-piece';
-    piece.style.left=Math.random()*100+'%';
-    piece.style.background=colors[Math.floor(Math.random()*colors.length)];
-    piece.style.animationDelay=Math.random()*2+'s';
-    piece.style.width=(6+Math.random()*8)+'px';
-    piece.style.height=(6+Math.random()*8)+'px';
-    piece.style.borderRadius=Math.random()>0.5?'50%':'0';
-    container.appendChild(piece);
-  }
-  setTimeout(()=>{container.innerHTML=''},4000);
-}
-
-// SERVICE WORKER
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js')}
-
-// ADS & PREMIUM
-const isPremium = localStorage.getItem('fc_premium') === 'true';
-
-// CHECK FOR SAVED CONFIG
-const saved = localStorage.getItem('freedomclock_config');
-if (saved) {
-  startApp(JSON.parse(saved));
-  if (!isPremium) showAds();
-} else {
-  setupScreen.classList.remove('hidden');
-}
+// UTILITY AD CONTROLS
 function hideAds() {
   const top = document.getElementById('adBannerTop');
   const bottom = document.getElementById('adBannerBottom');
@@ -963,44 +388,117 @@ function showAds() {
   if (bottom) bottom.classList.remove('hidden');
   document.getElementById('appScreen').classList.add('app-with-ads');
 }
-if (isPremium) { hideAds(); } else {
-  const appEl = document.getElementById('appScreen');
-  if (!appEl.classList.contains('hidden')) showAds();
+
+// COUNTRY DATABASE
+const COUNTRIES = {
+  US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:6,d:4,name:'Independence Day',off:true},{m:11,d:25,name:'Christmas',off:true}]},
+  UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:11,d:25,name:'Christmas',off:true}]},
+  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:6,d:1,name:'Canada Day',off:true}]},
+  IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18,holidays:(y)=>[{m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:21,name:'Yom Kippur',off:true}]}
+};
+
+// INITIALIZATION
+const setupScreen = document.getElementById('setupScreen');
+const appScreen = document.getElementById('appScreen');
+const inputCountry = document.getElementById('inputCountry');
+const inputBirthMonth = document.getElementById('inputBirthMonth');
+const inputBirthDay = document.getElementById('inputBirthDay');
+const inputBirthYear = document.getElementById('inputBirthYear');
+
+(function(){
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  months.forEach((m,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent=m;inputBirthMonth.appendChild(o)});
+  for(let d=1;d<=31;d++){const o=document.createElement('option');o.value=d;o.textContent=d;inputBirthDay.appendChild(o)}
+  const curYear=new Date().getFullYear();
+  for(let y=curYear-16;y>=curYear-80;y--){const o=document.createElement('option');o.value=y;o.textContent=y;inputBirthYear.appendChild(o)}
+})();
+
+function getBirthdayValue(){
+  const m=inputBirthMonth.value,d=inputBirthDay.value,y=inputBirthYear.value;
+  if(!m||!d||!y)return'';
+  return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
 }
-document.getElementById('btnRemoveAds').addEventListener('click', () => {
-  if (confirm('Remove all ads for $4.99?\n\n(This will unlock ad-free mode permanently on this device)')) {
-    localStorage.setItem('fc_premium', 'true');
-    hideAds();
-    alert('🎉 Ads removed! Enjoy your clean countdown.');
-  }
+
+const inputGender = document.getElementById('inputGender');
+const inputCustomAge = document.getElementById('inputCustomAge');
+const inputWeekend = document.getElementById('inputWeekend');
+const inputCareerStart = document.getElementById('inputCareerStart');
+const inputVacation = document.getElementById('inputVacation');
+const btnStart = document.getElementById('btnStart');
+
+const dreamsPicker = document.getElementById('dreamsPicker');
+const dreamTags = dreamsPicker.querySelectorAll('.dream-tag');
+const selectedDreams = new Set();
+dreamTags.forEach(tag => {
+  tag.addEventListener('click', () => {
+    const dream = tag.dataset.dream;
+    if (selectedDreams.has(dream)) { selectedDreams.delete(dream); tag.classList.remove('selected'); }
+    else { selectedDreams.add(dream); tag.classList.add('selected'); }
+  });
 });
 
-// RESET / START FRESH
-let resetPending = false;
-let resetTimer = null;
-function resetAll(evt) {
-  const btn = evt.currentTarget;
-  if (!resetPending) {
-    resetPending = true;
-    btn.textContent = '⚠️ Tap again to confirm reset';
-    btn.style.borderColor = '#ff6b6b';
-    btn.style.color = '#ff6b6b';
-    resetTimer = setTimeout(() => {
-      resetPending = false;
-      btn.textContent = btn.id === 'btnReset' ? '🔄 Start Fresh' : '⚙';
-      btn.style.borderColor = '';
-      btn.style.color = '';
-    }, 3000);
-    return;
-  }
-  clearTimeout(resetTimer);
-  localStorage.removeItem('freedomclock_config');
-  localStorage.removeItem('freedomclock_startDate');
-  localStorage.removeItem('fc_checks');
-  location.reload();
+function checkReady() {
+  btnStart.disabled = !(getBirthdayValue() && inputCountry.value);
 }
-document.getElementById('btnSettings').addEventListener('click', resetAll);
-document.getElementById('btnReset').addEventListener('click', resetAll);
+inputCountry.addEventListener('change', checkReady);
+inputBirthMonth.addEventListener('change', checkReady);
+inputBirthDay.addEventListener('change', checkReady);
+inputBirthYear.addEventListener('change', checkReady);
+
+btnStart.addEventListener('click', () => {
+  const config = {
+    country: inputCountry.value,
+    birthday: getBirthdayValue(),
+    gender: inputGender.value,
+    retireAge: 65,
+    retireDate: new Date(new Date().setFullYear(new Date().getFullYear() + 10)).toISOString().slice(0,10),
+    weekendDays: [0,6],
+    vacDays: parseInt(inputVacation.value) || 20,
+    dreams: [...selectedDreams]
+  };
+  localStorage.setItem('freedomclock_config', JSON.stringify(config));
+  localStorage.setItem('freedomclock_startDate', new Date().toISOString().slice(0,10));
+  location.reload();
+});
+
+// MAIN APP RUNNER
+function startApp(config) {
+  setupScreen.classList.add('hidden');
+  appScreen.classList.remove('hidden');
+
+  const RETIREMENT_DATE = new Date(config.retireDate);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const calDaysLeft = Math.max(0, Math.floor((RETIREMENT_DATE - today)/86400000));
+
+  document.getElementById('heroTitle').textContent = 'Freedom in...';
+  document.getElementById('heroDate').textContent = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('calDays').textContent = calDaysLeft.toLocaleString();
+  document.getElementById('workDays').textContent = Math.round(calDaysLeft * 5 / 7).toLocaleString();
+  document.getElementById('holDays').textContent = '12';
+  document.getElementById('vacDays').textContent = config.vacDays;
+
+  if (localStorage.getItem('fc_premium') === 'true') { hideAds(); } else { showAds(); }
+}
+
+document.getElementById('btnRemoveAds').addEventListener('click', () => {
+  localStorage.setItem('fc_premium', 'true');
+  hideAds();
+  alert('🎉 Ads removed! Enjoy your clean countdown.');
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  localStorage.clear();
+  location.reload();
+});
+
+// INITIAL LOAD CHECK
+const saved = localStorage.getItem('freedomclock_config');
+if (saved) {
+  startApp(JSON.parse(saved));
+} else {
+  setupScreen.classList.remove('hidden');
+}
 </script>
 </body>
 </html>
+
