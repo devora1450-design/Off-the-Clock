@@ -5,81 +5,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#f0f7f7">
+<meta name="theme-color" content="#38bdf8">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.svg">
 <title>Off-the-Clock - Retirement Countdown</title>
 <style>
-/* --- GLOBAL RESETS & COASTAL BEACH THEME --- */
+/* --- GLOBAL RESETS & GRAPHIC BEACH SCENE --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #f0f7f7;
-  background-image: linear-gradient(180deg, #e0f2fe 0%, #f0f7f7 100%);
-  color: #1e293b;
+  color: #0f172a;
   min-height: 100vh;
   padding: 16px;
   padding-top: env(safe-area-inset-top, 16px);
+  background-attachment: fixed;
+  /* Layered SVG Graphics: Clouds, Distant Waves, Shoreline & Sky Gradient */
+  background-image: 
+    /* Soft Drifting Clouds */
+    radial-gradient(circle at 20% 8%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 12%),
+    radial-gradient(circle at 75% 14%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 15%),
+    /* Ocean Wave SVG Horizon Layer */
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230284c7" fill-opacity="0.35" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,149.3C672,160,768,224,864,229.3C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path><path fill="%230d9488" fill-opacity="0.25" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,213.3C840,203,960,149,1080,149.3C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>'),
+    /* Sky to Sea Gradient */
+    linear-gradient(180deg, #38bdf8 0%, #7dd3fc 35%, #0284c7 65%, #0284c7 82%, #fde047 88%, #fef08a 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
 }
 
 .hidden { display: none !important; }
 
-/* SETUP & CONTAINERS */
+/* SETUP & CONTAINERS WITH FROSTED GLASS EFFECT */
 .setup, .app { max-width: 440px; margin: 0 auto; }
 
 .setup h1 {
   text-align: center;
-  font-size: 1.8em;
+  font-size: 1.9em;
   font-weight: 800;
   margin-bottom: 4px;
-  color: #0369a1;
+  color: #0284c7;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
 }
 
 .setup .tagline {
   text-align: center;
   margin-bottom: 24px;
   font-size: 0.9em;
-  color: #64748b;
+  color: #0369a1;
+  font-weight: 600;
 }
 
 .form-group { margin-bottom: 18px; }
-.form-group label { display: block; font-size: 0.85em; font-weight: 600; margin-bottom: 6px; color: #0369a1; }
+.form-group label { display: block; font-size: 0.85em; font-weight: 700; margin-bottom: 6px; color: #0284c7; }
 .form-group input, .form-group select {
   width: 100%;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #cbd5e1;
-  background: #ffffff;
-  color: #1e293b;
+  border-radius: 12px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
   font-size: 0.95em;
   outline: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 .btn-start {
   width: 100%;
   padding: 14px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #0284c7, #0d9488);
   color: #ffffff;
   font-size: 1.1em;
   font-weight: 700;
   cursor: pointer;
   margin-top: 10px;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.3);
 }
 .btn-start:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
 
-/* CARDS & PANELS */
+/* CARDS & PANELS (Frosted Glass backdrop for readability) */
 .hero {
   text-align: center;
   padding: 24px 12px;
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.92) 0%, rgba(3, 105, 161, 0.95) 100%);
+  border-radius: 22px;
   margin-bottom: 16px;
   color: #ffffff;
-  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.25);
+  box-shadow: 0 10px 25px rgba(2, 132, 199, 0.3);
+  backdrop-filter: blur(8px);
 }
 .hero h1 { font-size: 1.4em; margin-bottom: 4px; color: #ffffff; }
 .hero .retire-date { font-size: 0.9em; color: #e0f2fe; }
@@ -87,27 +102,29 @@ body {
 
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .card {
-  background: #ffffff;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
   padding: 16px 10px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
-  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 .card .number { font-size: 1.8em; font-weight: 800; margin-bottom: 2px; }
-.card .label { font-size: 0.7em; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.card .label { font-size: 0.7em; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
 .card.calendar .number { color: #f97316; }
 .card.workdays .number { color: #0284c7; }
 .card.holidays .number { color: #d97706; }
 .card.vacation .number { color: #0d9488; }
 
-.celebration, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board {
-  background: #ffffff;
-  border-radius: 16px;
+.setup, .celebration, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
   padding: 18px;
   margin-bottom: 16px;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .celebration { border: 2px solid #f59e0b; text-align: center; }
@@ -117,41 +134,42 @@ body {
 .progress-section h2, .calendar-section h2, .upcoming h2, .fun-stats h2, .dreams-board h2 {
   font-size: 0.9em;
   margin-bottom: 12px;
-  color: #0369a1;
+  color: #0284c7;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-weight: 800;
 }
 
-.progress-bar { height: 12px; background: #e2e8f0; border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
+.progress-bar { height: 12px; background: rgba(226, 232, 240, 0.8); border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #0d9488); border-radius: 6px; transition: width 0.5s; }
-.progress-text { font-size: 0.8em; color: #0284c7; text-align: right; font-weight: 600; }
+.progress-text { font-size: 0.8em; color: #0284c7; text-align: right; font-weight: 700; }
 
 /* CALENDAR GRID */
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .cal-nav button { background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1em; cursor: pointer; font-weight: 700; }
-.cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #1e293b; }
+.cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #0f172a; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .cal-grid .day-header { text-align: center; font-size: 0.65em; color: #64748b; padding: 4px 0; font-weight: 700; }
-.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: #f8fafc; border: 1px solid #f1f5f9; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; }
 .day-cell.empty { visibility: hidden; }
 .day-cell.weekend { background: #fff7ed; }
 .day-cell.holiday { background: #fef3c7; }
 .day-cell.today { border: 2px solid #0284c7; font-weight: bold; }
 .day-cell.checked { background: #dcfce7 !important; border-color: #86efac !important; }
-.day-cell .d-num { font-weight: 700; color: #1e293b; }
+.day-cell .d-num { font-weight: 700; color: #0f172a; }
 .day-cell .d-count { font-size: 0.75em; color: #f97316; }
 
 /* LISTS & CHIPS */
-.upcoming-item, .fun-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.85em; }
+.upcoming-item, .fun-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6); font-size: 0.85em; }
 .upcoming-item:last-child, .fun-row:last-child { border: none; }
-.upcoming-item .hol-name { color: #1e293b; font-weight: 600; }
+.upcoming-item .hol-name { color: #0f172a; font-weight: 600; }
 .upcoming-item .hol-date { color: #64748b; }
 .fun-row .val { color: #0d9488; font-weight: 700; }
 
 .dreams-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .dreams-picker .dream-tag { padding: 8px 12px; border-radius: 20px; background: #e0f2fe; border: 1px solid #bae6fd; font-size: 0.82em; cursor: pointer; color: #0369a1; }
 .dreams-picker .dream-tag.selected { background: #0284c7; border-color: #0284c7; color: #ffffff; font-weight: 600; }
-.dream-custom-input { margin-top: 10px; width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 0.85em; }
+.dream-custom-input { margin-top: 10px; width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 0.85em; }
 
 .dreams-board .dream-item { display: inline-block; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 0.8em; background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; font-weight: 600; }
 
@@ -159,7 +177,7 @@ body {
 .holiday-customizer { margin-top: 12px; max-height: 240px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px; background: #ffffff; }
 .hol-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 6px; border-bottom: 1px solid #f1f5f9; font-size: 0.82em; }
 .hol-item:last-child { border: none; }
-.hol-item .hol-info { flex: 1; color: #1e293b; }
+.hol-item .hol-info { flex: 1; color: #0f172a; }
 .hol-item .hol-info .hol-type { font-size: 0.75em; color: #64748b; margin-left: 6px; }
 
 .hol-toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
@@ -176,13 +194,13 @@ body {
 .hol-legend .dot.work { background: #cbd5e1; }
 
 /* UTILITY / ADS / OVERLAYS */
-.settings-btn { position: fixed; top: 16px; right: 16px; background: #ffffff; border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-.legend { text-align: center; font-size: 0.7em; color: #64748b; padding: 10px; }
-.ad-banner { background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; position: relative; }
+.settings-btn { position: fixed; top: 16px; right: 16px; background: rgba(255,255,255,0.9); border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.legend { text-align: center; font-size: 0.7em; color: #0284c7; font-weight: 600; padding: 10px; }
+.ad-banner { background: rgba(255,255,255,0.85); border: 1px dashed #cbd5e1; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; position: relative; }
 .ad-banner .ad-label { position: absolute; top: 4px; right: 8px; font-size: 0.6em; color: #94a3b8; text-transform: uppercase; }
 .ad-banner .ad-content { color: #64748b; font-size: 0.85em; }
 .remove-ads-btn { background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; border: none; padding: 6px 14px; border-radius: 16px; font-size: 0.8em; font-weight: 700; cursor: pointer; margin-left: 6px; }
-.ad-banner-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #cbd5e1; padding: 8px; text-align: center; z-index: 99; }
+.ad-banner-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-top: 1px solid #cbd5e1; padding: 8px; text-align: center; z-index: 99; }
 .app-with-ads { padding-bottom: 66px; }
 
 .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
@@ -385,7 +403,7 @@ body {
     </div>
   </div>
   <div style="text-align:center;margin-top:20px;padding-bottom:20px">
-    <button id="btnReset" style="background:none;border:1px solid #cbd5e1;color:#64748b;padding:10px 20px;border-radius:10px;font-size:0.85em;cursor:pointer">🔄 Start Fresh</button>
+    <button id="btnReset" style="background:none;border:1px solid rgba(255,255,255,0.8);color:#0284c7;padding:10px 20px;border-radius:10px;font-size:0.85em;cursor:pointer;font-weight:700">🔄 Start Fresh</button>
   </div>
 </div>
 
@@ -397,25 +415,180 @@ body {
 <div class="confetti-container" id="confetti"></div>
 
 <script>
-// FULL COUNTRIES DATABASE
-const COUNTRIES = {
-  IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18,holidays:(y)=>[{m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:13,name:'Rosh Hashana',off:true},{m:8,d:21,name:'Yom Kippur',off:true},{m:8,d:26,name:'Sukkot',off:true},{m:9,d:3,name:'Simchat Torah',off:true},{m:3,d:2,name:'Passover 1st',off:true},{m:3,d:8,name:'Passover 7th',off:true},{m:4,d:22,name:'Shavuot',off:true},{m:3,d:22,name:'Independence Day',off:true}]},
-  US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:0,d:20,name:'MLK Day',off:true},{m:1,d:17,name:"Presidents' Day",off:true},{m:4,d:26,name:'Memorial Day',off:true},{m:5,d:19,name:'Juneteenth',off:true},{m:6,d:4,name:'Independence Day',off:true},{m:8,d:1,name:'Labor Day',off:true},{m:10,d:11,name:'Veterans Day',off:true},{m:10,d:27,name:'Thanksgiving',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
-  UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:4,d:5,name:'Early May Bank',off:true},{m:4,d:26,name:'Spring Bank',off:true},{m:7,d:25,name:'Summer Bank',off:true},{m:11,d:25,name:'Winter Holiday',off:true},{m:11,d:26,name:'Boxing Day',off:true}]},
-  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:1,d:17,name:'Family Day',off:true},{m:6,d:1,name:'Canada Day',off:true},{m:8,d:1,name:'Labour Day',off:true},{m:9,d:13,name:'Thanksgiving',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
-  AU: {name:'Australia',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:"New Year's Day",off:true},{m:0,d:26,name:'Australia Day',off:true},{m:3,d:25,name:'Anzac Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
-  DE: {name:'Germany',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:30,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:9,d:3,name:'Unity Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
-  FR: {name:'France',retireAge:{M:64,F:64},weekendDays:[0,6],vacDays:25,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:4,d:1,name:'Labour Day',off:true},{m:6,d:14,name:'National Day',off:true},{m:11,d:25,name:'Winter Holiday',off:true}]},
-  JP: {name:'Japan',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20,holidays:(y)=>[{m:0,d:1,name:'New Year',off:true},{m:1,d:11,name:'Foundation Day',off:true},{m:10,d:3,name:'Culture Day',off:true}]}
+// DYNAMIC SECULAR HOLIDAY CALCULATOR
+function getNthDayOfMonth(year, month, dayOfWeek, n) {
+  let count = 0;
+  for (let d = 1; d <= 31; d++) {
+    const dt = new Date(year, month, d);
+    if (dt.getMonth() !== month) break;
+    if (dt.getDay() === dayOfWeek) {
+      count++;
+      if (count === n) return d;
+    }
+  }
+  return 1;
+}
+
+function getLastDayOfMonth(year, month, dayOfWeek) {
+  let lastDay = 1;
+  for (let d = 1; d <= 31; d++) {
+    const dt = new Date(year, month, d);
+    if (dt.getMonth() !== month) break;
+    if (dt.getDay() === dayOfWeek) lastDay = d;
+  }
+  return lastDay;
+}
+
+// FULL SECULAR NATIONAL HOLIDAYS DYNAMIC ENGINE
+const COUNTRY_SECULAR_HOLIDAYS = {
+  US: (y) => [
+    {m:0, d:1, name:"New Year's Day", off:true},
+    {m:0, d:getNthDayOfMonth(y, 0, 1, 3), name:"MLK Day", off:true},
+    {m:1, d:getNthDayOfMonth(y, 1, 1, 3), name:"Presidents' Day", off:true},
+    {m:4, d:getLastDayOfMonth(y, 4, 1), name:"Memorial Day", off:true},
+    {m:5, d:19, name:"Juneteenth", off:true},
+    {m:6, d:4, name:"Independence Day", off:true},
+    {m:8, d:getNthDayOfMonth(y, 8, 1, 1), name:"Labor Day", off:true},
+    {m:10, d:11, name:"Veterans Day", off:true},
+    {m:10, d:getNthDayOfMonth(y, 10, 4, 4), name:"Thanksgiving", off:true},
+    {m:11, d:25, name:"Christmas", off:true}
+  ],
+  UK: (y) => [
+    {m:0, d:1, name:"New Year's Day", off:true},
+    {m:4, d:getNthDayOfMonth(y, 4, 1, 1), name:"Early May Bank Holiday", off:true},
+    {m:4, d:getLastDayOfMonth(y, 4, 1), name:"Spring Bank Holiday", off:true},
+    {m:7, d:getLastDayOfMonth(y, 7, 1), name:"Summer Bank Holiday", off:true},
+    {m:11, d:25, name:"Christmas Day", off:true},
+    {m:11, d:26, name:"Boxing Day", off:true}
+  ],
+  CA: (y) => [
+    {m:0, d:1, name:"New Year's Day", off:true},
+    {m:1, d:getNthDayOfMonth(y, 1, 1, 3), name:"Family Day", off:true},
+    {m:4, d:getLastDayOfMonth(y, 4, 1) - 7, name:"Victoria Day", off:true},
+    {m:6, d:1, name:"Canada Day", off:true},
+    {m:8, d:getNthDayOfMonth(y, 8, 1, 1), name:"Labour Day", off:true},
+    {m:8, d:30, name:"Truth and Reconciliation Day", off:true},
+    {m:9, d:getNthDayOfMonth(y, 9, 1, 2), name:"Thanksgiving", off:true},
+    {m:10, d:11, name:"Remembrance Day", off:true},
+    {m:11, d:25, name:"Christmas Day", off:true},
+    {m:11, d:26, name:"Boxing Day", off:true}
+  ],
+  IL: (y) => [
+    {m:3, d:22, name:"Independence Day", off:true}
+  ],
+  AU: (y) => [
+    {m:0, d:1, name:"New Year's Day", off:true},
+    {m:0, d:26, name:"Australia Day", off:true},
+    {m:3, d:25, name:"Anzac Day", off:true},
+    {m:5, d:getNthDayOfMonth(y, 5, 1, 2), name:"King's Birthday", off:true},
+    {m:11, d:25, name:"Christmas Day", off:true},
+    {m:11, d:26, name:"Boxing Day", off:true}
+  ],
+  DE: (y) => [
+    {m:0, d:1, name:"New Year's Day", off:true},
+    {m:4, d:1, name:"Labour Day", off:true},
+    {m:9, d:3, name:"German Unity Day", off:true},
+    {m:11, d:25, name:"Christmas Day", off:true},
+    {m:11, d:26, name:"2nd Day of Christmas", off:true}
+  ],
+  FR: (y) => [
+    {m:0, d:1, name:"New Year's Day", off:true},
+    {m:4, d:1, name:"Labour Day", off:true},
+    {m:4, d:8, name:"Victory in Europe Day", off:true},
+    {m:6, d:14, name:"Bastille Day", off:true},
+    {m:10, d:11, name:"Armistice Day", off:true},
+    {m:11, d:25, name:"Christmas Day", off:true}
+  ],
+  JP: (y) => [
+    {m:0, d:1, name:"New Year's Day", off:true},
+    {m:0, d:getNthDayOfMonth(y, 0, 1, 2), name:"Coming of Age Day", off:true},
+    {m:1, d:11, name:"National Foundation Day", off:true},
+    {m:3, d:29, name:"Showa Day", off:true},
+    {m:4, d:3, name:"Constitution Memorial Day", off:true},
+    {m:4, d:4, name:"Greenery Day", off:true},
+    {m:4, d:5, name:"Children's Day", off:true},
+    {m:6, d:getNthDayOfMonth(y, 6, 1, 3), name:"Marine Day", off:true},
+    {m:7, d:11, name:"Mountain Day", off:true},
+    {m:8, d:getNthDayOfMonth(y, 8, 1, 3), name:"Respect for the Aged Day", off:true},
+    {m:10, d:3, name:"Culture Day", off:true},
+    {m:10, d:23, name:"Labor Thanksgiving Day", off:true}
+  ]
 };
 
-// RELIGIOUS HOLIDAY DATABASE
+// FULL COUNTRIES CONFIG METADATA
+const COUNTRIES = {
+  IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18},
+  US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15},
+  UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28},
+  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15},
+  AU: {name:'Australia',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20},
+  DE: {name:'Germany',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:30},
+  FR: {name:'France',retireAge:{M:64,F:64},weekendDays:[0,6],vacDays:25},
+  JP: {name:'Japan',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
+  AR: {name:'Argentina',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:14},
+  AT: {name:'Austria',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:25},
+  BE: {name:'Belgium',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
+  BR: {name:'Brazil',retireAge:{M:65,F:62},weekendDays:[0,6],vacDays:30},
+  CL: {name:'Chile',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:15},
+  CN: {name:'China',retireAge:{M:60,F:55},weekendDays:[0,6],vacDays:10},
+  CO: {name:'Colombia',retireAge:{M:62,F:57},weekendDays:[0,6],vacDays:15},
+  CZ: {name:'Czech Republic',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
+  DK: {name:'Denmark',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
+  EG: {name:'Egypt',retireAge:{M:60,F:60},weekendDays:[5,6],vacDays:21},
+  FI: {name:'Finland',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:25},
+  GR: {name:'Greece',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20},
+  HU: {name:'Hungary',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
+  IN: {name:'India',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:15},
+  ID: {name:'Indonesia',retireAge:{M:58,F:58},weekendDays:[0,6],vacDays:12},
+  IE: {name:'Ireland',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:20},
+  IT: {name:'Italy',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:26},
+  KR: {name:'South Korea',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15},
+  MY: {name:'Malaysia',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:14},
+  MX: {name:'Mexico',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:12},
+  NL: {name:'Netherlands',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
+  NZ: {name:'New Zealand',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
+  NG: {name:'Nigeria',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:15},
+  NO: {name:'Norway',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
+  PK: {name:'Pakistan',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:14},
+  PE: {name:'Peru',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:30},
+  PH: {name:'Philippines',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:5},
+  PL: {name:'Poland',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:26},
+  PT: {name:'Portugal',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:22},
+  RO: {name:'Romania',retireAge:{M:65,F:63},weekendDays:[0,6],vacDays:21},
+  RU: {name:'Russia',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:28},
+  SA: {name:'Saudi Arabia',retireAge:{M:60,F:55},weekendDays:[5,6],vacDays:21},
+  SG: {name:'Singapore',retireAge:{M:63,F:63},weekendDays:[0,6],vacDays:14},
+  ZA: {name:'South Africa',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15},
+  ES: {name:'Spain',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:22},
+  SE: {name:'Sweden',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
+  CH: {name:'Switzerland',retireAge:{M:65,F:64},weekendDays:[0,6],vacDays:20},
+  TH: {name:'Thailand',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:6},
+  TR: {name:'Turkey',retireAge:{M:60,F:58},weekendDays:[0,6],vacDays:14},
+  AE: {name:'UAE',retireAge:{M:60,F:55},weekendDays:[0,6],vacDays:30},
+  VN: {name:'Vietnam',retireAge:{M:62,F:60},weekendDays:[0,6],vacDays:12}
+};
+
+// RELIGIOUS HOLIDAY CALCULATOR ENGINE
 const RELIGIOUS_HOLIDAYS = {
-  jewish: (y) => [{m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:13,name:'Rosh Hashana',off:true},{m:8,d:21,name:'Yom Kippur',off:true},{m:8,d:26,name:'Sukkot',off:true},{m:9,d:3,name:'Simchat Torah',off:true},{m:3,d:2,name:'Passover 1st',off:true},{m:3,d:8,name:'Passover 7th',off:true},{m:4,d:22,name:'Shavuot',off:true},{m:11,d:4,name:'Hanukkah',off:false},{m:2,d:5,name:'Purim',off:false}],
-  christian: (y) => [{m:11,d:25,name:'Christmas',off:true},{m:11,d:24,name:'Christmas Eve',off:false}],
-  muslim: (y) => [{m:2,d:20,name:'Eid al-Fitr',off:true},{m:4,d:27,name:'Eid al-Adha',off:true}],
-  hindu: (y) => [{m:10,d:8,name:'Diwali',off:true},{m:2,d:4,name:'Holi',off:false}],
-  buddhist: (y) => [{m:4,d:1,name:'Vesak',off:true}]
+  jewish: (y) => [
+    {m:8,d:12,name:'Rosh Hashana',off:true},{m:8,d:13,name:'Rosh Hashana',off:true},
+    {m:8,d:21,name:'Yom Kippur',off:true},{m:8,d:26,name:'Sukkot',off:true},
+    {m:9,d:3,name:'Simchat Torah',off:true},{m:3,d:2,name:'Passover 1st',off:true},
+    {m:3,d:8,name:'Passover 7th',off:true},{m:4,d:22,name:'Shavuot',off:true},
+    {m:11,d:4,name:'Hanukkah',off:false},{m:2,d:5,name:'Purim',off:false}
+  ],
+  christian: (y) => [
+    {m:11,d:25,name:'Christmas',off:true},{m:11,d:24,name:'Christmas Eve',off:false}
+  ],
+  muslim: (y) => [
+    {m:2,d:20,name:'Eid al-Fitr',off:true},{m:4,d:27,name:'Eid al-Adha',off:true}
+  ],
+  hindu: (y) => [
+    {m:10,d:8,name:'Diwali',off:true},{m:2,d:4,name:'Holi',off:false}
+  ],
+  buddhist: (y) => [
+    {m:4,d:1,name:'Vesak',off:true}
+  ]
 };
 
 const holidayOverrides = {};
@@ -461,7 +634,7 @@ dreamTags.forEach(tag => {
   });
 });
 
-// RELIGION PICKER LOGIC & CUSTOMIZER BUILDER
+// RELIGION PICKER LOGIC
 const religionPicker = document.getElementById('religionPicker');
 const religionTags = religionPicker.querySelectorAll('.dream-tag');
 const selectedReligions = new Set();
@@ -490,17 +663,27 @@ function populateHolidayCustomizer() {
   container.innerHTML = '';
   Object.keys(holidayOverrides).forEach(k => delete holidayOverrides[k]);
   
+  const c = inputCountry.value;
   const hasReligions = selectedReligions.size > 0 && !selectedReligions.has('none');
-  if (!hasReligions) { group.classList.add('hidden'); return; }
+  
   group.classList.remove('hidden');
 
   const y = new Date().getFullYear();
   let hols = [];
-  selectedReligions.forEach(rel => {
-    if (RELIGIOUS_HOLIDAYS[rel]) {
-      hols = hols.concat(RELIGIOUS_HOLIDAYS[rel](y));
-    }
-  });
+  
+  // 1. Add Country Secular Holidays
+  if (COUNTRY_SECULAR_HOLIDAYS[c]) {
+    hols = hols.concat(COUNTRY_SECULAR_HOLIDAYS[c](y));
+  }
+  
+  // 2. Add Selected Religious Holidays
+  if (hasReligions) {
+    selectedReligions.forEach(rel => {
+      if (RELIGIOUS_HOLIDAYS[rel]) {
+        hols = hols.concat(RELIGIOUS_HOLIDAYS[rel](y));
+      }
+    });
+  }
 
   const seen = new Set();
   hols.forEach(h => {
@@ -517,7 +700,10 @@ function populateHolidayCustomizer() {
   });
 }
 
-function checkReady() { btnStart.disabled = !(getBirthdayValue() && inputCountry.value); }
+function checkReady() { 
+  btnStart.disabled = !(getBirthdayValue() && inputCountry.value); 
+  if (inputCountry.value) populateHolidayCustomizer();
+}
 inputCountry.addEventListener('change', checkReady);
 inputBirthMonth.addEventListener('change', checkReady);
 inputBirthDay.addEventListener('change', checkReady);
@@ -569,12 +755,15 @@ function startApp(config) {
 
   function isWeekend(d){ return weekendDays.includes(d.getDay()); }
 
-  // HOLIDAY EVALUATION ENGINE
+  // HOLIDAY DYNAMIC ENGINE (Secular + Religious)
   const configReligions = config.religions || [];
   const holOverrides = config.holOverrides || {};
   
   function getYearHolidays(y) {
-    let hols = (COUNTRIES[config.country] && COUNTRIES[config.country].holidays) ? COUNTRIES[config.country].holidays(y) : [];
+    let hols = [];
+    if (COUNTRY_SECULAR_HOLIDAYS[config.country]) {
+      hols = hols.concat(COUNTRY_SECULAR_HOLIDAYS[config.country](y));
+    }
     const seen = new Set(hols.map(h => h.name));
     configReligions.forEach(rel => {
       if (RELIGIOUS_HOLIDAYS[rel]) {
@@ -601,11 +790,11 @@ function startApp(config) {
     });
   }
 
-  // COUNTS
-  const workDaysLeft = Math.round(calDaysLeft * (7 - weekendDays.length) / 7);
+  // COUNTS (Workdays - Total Vacation Days - Total Secular/Religious Holidays)
+  const workDaysLeftRaw = Math.round(calDaysLeft * (7 - weekendDays.length) / 7);
   const yearsLeft = calDaysLeft / 365.25;
   const totalVacLeft = Math.round(yearsLeft * config.vacDays);
-  const netWorkDays = Math.max(0, workDaysLeft - totalVacLeft);
+  const netWorkDays = Math.max(0, workDaysLeftRaw - totalVacLeft - totalHolidaysLeft);
 
   document.getElementById('heroTitle').textContent = 'Freedom in...';
   document.getElementById('heroDate').textContent = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
