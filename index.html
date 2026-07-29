@@ -151,12 +151,20 @@ body {
 }
 .fun-row .val { color: #0d9488; font-weight: 700; }
 
-/* FINANCIAL CALCULATOR STYLES */
+/* FINANCIAL CALCULATOR STYLES & MOBILE INPUT LAYOUT */
 .calc-card { background: rgba(255, 255, 255, 0.95); border-radius: 14px; padding: 14px; border: 1px solid #bae6fd; }
-.calc-result { text-align: center; margin-top: 12px; padding: 12px; background: #e0f2fe; border-radius: 12px; border: 1px solid #7dd3fc; }
+.calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+@media (max-width: 400px) {
+  .calc-inputs { grid-template-columns: 1fr; }
+}
+
+.calc-result { text-align: center; margin-top: 12px; padding: 12px; background: #e0f2fe; border-radius: 12px; border: 1px solid #7dd3fc; transition: background 0.3s, border-color 0.3s; }
+.calc-result.synced { background: #dcfce7; border-color: #86efac; }
 .calc-result .big-date { font-size: 1.3em; font-weight: 800; color: #0284c7; margin: 4px 0; }
+.calc-result.synced .big-date { color: #166534; }
 .calc-result .sub-text { font-size: 0.8em; color: #0369a1; }
-.btn-sync { background: #0d9488; color: #ffffff; border: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85em; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%; }
+.btn-sync { background: #0d9488; color: #ffffff; border: none; padding: 12px 14px; border-radius: 10px; font-size: 0.85em; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%; transition: background 0.2s; }
+.btn-sync:active { transform: scale(0.98); }
 
 /* MODAL POPUP FOR FINANCIAL INPUT */
 .modal-overlay {
@@ -190,13 +198,14 @@ body {
 .hol-legend .dot.off { background: #0d9488; }
 .hol-legend .dot.work { background: #cbd5e1; }
 
-/* CALENDAR GRID */
+/* CALENDAR GRID RELIABILITY FIX */
+.calendar-section { display: block; width: 100%; min-height: 280px; }
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .cal-nav button { background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1em; cursor: pointer; font-weight: 700; }
 .cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #0f172a; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
 .cal-grid .day-header { text-align: center; font-size: 0.65em; color: #64748b; padding: 4px 0; font-weight: 700; }
-.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; min-height: 36px; }
 .day-cell.empty { visibility: hidden; }
 .day-cell.weekend { background: #fff7ed; }
 .day-cell.holiday { background: #fef3c7; }
@@ -382,7 +391,6 @@ body {
     <input class="dream-custom-input" id="dreamCustom" placeholder="Or type your own dream...">
   </div>
 
-  <!-- FINANCIAL POPUP TRIGGER BUTTON (MOVED TO BOTTOM) -->
   <div class="form-group" style="margin-top: 20px;">
     <button id="btnOpenFinancialModal" style="width:100%; padding:12px; background:#e0f2fe; border:1px solid #7dd3fc; color:#0284c7; border-radius:12px; font-weight:700; cursor:pointer;">
       💰 Optional: Enter Financial Goal Amounts
@@ -392,7 +400,7 @@ body {
   <button class="btn-start" id="btnStart" disabled>Start My Countdown</button>
 </div>
 
-<!-- FINANCIAL POPUP MODAL (CLEAN TEXT INPUTS, NO DROPDOWNS) -->
+<!-- FINANCIAL POPUP MODAL -->
 <div class="modal-overlay hidden" id="financialModal">
   <div class="modal-content">
     <h3>Enter Financial Amounts</h3>
@@ -438,7 +446,9 @@ body {
     <div id="funList"></div>
   </div>
   
+  <!-- INTERACTIVE CALENDAR -->
   <div class="calendar-section">
+    <h2>Calendar Overview</h2>
     <div class="cal-nav">
       <button id="prevMonth">&lt;</button>
       <span class="month-label" id="monthLabel"></span>
@@ -456,7 +466,7 @@ body {
   <div class="finance-section">
     <h2>💰 Road to $1 Million Freedom</h2>
     <div class="calc-card">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div class="calc-inputs">
         <div>
           <label style="font-size:0.75em;font-weight:700;color:#0284c7">Starting Balance ($)</label>
           <input type="number" id="calcStartBalance" placeholder="e.g. 10000">
@@ -781,8 +791,11 @@ function runFinancialCalculator(startVal, monthlyVal) {
   const startP = parseFloat(startVal);
   const monthlyP = parseFloat(monthlyVal);
 
+  const calcRes = document.getElementById('calcResult');
   const dDate = document.getElementById('calcMillionDate');
   const dSub = document.getElementById('calcMillionSub');
+
+  if (calcRes) calcRes.classList.remove('synced');
 
   if (isNaN(startP) || isNaN(monthlyP) || monthlyP <= 0) {
     if (dDate) dDate.textContent = "Enter numbers above";
@@ -869,6 +882,7 @@ btnStart.addEventListener('click', () => {
   location.reload();
 });
 
+// SET COUNTDOWN TO GOAL DATE WITH VISUAL SYNC CONFIRMATION
 document.getElementById('btnSyncMillion').addEventListener('click', () => {
   if (!computedMillionDate) return;
   const saved = localStorage.getItem('freedomclock_config');
@@ -876,7 +890,14 @@ document.getElementById('btnSyncMillion').addEventListener('click', () => {
     const config = JSON.parse(saved);
     config.retireDate = computedMillionDate.toISOString().slice(0, 10);
     localStorage.setItem('freedomclock_config', JSON.stringify(config));
-    location.reload();
+    
+    // Smoothly update metrics and show visual success state
+    const calcRes = document.getElementById('calcResult');
+    const dSub = document.getElementById('calcMillionSub');
+    if (calcRes) calcRes.classList.add('synced');
+    if (dSub) dSub.textContent = "✅ Applied as your active retirement countdown date!";
+
+    startApp(config);
   }
 });
 
@@ -966,11 +987,11 @@ function startApp(config) {
     }).join('');
   }
 
-  // RESTORED EMOJI BADGES FOR MILESTONES
+  // MILESTONES WITH UPDATED EMOJI BADGES (No sleepy face!)
   document.getElementById('funList').innerHTML = [
     ['Months left', '~' + Math.round(calDaysLeft / 30.4), '🍼 Bye'],
     ['Weekends left', Math.floor(calDaysLeft / 7), '🎉 Yay'],
-    ['Sleeps until freedom', calDaysLeft.toLocaleString(), '😴 Zzz'],
+    ['Sleeps until freedom', calDaysLeft.toLocaleString(), '✨ Almost'],
     ['Coffees at work', netWorkDays.toLocaleString(), '☕ Gulp']
   ].map(r => '<div class="fun-row"><div class="label-group"><span>' + r[0] + '</span><span class="fun-badge">' + r[2] + '</span></div><span class="val">' + r[1] + '</span></div>').join('');
 
@@ -983,6 +1004,7 @@ function startApp(config) {
   function renderCal(){
     document.getElementById('monthLabel').textContent = monthNames[viewMonth] + ' ' + viewYear;
     const grid = document.getElementById('calGrid');
+    if (!grid) return;
     grid.innerHTML = '';
     ['S','M','T','W','T','F','S'].forEach(d => { const el = document.createElement('div'); el.className = 'day-header'; el.textContent = d; grid.appendChild(el); });
     
