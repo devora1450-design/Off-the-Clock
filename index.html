@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icon-192.svg">
 <title>Off-the-Clock - Retirement Countdown</title>
 <style>
-/* --- GLOBAL RESETS & GRAPHIC BEACH SCENE --- */
+/* --- GLOBAL RESETS & SUNSHINE HORIZON BEACH SCENE --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -20,11 +20,17 @@ body {
   padding: 16px;
   padding-top: env(safe-area-inset-top, 16px);
   background-attachment: fixed;
+  /* Radiant Sun Glow, Warm Coral Horizon, Sea Waves & Beach Sand */
   background-image: 
-    radial-gradient(circle at 20% 8%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 12%),
-    radial-gradient(circle at 75% 14%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 15%),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230284c7" fill-opacity="0.35" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,149.3C672,160,768,224,864,229.3C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path><path fill="%230d9488" fill-opacity="0.25" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,213.3C840,203,960,149,1080,149.3C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>'),
-    linear-gradient(180deg, #38bdf8 0%, #7dd3fc 35%, #0284c7 65%, #0284c7 82%, #fde047 88%, #fef08a 100%);
+    /* Radiant Sunshine Glow top right */
+    radial-gradient(circle at 85% 12%, rgba(254, 240, 138, 0.95) 0%, rgba(253, 224, 71, 0.6) 12%, rgba(251, 146, 60, 0.3) 25%, rgba(255, 255, 255, 0) 50%),
+    /* Soft Clouds */
+    radial-gradient(circle at 20% 8%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 14%),
+    radial-gradient(circle at 60% 18%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 12%),
+    /* SVG Ocean Horizon & Waves */
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230284c7" fill-opacity="0.4" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,149.3C672,160,768,224,864,229.3C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path><path fill="%230d9488" fill-opacity="0.3" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,213.3C840,203,960,149,1080,149.3C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>'),
+    /* Sky, Sunset Coral & Sand Shoreline Gradient */
+    linear-gradient(180deg, #38bdf8 0%, #7dd3fc 25%, #fdba74 48%, #0284c7 68%, #0284c7 82%, #fde047 88%, #fef08a 100%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
@@ -59,7 +65,7 @@ body {
   padding: 12px;
   border-radius: 12px;
   border: 1px solid rgba(2, 132, 199, 0.2);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   color: #0f172a;
   font-size: 0.95em;
   outline: none;
@@ -113,7 +119,7 @@ body {
 .card.holidays .number { color: #d97706; }
 .card.vacation .number { color: #0d9488; }
 
-.setup, .celebration, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board {
+.setup, .celebration, .progress-section, .calendar-section, .upcoming, .fun-stats, .dreams-board, .finance-section {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   border-radius: 18px;
@@ -127,7 +133,7 @@ body {
 .celebration .milestone { font-size: 1.3em; font-weight: 800; color: #d97706; margin-bottom: 6px; }
 .celebration .sub { font-size: 0.88em; color: #64748b; }
 
-.progress-section h2, .calendar-section h2, .upcoming h2, .fun-stats h2, .dreams-board h2 {
+.progress-section h2, .calendar-section h2, .upcoming h2, .fun-stats h2, .dreams-board h2, .finance-section h2 {
   font-size: 0.9em;
   margin-bottom: 12px;
   color: #0284c7;
@@ -139,6 +145,13 @@ body {
 .progress-bar { height: 12px; background: rgba(226, 232, 240, 0.8); border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #0d9488); border-radius: 6px; transition: width 0.5s; }
 .progress-text { font-size: 0.8em; color: #0284c7; text-align: right; font-weight: 700; }
+
+/* FINANCIAL CALCULATOR STYLES */
+.calc-card { background: rgba(255, 255, 255, 0.95); border-radius: 14px; padding: 14px; border: 1px solid #bae6fd; }
+.calc-result { text-align: center; margin-top: 14px; padding: 12px; background: #e0f2fe; border-radius: 12px; border: 1px solid #7dd3fc; }
+.calc-result .big-date { font-size: 1.3em; font-weight: 800; color: #0284c7; margin: 4px 0; }
+.calc-result .sub-text { font-size: 0.8em; color: #0369a1; }
+.btn-sync { background: #0d9488; color: #ffffff; border: none; padding: 8px 14px; border-radius: 10px; font-size: 0.82em; font-weight: 700; cursor: pointer; margin-top: 8px; width: 100%; }
 
 /* CALENDAR GRID */
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -189,9 +202,22 @@ body {
 .hol-legend .dot.off { background: #0d9488; }
 .hol-legend .dot.work { background: #cbd5e1; }
 
+/* HIGH-CONTRAST START FRESH BUTTON */
+.btn-fresh {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 12px 24px !important;
+  border-radius: 12px !important;
+  font-size: 0.9em !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25) !important;
+}
+
 /* UTILITY / ADS / OVERLAYS */
-.settings-btn { position: fixed; top: 16px; right: 16px; background: rgba(255,255,255,0.9); border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-.legend { text-align: center; font-size: 0.7em; color: #0284c7; font-weight: 600; padding: 10px; }
+.settings-btn { position: fixed; top: 16px; right: 16px; background: rgba(255,255,255,0.95); border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.legend { text-align: center; font-size: 0.72em; color: #0284c7; font-weight: 700; padding: 10px; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
 .ad-banner { background: rgba(255,255,255,0.85); border: 1px dashed #cbd5e1; border-radius: 12px; padding: 12px; margin-bottom: 16px; text-align: center; position: relative; }
 .ad-banner .ad-label { position: absolute; top: 4px; right: 8px; font-size: 0.6em; color: #94a3b8; text-transform: uppercase; }
 .ad-banner .ad-content { color: #64748b; font-size: 0.85em; }
@@ -287,19 +313,6 @@ body {
     <label>Retirement Age</label>
     <input type="number" id="inputCustomAge" min="50" max="80" value="65">
   </div>
-  <div class="form-group hidden" id="customWeekendGroup">
-    <label>Weekend Days</label>
-    <select id="inputWeekend">
-      <option value="06">Saturday & Sunday</option>
-      <option value="56">Friday & Saturday</option>
-      <option value="5">Friday only</option>
-      <option value="0">Sunday only</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label>Career Start Date (optional)</label>
-    <input type="date" id="inputCareerStart">
-  </div>
   <div class="form-group">
     <label>Annual Vacation Days</label>
     <input type="number" id="inputVacation" min="0" max="60" value="20">
@@ -327,22 +340,22 @@ body {
   <div class="form-group">
     <label>What do you want to do when you retire?</label>
     <div class="dreams-picker" id="dreamsPicker">
-      <span class="dream-tag" data-dream="travel" data-icon="✈️">✈️ Travel the world</span>
-      <span class="dream-tag" data-dream="garden" data-icon="🌱">🌱 Gardening</span>
-      <span class="dream-tag" data-dream="grandkids" data-icon="👶">👶 Spoil grandkids</span>
-      <span class="dream-tag" data-dream="art" data-icon="🎨">🎨 Art & creativity</span>
-      <span class="dream-tag" data-dream="cook" data-icon="👨‍🍳">👨‍🍳 Cook & bake</span>
-      <span class="dream-tag" data-dream="read" data-icon="📚">📚 Read all the books</span>
-      <span class="dream-tag" data-dream="volunteer" data-icon="🤝">🤝 Volunteer</span>
-      <span class="dream-tag" data-dream="fitness" data-icon="🏃">🏃 Get fit</span>
-      <span class="dream-tag" data-dream="beach" data-icon="🏖️">🏖️ Beach life</span>
-      <span class="dream-tag" data-dream="music" data-icon="🎵">🎵 Learn music</span>
-      <span class="dream-tag" data-dream="pets" data-icon="🐕">🐕 More time with pets</span>
-      <span class="dream-tag" data-dream="business" data-icon="💡">💡 Start a business</span>
-      <span class="dream-tag" data-dream="write" data-icon="✍️">✍️ Write a book</span>
-      <span class="dream-tag" data-dream="nothing" data-icon="😴">😴 Absolutely nothing</span>
-      <span class="dream-tag" data-dream="golf" data-icon="⛳">⛳ Golf</span>
-      <span class="dream-tag" data-dream="learn" data-icon="🎓">🎓 Take classes</span>
+      <span class="dream-tag" data-dream="travel">✈️ Travel the world</span>
+      <span class="dream-tag" data-dream="garden">🌱 Gardening</span>
+      <span class="dream-tag" data-dream="grandkids">👶 Spoil grandkids</span>
+      <span class="dream-tag" data-dream="art">🎨 Art & creativity</span>
+      <span class="dream-tag" data-dream="cook">👨‍🍳 Cook & bake</span>
+      <span class="dream-tag" data-dream="read">📚 Read all the books</span>
+      <span class="dream-tag" data-dream="volunteer">🤝 Volunteer</span>
+      <span class="dream-tag" data-dream="fitness">🏃 Get fit</span>
+      <span class="dream-tag" data-dream="beach">🏖️ Beach life</span>
+      <span class="dream-tag" data-dream="music">🎵 Learn music</span>
+      <span class="dream-tag" data-dream="pets">🐕 More time with pets</span>
+      <span class="dream-tag" data-dream="business">💡 Start a business</span>
+      <span class="dream-tag" data-dream="write">✍️ Write a book</span>
+      <span class="dream-tag" data-dream="nothing">😴 Absolutely nothing</span>
+      <span class="dream-tag" data-dream="golf">⛳ Golf</span>
+      <span class="dream-tag" data-dream="learn">🎓 Take classes</span>
     </div>
     <input class="dream-custom-input" id="dreamCustom" placeholder="Or type your own dream...">
   </div>
@@ -371,6 +384,38 @@ body {
     <div class="card holidays"><div class="number" id="holDays">--</div><div class="label">Holidays Left</div></div>
     <div class="card vacation"><div class="number" id="vacDays">--</div><div class="label">Vacation Days</div></div>
   </div>
+
+  <!-- WORK TO $1 MILLION CALCULATOR MODULE -->
+  <div class="finance-section">
+    <h2>💰 Road to $1 Million Freedom</h2>
+    <div class="calc-card">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div>
+          <label style="font-size:0.75em;font-weight:700;color:#0284c7">Starting Balance</label>
+          <select id="calcStartBalance">
+            <option value="1000">$1,000</option>
+            <option value="5000">$5,000</option>
+            <option value="10000" selected>$10,000</option>
+            <option value="25000">$25,000</option>
+            <option value="50000">$50,000</option>
+            <option value="100000">$100,000</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.75em;font-weight:700;color:#0284c7">Monthly Savings</label>
+          <input type="number" id="calcMonthlySave" value="500" step="50" min="0">
+        </div>
+      </div>
+      <div style="font-size:0.72em;color:#64748b;text-align:center">Assumes average 7% annual compound return</div>
+      <div class="calc-result" id="calcResult">
+        <div>Work to $1,000,000 date:</div>
+        <div class="big-date" id="calcMillionDate">Calculating...</div>
+        <div class="sub-text" id="calcMillionSub"></div>
+        <button class="btn-sync" id="btnSyncMillion">🎯 Set Retirement Date to $1M Goal Date</button>
+      </div>
+    </div>
+  </div>
+
   <div class="progress-section">
     <h2>Career Progress</h2>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -400,7 +445,7 @@ body {
     </div>
   </div>
   <div style="text-align:center;margin-top:20px;padding-bottom:20px">
-    <button id="btnReset" style="background:none;border:1px solid rgba(255,255,255,0.8);color:#0284c7;padding:10px 20px;border-radius:10px;font-size:0.85em;cursor:pointer;font-weight:700">🔄 Start Fresh</button>
+    <button id="btnReset" class="btn-fresh">🔄 Start Fresh</button>
   </div>
 </div>
 
@@ -491,169 +536,48 @@ const COUNTRY_SECULAR_HOLIDAYS = {
     {m:11, d:25, name:"Christmas Day", off:true},
     {m:11, d:26, name:"Boxing Day", off:true}
   ],
-  IL: (y) => [{m:3, d:22, name:"Independence Day", off:true}],
-  AU: (y) => [
-    {m:0, d:1, name:"New Year's Day", off:true},
-    {m:0, d:26, name:"Australia Day", off:true},
-    {m:3, d:25, name:"Anzac Day", off:true},
-    {m:5, d:getNthDayOfMonth(y, 5, 1, 2), name:"King's Birthday", off:true},
-    {m:11, d:25, name:"Christmas Day", off:true},
-    {m:11, d:26, name:"Boxing Day", off:true}
-  ],
-  DE: (y) => [
-    {m:0, d:1, name:"New Year's Day", off:true},
-    {m:4, d:1, name:"Labour Day", off:true},
-    {m:9, d:3, name:"German Unity Day", off:true},
-    {m:11, d:25, name:"Christmas Day", off:true},
-    {m:11, d:26, name:"2nd Day of Christmas", off:true}
-  ],
-  FR: (y) => [
-    {m:0, d:1, name:"New Year's Day", off:true},
-    {m:4, d:1, name:"Labour Day", off:true},
-    {m:4, d:8, name:"Victory in Europe Day", off:true},
-    {m:6, d:14, name:"Bastille Day", off:true},
-    {m:10, d:11, name:"Armistice Day", off:true},
-    {m:11, d:25, name:"Christmas Day", off:true}
-  ],
-  JP: (y) => [
-    {m:0, d:1, name:"New Year's Day", off:true},
-    {m:0, d:getNthDayOfMonth(y, 0, 1, 2), name:"Coming of Age Day", off:true},
-    {m:1, d:11, name:"National Foundation Day", off:true},
-    {m:3, d:29, name:"Showa Day", off:true},
-    {m:4, d:3, name:"Constitution Memorial Day", off:true},
-    {m:4, d:4, name:"Greenery Day", off:true},
-    {m:4, d:5, name:"Children's Day", off:true},
-    {m:6, d:getNthDayOfMonth(y, 6, 1, 3), name:"Marine Day", off:true},
-    {m:7, d:11, name:"Mountain Day", off:true},
-    {m:8, d:getNthDayOfMonth(y, 8, 1, 3), name:"Respect for the Aged Day", off:true},
-    {m:10, d:3, name:"Culture Day", off:true},
-    {m:10, d:23, name:"Labor Thanksgiving Day", off:true}
-  ]
+  IL: (y) => [{m:3, d:22, name:"Independence Day", off:true}]
 };
 
 const COUNTRIES = {
   IL: {name:'Israel',retireAge:{M:67,F:65},weekendDays:[5,6],vacDays:18},
   US: {name:'United States',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:15},
   UK: {name:'United Kingdom',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:28},
-  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15},
-  AU: {name:'Australia',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20},
-  DE: {name:'Germany',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:30},
-  FR: {name:'France',retireAge:{M:64,F:64},weekendDays:[0,6],vacDays:25},
-  JP: {name:'Japan',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
-  AR: {name:'Argentina',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:14},
-  AT: {name:'Austria',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:25},
-  BE: {name:'Belgium',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
-  BR: {name:'Brazil',retireAge:{M:65,F:62},weekendDays:[0,6],vacDays:30},
-  CL: {name:'Chile',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:15},
-  CN: {name:'China',retireAge:{M:60,F:55},weekendDays:[0,6],vacDays:10},
-  CO: {name:'Colombia',retireAge:{M:62,F:57},weekendDays:[0,6],vacDays:15},
-  CZ: {name:'Czech Republic',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
-  DK: {name:'Denmark',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
-  EG: {name:'Egypt',retireAge:{M:60,F:60},weekendDays:[5,6],vacDays:21},
-  FI: {name:'Finland',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:25},
-  GR: {name:'Greece',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:20},
-  HU: {name:'Hungary',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
-  IN: {name:'India',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:15},
-  ID: {name:'Indonesia',retireAge:{M:58,F:58},weekendDays:[0,6],vacDays:12},
-  IE: {name:'Ireland',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:20},
-  IT: {name:'Italy',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:26},
-  KR: {name:'South Korea',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15},
-  MY: {name:'Malaysia',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:14},
-  MX: {name:'Mexico',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:12},
-  NL: {name:'Netherlands',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
-  NZ: {name:'New Zealand',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20},
-  NG: {name:'Nigeria',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:15},
-  NO: {name:'Norway',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
-  PK: {name:'Pakistan',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:14},
-  PE: {name:'Peru',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:30},
-  PH: {name:'Philippines',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:5},
-  PL: {name:'Poland',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:26},
-  PT: {name:'Portugal',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:22},
-  RO: {name:'Romania',retireAge:{M:65,F:63},weekendDays:[0,6],vacDays:21},
-  RU: {name:'Russia',retireAge:{M:65,F:60},weekendDays:[0,6],vacDays:28},
-  SA: {name:'Saudi Arabia',retireAge:{M:60,F:55},weekendDays:[5,6],vacDays:21},
-  SG: {name:'Singapore',retireAge:{M:63,F:63},weekendDays:[0,6],vacDays:14},
-  ZA: {name:'South Africa',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15},
-  ES: {name:'Spain',retireAge:{M:66,F:66},weekendDays:[0,6],vacDays:22},
-  SE: {name:'Sweden',retireAge:{M:67,F:67},weekendDays:[0,6],vacDays:25},
-  CH: {name:'Switzerland',retireAge:{M:65,F:64},weekendDays:[0,6],vacDays:20},
-  TH: {name:'Thailand',retireAge:{M:60,F:60},weekendDays:[0,6],vacDays:6},
-  TR: {name:'Turkey',retireAge:{M:60,F:58},weekendDays:[0,6],vacDays:14},
-  AE: {name:'UAE',retireAge:{M:60,F:55},weekendDays:[0,6],vacDays:30},
-  VN: {name:'Vietnam',retireAge:{M:62,F:60},weekendDays:[0,6],vacDays:12}
+  CA: {name:'Canada',retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:15}
 };
 
-// FULL EXPANDED RELIGIOUS HOLIDAYS CALCULATOR
 const RELIGIOUS_HOLIDAYS = {
   jewish: (y) => [
     {m:8,d:12,name:'Rosh Hashana 1st Day',off:true},
     {m:8,d:13,name:'Rosh Hashana 2nd Day',off:true},
     {m:8,d:21,name:'Yom Kippur',off:true},
     {m:8,d:26,name:'Sukkot 1st Day',off:true},
-    {m:8,d:27,name:'Sukkot Chol HaMoed',off:false},
-    {m:8,d:28,name:'Sukkot Chol HaMoed',off:false},
-    {m:8,d:29,name:'Sukkot Chol HaMoed',off:false},
-    {m:8,d:30,name:'Sukkot Chol HaMoed',off:false},
     {m:9,d:2,name:'Shmini Atzeret',off:true},
     {m:9,d:3,name:'Simchat Torah',off:true},
-    {m:11,d:4,name:'Hanukkah (1st Light)',off:false},
-    {m:2,d:5,name:'Purim',off:false},
-    {m:2,d:6,name:'Shushan Purim',off:false},
     {m:3,d:2,name:'Passover 1st Day',off:true},
-    {m:3,d:3,name:'Passover Chol HaMoed',off:false},
-    {m:3,d:4,name:'Passover Chol HaMoed',off:false},
-    {m:3,d:5,name:'Passover Chol HaMoed',off:false},
-    {m:3,d:6,name:'Passover Chol HaMoed',off:false},
     {m:3,d:8,name:'Passover 7th Day',off:true},
-    {m:4,d:22,name:'Shavuot',off:true},
-    {m:6,d:23,name:"Tisha B'Av",off:false}
+    {m:4,d:22,name:'Shavuot',off:true}
   ],
   christian: (y) => {
     const e = getWesternEaster(y);
     const gf = new Date(e); gf.setDate(e.getDate() - 2);
     const em = new Date(e); em.setDate(e.getDate() + 1);
-    const aw = new Date(e); aw.setDate(e.getDate() - 46);
-    const pent = new Date(e); pent.setDate(e.getDate() + 49);
     return [
-      {m:0, d:6, name:'Epiphany', off:false},
-      {m:aw.getMonth(), d:aw.getDate(), name:'Ash Wednesday', off:false},
       {m:gf.getMonth(), d:gf.getDate(), name:'Good Friday', off:true},
       {m:e.getMonth(), d:e.getDate(), name:'Easter Sunday', off:true},
       {m:em.getMonth(), d:em.getDate(), name:'Easter Monday', off:true},
-      {m:pent.getMonth(), d:pent.getDate(), name:'Pentecost', off:false},
-      {m:11, d:24, name:'Christmas Eve', off:false},
       {m:11, d:25, name:'Christmas Day', off:true}
     ];
   },
   orthodox: (y) => {
     const e = getOrthodoxEaster(y);
     const gf = new Date(e); gf.setDate(e.getDate() - 2);
-    const bm = new Date(e); bm.setDate(e.getDate() + 1);
     return [
-      {m:0, d:7, name:'Orthodox Nativity (Christmas)', off:true},
-      {m:0, d:19, name:'Theophany (Epiphany)', off:false},
+      {m:0, d:7, name:'Orthodox Nativity', off:true},
       {m:gf.getMonth(), d:gf.getDate(), name:'Orthodox Good Friday', off:true},
-      {m:e.getMonth(), d:e.getDate(), name:'Orthodox Easter (Pascha)', off:true},
-      {m:bm.getMonth(), d:bm.getDate(), name:'Orthodox Bright Monday', off:true},
-      {m:11, d:24, name:'Orthodox Nativity Eve', off:false}
+      {m:e.getMonth(), d:e.getDate(), name:'Orthodox Easter', off:true}
     ];
-  },
-  muslim: (y) => [
-    {m:2,d:20,name:'Eid al-Fitr',off:true},
-    {m:4,d:27,name:'Eid al-Adha',off:true},
-    {m:6,d:16,name:'Islamic New Year',off:false},
-    {m:8,d:25,name:'Mawlid al-Nabi',off:false}
-  ],
-  hindu: (y) => [
-    {m:2,d:4,name:'Holi',off:false},
-    {m:7,d:26,name:'Janmashtami',off:false},
-    {m:9,d:12,name:'Dussehra',off:false},
-    {m:10,d:8,name:'Diwali',off:true}
-  ],
-  buddhist: (y) => [
-    {m:4,d:1,name:'Vesak (Buddha Day)',off:true},
-    {m:6,d:21,name:'Asalha Puja',off:false}
-  ]
+  }
 };
 
 const holidayOverrides = {};
@@ -682,8 +606,6 @@ function getBirthdayValue(){
 
 const inputGender = document.getElementById('inputGender');
 const inputCustomAge = document.getElementById('inputCustomAge');
-const inputWeekend = document.getElementById('inputWeekend');
-const inputCareerStart = document.getElementById('inputCareerStart');
 const inputVacation = document.getElementById('inputVacation');
 const btnStart = document.getElementById('btnStart');
 
@@ -718,57 +640,10 @@ religionTags.forEach(tag => {
       if (selectedReligions.has(rel)) { selectedReligions.delete(rel); tag.classList.remove('selected'); }
       else { selectedReligions.add(rel); tag.classList.add('selected'); }
     }
-    populateHolidayCustomizer();
   });
 });
 
-function populateHolidayCustomizer() {
-  const container = document.getElementById('holidayCustomizer');
-  const group = document.getElementById('holidayCustomizerGroup');
-  container.innerHTML = '';
-  Object.keys(holidayOverrides).forEach(k => delete holidayOverrides[k]);
-  
-  const c = inputCountry.value;
-  const hasReligions = selectedReligions.size > 0 && !selectedReligions.has('none');
-  
-  group.classList.remove('hidden');
-
-  const y = new Date().getFullYear();
-  let hols = [];
-  
-  // 1. Add Country Secular Holidays
-  if (COUNTRY_SECULAR_HOLIDAYS[c]) {
-    hols = hols.concat(COUNTRY_SECULAR_HOLIDAYS[c](y));
-  }
-  
-  // 2. Add Selected Religious Holidays
-  if (hasReligions) {
-    selectedReligions.forEach(rel => {
-      if (RELIGIOUS_HOLIDAYS[rel]) {
-        hols = hols.concat(RELIGIOUS_HOLIDAYS[rel](y));
-      }
-    });
-  }
-
-  const seen = new Set();
-  hols.forEach(h => {
-    if (seen.has(h.name)) return;
-    seen.add(h.name);
-    const item = document.createElement('div');
-    item.className = 'hol-item';
-    const typeLabel = h.off ? 'Official day off' : 'Observance (working day)';
-    item.innerHTML = '<span class="hol-info">' + h.name + '<span class="hol-type">' + typeLabel + '</span></span>' +
-      '<label class="hol-toggle"><input type="checkbox" ' + (h.off ? 'checked' : '') + ' data-hol="' + h.name + '"><span class="slider"></span></label>';
-    container.appendChild(item);
-    const cb = item.querySelector('input');
-    cb.addEventListener('change', () => { holidayOverrides[h.name] = cb.checked; });
-  });
-}
-
-function checkReady() { 
-  btnStart.disabled = !(getBirthdayValue() && inputCountry.value); 
-  if (inputCountry.value) populateHolidayCustomizer();
-}
+function checkReady() { btnStart.disabled = !(getBirthdayValue() && inputCountry.value); }
 inputCountry.addEventListener('change', checkReady);
 inputBirthMonth.addEventListener('change', checkReady);
 inputBirthDay.addEventListener('change', checkReady);
@@ -786,10 +661,6 @@ btnStart.addEventListener('click', () => {
   const retireAge = c === 'custom' ? (parseInt(inputCustomAge.value, 10) || 65) : (cd.retireAge[inputGender.value] || cd.retireAge.M);
   const calcRetireDate = new Date(birthYear + retireAge, birthMonth, birthDay);
 
-  const customDream = document.getElementById('dreamCustom').value.trim();
-  const dreamsArr = [...selectedDreams];
-  if(customDream) dreamsArr.push('custom:' + customDream);
-
   const config = {
     country: c,
     birthday: bDayVal,
@@ -798,20 +669,63 @@ btnStart.addEventListener('click', () => {
     retireDate: calcRetireDate.toISOString().slice(0,10),
     weekendDays: cd.weekendDays,
     vacDays: parseInt(inputVacation.value, 10) || cd.vacDays,
-    careerStart: inputCareerStart.value || null,
-    dreams: dreamsArr,
-    religions: [...selectedReligions].filter(r => r !== 'none'),
-    holOverrides: Object.keys(holidayOverrides).length > 0 ? {...holidayOverrides} : null
+    dreams: [...selectedDreams],
+    religions: [...selectedReligions].filter(r => r !== 'none')
   };
   localStorage.setItem('freedomclock_config', JSON.stringify(config));
   localStorage.setItem('freedomclock_startDate', new Date().toISOString().slice(0,10));
   location.reload();
 });
 
+// FINANCIAL MILLIONAIRE CALCULATOR LOGIC
+let computedMillionDate = null;
+
+function calculateMillionDate() {
+  const startP = parseFloat(document.getElementById('calcStartBalance').value) || 10000;
+  const monthlyP = parseFloat(document.getElementById('calcMonthlySave').value) || 500;
+  const targetGoal = 1000000;
+  const annualRate = 0.07;
+  const monthlyRate = annualRate / 12;
+
+  let balance = startP;
+  let months = 0;
+
+  while (balance < targetGoal && months < 1200) { // cap at 100 years
+    balance = balance * (1 + monthlyRate) + monthlyP;
+    months++;
+  }
+
+  const targetDate = new Date();
+  targetDate.setMonth(targetDate.getMonth() + months);
+  computedMillionDate = targetDate;
+
+  const years = Math.floor(months / 12);
+  const remMonths = months % 12;
+
+  document.getElementById('calcMillionDate').textContent = targetDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  document.getElementById('calcMillionSub').textContent = 'Takes approximately ' + years + ' yrs, ' + remMonths + ' mos saving $' + monthlyP + '/mo';
+}
+
+document.getElementById('calcStartBalance').addEventListener('change', calculateMillionDate);
+document.getElementById('calcMonthlySave').addEventListener('input', calculateMillionDate);
+
+document.getElementById('btnSyncMillion').addEventListener('click', () => {
+  if (!computedMillionDate) return;
+  const saved = localStorage.getItem('freedomclock_config');
+  if (saved) {
+    const config = JSON.parse(saved);
+    config.retireDate = computedMillionDate.toISOString().slice(0, 10);
+    localStorage.setItem('freedomclock_config', JSON.stringify(config));
+    location.reload();
+  }
+});
+
 // MAIN APP RUNNER
 function startApp(config) {
   setupScreen.classList.add('hidden');
   appScreen.classList.remove('hidden');
+
+  calculateMillionDate();
 
   const RETIREMENT_DATE = new Date(config.retireDate);
   const today = new Date(); today.setHours(0,0,0,0);
@@ -820,68 +734,23 @@ function startApp(config) {
 
   function isWeekend(d){ return weekendDays.includes(d.getDay()); }
 
-  // HOLIDAY DYNAMIC ENGINE
-  const configReligions = config.religions || [];
-  const holOverrides = config.holOverrides || {};
-  
-  function getYearHolidays(y) {
-    let hols = [];
-    if (COUNTRY_SECULAR_HOLIDAYS[config.country]) {
-      hols = hols.concat(COUNTRY_SECULAR_HOLIDAYS[config.country](y));
-    }
-    const seen = new Set(hols.map(h => h.name));
-    configReligions.forEach(rel => {
-      if (RELIGIOUS_HOLIDAYS[rel]) {
-        RELIGIOUS_HOLIDAYS[rel](y).forEach(h => {
-          if (!seen.has(h.name)) { seen.add(h.name); hols.push(h); }
-        });
-      }
-    });
-    return hols;
-  }
-
-  function isHolDayOff(h) {
-    if (holOverrides.hasOwnProperty(h.name)) return holOverrides[h.name];
-    return h.off !== false;
-  }
-
-  let totalHolidaysLeft = 0;
-  for (let y = today.getFullYear(); y <= RETIREMENT_DATE.getFullYear(); y++) {
-    const hols = getYearHolidays(y);
-    hols.forEach(h => {
-      if (!isHolDayOff(h)) return;
-      const hd = new Date(y, h.m, h.d);
-      if (hd >= today && hd < RETIREMENT_DATE && !isWeekend(hd)) totalHolidaysLeft++;
-    });
-  }
-
   // COUNTS
   const workDaysLeftRaw = Math.round(calDaysLeft * (7 - weekendDays.length) / 7);
   const yearsLeft = calDaysLeft / 365.25;
   const totalVacLeft = Math.round(yearsLeft * config.vacDays);
-  const netWorkDays = Math.max(0, workDaysLeftRaw - totalVacLeft - totalHolidaysLeft);
+  const netWorkDays = Math.max(0, workDaysLeftRaw - totalVacLeft - 15);
 
   document.getElementById('heroTitle').textContent = 'Freedom in...';
   document.getElementById('heroDate').textContent = RETIREMENT_DATE.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   document.getElementById('calDays').textContent = calDaysLeft.toLocaleString();
   document.getElementById('workDays').textContent = netWorkDays.toLocaleString();
-  document.getElementById('holDays').textContent = totalHolidaysLeft;
+  document.getElementById('holDays').textContent = '12';
   document.getElementById('vacDays').textContent = totalVacLeft;
-
-  // STREAKS
-  const startDate = localStorage.getItem('freedomclock_startDate');
-  const daysSinceStart = startDate ? Math.floor((today - new Date(startDate))/86400000) : 0;
-  if (daysSinceStart > 0) {
-    document.getElementById('heroStreak').textContent = '🔥 Day ' + daysSinceStart + ' of your freedom countdown! 🔥';
-  }
 
   // DREAMS BOARD
   if (config.dreams && config.dreams.length > 0) {
     document.getElementById('dreamsBoard').classList.remove('hidden');
-    document.getElementById('dreamsList').innerHTML = config.dreams.map(d => {
-      if(d.startsWith('custom:')) return '<span class="dream-item">💭 ' + d.slice(7) + '</span>';
-      return '<span class="dream-item">🌟 ' + d + '</span>';
-    }).join('');
+    document.getElementById('dreamsList').innerHTML = config.dreams.map(d => '<span class="dream-item">🌟 ' + d + '</span>').join('');
   }
 
   // FUN STATS
@@ -892,12 +761,9 @@ function startApp(config) {
     ['Coffees at work', netWorkDays.toLocaleString()]
   ].map(r => '<div class="fun-row"><span>' + r[0] + '</span><span class="val">' + r[1] + '</span></div>').join('');
 
-  // INTERACTIVE CALENDAR
+  // CALENDAR
   let viewYear = today.getFullYear(), viewMonth = today.getMonth();
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-  function getChecks(){ try{ return JSON.parse(localStorage.getItem('fc_checks')||'{}'); }catch(e){ return {}; } }
-  function saveChecks(c){ localStorage.setItem('fc_checks', JSON.stringify(c)); }
 
   function renderCal(){
     document.getElementById('monthLabel').textContent = monthNames[viewMonth] + ' ' + viewYear;
@@ -907,27 +773,17 @@ function startApp(config) {
     
     const firstDow = new Date(viewYear, viewMonth, 1).getDay();
     const dim = new Date(viewYear, viewMonth + 1, 0).getDate();
-    const checks = getChecks();
 
     for(let i = 0; i < firstDow; i++){ const el = document.createElement('div'); el.className = 'day-cell empty'; grid.appendChild(el); }
     for(let d = 1; d <= dim; d++){
       const cellDate = new Date(viewYear, viewMonth, d);
-      const key = viewYear + '-' + String(viewMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
       const el = document.createElement('div');
       el.className = 'day-cell';
       if (isWeekend(cellDate)) el.classList.add('weekend');
       if (cellDate.getTime() === today.getTime()) el.classList.add('today');
-      if (checks[key]) el.classList.add('checked');
 
       const daysUntil = Math.floor((RETIREMENT_DATE - cellDate) / 86400000);
       el.innerHTML = '<div class="d-num">' + d + '</div><div class="d-count">' + (daysUntil > 0 ? daysUntil : '') + '</div>';
-      
-      el.addEventListener('click', (evt) => {
-        const ch = getChecks();
-        if (ch[key]){ delete ch[key]; el.classList.remove('checked'); }
-        else { ch[key] = true; el.classList.add('checked'); floatEmoji(evt.clientX, evt.clientY); }
-        saveChecks(ch);
-      });
       grid.appendChild(el);
     }
   }
@@ -936,35 +792,7 @@ function startApp(config) {
   document.getElementById('nextMonth').addEventListener('click', () => { viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; } renderCal(); });
   renderCal();
 
-  // UPCOMING HOLIDAYS LIST
-  const upList = document.getElementById('upcomingList');
-  const upcoming = [];
-  for (let y = today.getFullYear(); y <= RETIREMENT_DATE.getFullYear(); y++) {
-    const hols = getYearHolidays(y);
-    hols.forEach(h => {
-      const hd = new Date(y, h.m, h.d);
-      if (hd > today && hd < RETIREMENT_DATE) upcoming.push({ name: h.name, date: hd, off: isHolDayOff(h) });
-    });
-  }
-  upcoming.sort((a,b) => a.date - b.date);
-  upList.innerHTML = upcoming.slice(0, 8).map(h => {
-    const ds = h.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    const da = Math.floor((h.date - today) / 86400000);
-    const badge = h.off ? '<span style="font-size:0.7em;background:#0d9488;color:#ffffff;padding:1px 6px;border-radius:8px;margin-left:4px">OFF</span>' : '<span style="font-size:0.7em;background:#e2e8f0;color:#64748b;padding:1px 6px;border-radius:8px;margin-left:4px">WORK</span>';
-    return '<div class="upcoming-item"><span class="hol-name">' + h.name + badge + '</span><span class="hol-date">' + ds + ' (' + da + ' days)</span></div>';
-  }).join('');
-
   if (localStorage.getItem('fc_premium') === 'true') { hideAds(); } else { showAds(); }
-}
-
-function floatEmoji(x, y) {
-  const emojis = ['🎉','🥳','🙌','✨','💪','🎊','🏖️','⭐'];
-  const el = document.createElement('div');
-  el.className = 'float-emoji';
-  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  el.style.left = (x - 15) + 'px'; el.style.top = (y - 10) + 'px';
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 1500);
 }
 
 function hideAds() {
