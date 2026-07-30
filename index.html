@@ -204,14 +204,14 @@ body {
 .hol-legend .dot.off { background: #0d9488; }
 .hol-legend .dot.work { background: #cbd5e1; }
 
-/* CALENDAR GRID RELIABILITY & EMOJI FIXES */
+/* CALENDAR GRID STYLING */
 .calendar-section { display: block; width: 100%; min-height: 280px; }
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .cal-nav button { background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1em; cursor: pointer; font-weight: 700; }
 .cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #0f172a; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
 .cal-grid .day-header { text-align: center; font-size: 0.65em; color: #64748b; padding: 4px 0; font-weight: 700; }
-.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 4px; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; min-height: 48px; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 4px; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; min-height: 52px; }
 .day-cell.empty { visibility: hidden; }
 .day-cell.weekend { background: #fff7ed; }
 .day-cell.holiday { background: #fef3c7; }
@@ -219,14 +219,15 @@ body {
 .day-cell.checked { background: #dcfce7 !important; border-color: #86efac !important; }
 .day-cell .d-num { font-weight: 700; color: #0f172a; align-self: flex-start; }
 
-/* FORCE SYSTEM EMOJI FONTS SO STATUSES RENDER RELIABLY */
+/* EMOJI RENDERING ENGINE FIX */
 .status-emoji {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
-  font-size: 1.1em;
-  line-height: 1;
+  font-size: 1.15em;
+  line-height: 1.2;
   display: block;
   text-align: center;
   margin-top: 2px;
+  word-break: break-all;
 }
 
 /* LISTS & CHIPS */
@@ -436,7 +437,7 @@ body {
     <div class="live-timer" id="clockDisplay">00d 00h 00m 00s</div>
   </header>
 
-  <!-- Calendar Overview Directly Below -->
+  <!-- SINGLE Calendar Section directly below top header -->
   <main class="calendar-section">
     <h2>Calendar Overview</h2>
     <div class="cal-nav">
@@ -924,6 +925,14 @@ function isFinalMonth(date, target) {
          date.getMonth() === target.getMonth();
 }
 
+// MAP OF FUN EMOJIS FOR CALENDAR DAYS
+const DAY_EMOJIS = {
+  15: '🎉',
+  16: '😬',
+  17: '📝',
+  20: '🥳'
+};
+
 let timerInterval = null;
 
 // MAIN APP RUNNER
@@ -934,7 +943,7 @@ function startApp(config) {
   updateFromDashCalc();
 
   const RETIREMENT_DATE = new Date(config.retireDate);
-  RETIREMENT_DATE.setHours(17, 0, 0, 0); // Default end-of-day target
+  RETIREMENT_DATE.setHours(17, 0, 0, 0);
 
   // Live Timer Countdown Loop
   if (timerInterval) clearInterval(timerInterval);
@@ -1036,7 +1045,7 @@ function startApp(config) {
     }).join('');
   }
 
-  // MILESTONES WITH UPDATED EMOJI BADGES
+  // MILESTONES WITH EMOJI BADGES
   document.getElementById('funList').innerHTML = [
     ['Months left', '~' + Math.round(calDaysLeft / 30.4), '🍼 Bye'],
     ['Weekends left', Math.floor(calDaysLeft / 7), '🎉 Yay'],
@@ -1071,8 +1080,11 @@ function startApp(config) {
       if (cellDate.getTime() === today.getTime()) el.classList.add('today');
       if (checks[key]) el.classList.add('checked');
 
-      // Build status emoji list dynamically
+      // Assemble all status emojis for the day
       let statusEmojis = '';
+      if (DAY_EMOJIS[d]) {
+        statusEmojis += DAY_EMOJIS[d] + ' ';
+      }
       if (isLastDayOfMonth(cellDate)) {
         statusEmojis += '🗓️❌ ';
       }
