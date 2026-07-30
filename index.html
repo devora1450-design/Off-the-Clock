@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#38bdf8">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.svg">
-<title>Off-the-Clock - Retirement Countdown</title>
+<title>My Time - Retirement Countdown</title>
 <style>
 /* --- GLOBAL RESETS & SUNSHINE HORIZON BEACH SCENE --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -81,7 +81,7 @@ body {
 }
 .btn-start:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
 
-/* CARDS & PANELS */
+/* HERO & COUNTDOWN TIMER HEADER */
 .hero {
   text-align: center;
   padding: 24px 12px;
@@ -93,8 +93,14 @@ body {
   backdrop-filter: blur(8px);
 }
 .hero h1 { font-size: 1.6em; margin-bottom: 4px; color: #ffffff; font-weight: 800; }
-.hero .retire-date { font-size: 0.9em; color: #e0f2fe; }
-.hero .streak { margin-top: 10px; font-size: 1em; color: #fef08a; font-weight: 600; }
+.hero .retire-date { font-size: 0.9em; color: #e0f2fe; margin-bottom: 8px; }
+.hero .live-timer {
+  font-size: 1.6em;
+  font-weight: 800;
+  color: #fef08a;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .card {
@@ -151,7 +157,7 @@ body {
 }
 .fun-row .val { color: #0d9488; font-weight: 700; }
 
-/* FINANCIAL CALCULATOR STYLES & MOBILE INPUT LAYOUT */
+/* FINANCIAL CALCULATOR STYLES */
 .calc-card { background: rgba(255, 255, 255, 0.95); border-radius: 14px; padding: 14px; border: 1px solid #bae6fd; }
 .calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
 @media (max-width: 400px) {
@@ -198,21 +204,30 @@ body {
 .hol-legend .dot.off { background: #0d9488; }
 .hol-legend .dot.work { background: #cbd5e1; }
 
-/* CALENDAR GRID RELIABILITY FIX */
+/* CALENDAR GRID RELIABILITY & EMOJI FIXES */
 .calendar-section { display: block; width: 100%; min-height: 280px; }
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .cal-nav button { background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1em; cursor: pointer; font-weight: 700; }
 .cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #0f172a; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
 .cal-grid .day-header { text-align: center; font-size: 0.65em; color: #64748b; padding: 4px 0; font-weight: 700; }
-.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; min-height: 36px; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 4px; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; min-height: 48px; }
 .day-cell.empty { visibility: hidden; }
 .day-cell.weekend { background: #fff7ed; }
 .day-cell.holiday { background: #fef3c7; }
-.day-cell.today { border: 2px solid #0284c7; font-weight: bold; }
+.day-cell.today { border: 2px solid #0284c7; font-weight: bold; background: #e0f2fe; }
 .day-cell.checked { background: #dcfce7 !important; border-color: #86efac !important; }
-.day-cell .d-num { font-weight: 700; color: #0f172a; }
-.day-cell .d-count { font-size: 0.75em; color: #f97316; }
+.day-cell .d-num { font-weight: 700; color: #0f172a; align-self: flex-start; }
+
+/* FORCE SYSTEM EMOJI FONTS SO STATUSES RENDER RELIABLY */
+.status-emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  font-size: 1.1em;
+  line-height: 1;
+  display: block;
+  text-align: center;
+  margin-top: 2px;
+}
 
 /* LISTS & CHIPS */
 .upcoming-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6); font-size: 0.85em; }
@@ -227,7 +242,6 @@ body {
 
 .dreams-board .dream-item { display: inline-block; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 0.8em; background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; font-weight: 600; }
 
-/* HIGH-CONTRAST START FRESH BUTTON */
 .btn-fresh {
   background: #0f172a !important;
   color: #ffffff !important;
@@ -241,7 +255,6 @@ body {
 }
 
 /* EMOJI ANIMATIONS */
-.settings-btn { position: fixed; top: 16px; right: 16px; background: rgba(255,255,255,0.95); border: 1px solid #cbd5e1; color: #0369a1; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1em; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 .legend { text-align: center; font-size: 0.72em; color: #0284c7; font-weight: 700; padding: 10px; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
 
 .float-emoji {
@@ -262,7 +275,7 @@ body {
 
 <!-- SETUP SCREEN -->
 <div class="setup" id="setupScreen">
-  <h1>FreedomClock</h1>
+  <h1>My Time</h1>
   <p class="tagline">Count down to the rest of your life</p>
 
   <div class="form-group">
@@ -305,7 +318,6 @@ body {
       <option value="IT">Italy</option>
       <option value="JP">Japan</option>
       <option value="KR">South Korea</option>
-      <option value="MY">Malaysia</option>
       <option value="MX">Mexico</option>
       <option value="NL">Netherlands</option>
       <option value="NZ">New Zealand</option>
@@ -330,7 +342,6 @@ body {
       <option value="UK">United Kingdom</option>
       <option value="US">United States</option>
       <option value="VN">Vietnam</option>
-      <option value="custom">Custom (set my own rules)</option>
     </select>
   </div>
   <div class="form-group hidden" id="genderGroup">
@@ -418,16 +429,29 @@ body {
 
 <!-- MAIN APP SCREEN -->
 <div class="app hidden" id="appScreen">
-  <button class="settings-btn" id="btnSettings">&#9881;</button>
-  <div class="hero">
-    <h1>Off the Clock</h1>
+  <!-- Countdown Title & Live Clock Stacked at Top -->
+  <header class="hero">
+    <h1>Counting Down To: My Time</h1>
     <div class="retire-date" id="heroDate"></div>
-    <div class="streak" id="heroStreak"></div>
-  </div>
+    <div class="live-timer" id="clockDisplay">00d 00h 00m 00s</div>
+  </header>
+
+  <!-- Calendar Overview Directly Below -->
+  <main class="calendar-section">
+    <h2>Calendar Overview</h2>
+    <div class="cal-nav">
+      <button id="prevMonth">&lt;</button>
+      <span class="month-label" id="monthLabel"></span>
+      <button id="nextMonth">&gt;</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </main>
+
   <div class="dreams-board hidden" id="dreamsBoard">
     <h2>What I'm Counting Down To</h2>
     <div id="dreamsList"></div>
   </div>
+
   <div class="cards">
     <div class="card calendar"><div class="number" id="calDays">--</div><div class="label">Calendar Days</div></div>
     <div class="card workdays"><div class="number" id="workDays">--</div><div class="label">Work Days</div></div>
@@ -445,24 +469,13 @@ body {
     <h2>Freedom Milestones</h2>
     <div id="funList"></div>
   </div>
-  
-  <!-- INTERACTIVE CALENDAR -->
-  <div class="calendar-section">
-    <h2>Calendar Overview</h2>
-    <div class="cal-nav">
-      <button id="prevMonth">&lt;</button>
-      <span class="month-label" id="monthLabel"></span>
-      <button id="nextMonth">&gt;</button>
-    </div>
-    <div class="cal-grid" id="calGrid"></div>
-  </div>
 
   <div class="upcoming" id="upcomingSection">
     <h2>Upcoming Holidays</h2>
     <div id="upcomingList"></div>
   </div>
 
-  <!-- WORK TO $1 MILLION CALCULATOR MODULE AT THE VERY BOTTOM -->
+  <!-- FINANCIAL CALCULATOR MODULE -->
   <div class="finance-section">
     <h2>💰 Road to $1 Million Freedom</h2>
     <div class="calc-card">
@@ -514,7 +527,7 @@ document.getElementById('btnCloseFinancialModal').addEventListener('click', () =
   financialModal.classList.add('hidden');
 });
 
-// EASTER DYNAMIC ALGORITHMS
+// EASTER & HOLIDAY ALGORITHMS
 function getWesternEaster(year) {
   const a = year % 19, b = Math.floor(year / 100), c = year % 100;
   const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
@@ -784,7 +797,7 @@ inputBirthMonth.addEventListener('change', checkReady);
 inputBirthDay.addEventListener('change', checkReady);
 inputBirthYear.addEventListener('change', checkReady);
 
-// FINANCIAL MILLIONAIRE CALCULATOR LOGIC
+// FINANCIAL CALCULATOR LOGIC
 let computedMillionDate = null;
 
 function runFinancialCalculator(startVal, monthlyVal) {
@@ -857,7 +870,7 @@ btnStart.addEventListener('click', () => {
   
   const c = inputCountry.value;
   const cd = COUNTRIES[c] || {retireAge:{M:65,F:65},weekendDays:[0,6],vacDays:20};
-  const retireAge = c === 'custom' ? (parseInt(inputCustomAge.value, 10) || 65) : (cd.retireAge[inputGender.value] || cd.retireAge.M);
+  const retireAge = cd.retireAge[inputGender.value] || cd.retireAge.M;
   const calcRetireDate = new Date(birthYear + retireAge, birthMonth, birthDay);
 
   const customDream = document.getElementById('dreamCustom').value.trim();
@@ -891,7 +904,6 @@ document.getElementById('btnSyncMillion').addEventListener('click', () => {
     config.retireDate = computedMillionDate.toISOString().slice(0, 10);
     localStorage.setItem('freedomclock_config', JSON.stringify(config));
     
-    // Smoothly update metrics and show visual success state
     const calcRes = document.getElementById('calcResult');
     const dSub = document.getElementById('calcMillionSub');
     if (calcRes) calcRes.classList.add('synced');
@@ -901,6 +913,19 @@ document.getElementById('btnSyncMillion').addEventListener('click', () => {
   }
 });
 
+// EMOJI DYNAMIC RULE HELPERS
+function isLastDayOfMonth(date) {
+  const nextDay = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+  return nextDay.getDate() === 1;
+}
+
+function isFinalMonth(date, target) {
+  return date.getFullYear() === target.getFullYear() && 
+         date.getMonth() === target.getMonth();
+}
+
+let timerInterval = null;
+
 // MAIN APP RUNNER
 function startApp(config) {
   setupScreen.classList.add('hidden');
@@ -909,6 +934,30 @@ function startApp(config) {
   updateFromDashCalc();
 
   const RETIREMENT_DATE = new Date(config.retireDate);
+  RETIREMENT_DATE.setHours(17, 0, 0, 0); // Default end-of-day target
+
+  // Live Timer Countdown Loop
+  if (timerInterval) clearInterval(timerInterval);
+  function updateLiveClock() {
+    const now = new Date();
+    const diff = RETIREMENT_DATE - now;
+    const clockEl = document.getElementById('clockDisplay');
+
+    if (diff <= 0) {
+      clockEl.textContent = "00d 00h 00m 00s — Off the Clock!";
+      return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    clockEl.textContent = `${d}d ${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+  }
+  timerInterval = setInterval(updateLiveClock, 1000);
+  updateLiveClock();
+
   const today = new Date(); today.setHours(0,0,0,0);
   const calDaysLeft = Math.max(0, Math.floor((RETIREMENT_DATE - today)/86400000));
   const weekendDays = config.weekendDays || [0,6];
@@ -987,7 +1036,7 @@ function startApp(config) {
     }).join('');
   }
 
-  // MILESTONES WITH UPDATED EMOJI BADGES (No sleepy face!)
+  // MILESTONES WITH UPDATED EMOJI BADGES
   document.getElementById('funList').innerHTML = [
     ['Months left', '~' + Math.round(calDaysLeft / 30.4), '🍼 Bye'],
     ['Weekends left', Math.floor(calDaysLeft / 7), '🎉 Yay'],
@@ -1022,8 +1071,16 @@ function startApp(config) {
       if (cellDate.getTime() === today.getTime()) el.classList.add('today');
       if (checks[key]) el.classList.add('checked');
 
-      const daysUntil = Math.floor((RETIREMENT_DATE - cellDate) / 86400000);
-      el.innerHTML = '<div class="d-num">' + d + '</div><div class="d-count">' + (daysUntil > 0 ? daysUntil : '') + '</div>';
+      // Build status emoji list dynamically
+      let statusEmojis = '';
+      if (isLastDayOfMonth(cellDate)) {
+        statusEmojis += '🗓️❌ ';
+      }
+      if (isFinalMonth(cellDate, RETIREMENT_DATE)) {
+        statusEmojis += '🏁 ';
+      }
+
+      el.innerHTML = '<div class="d-num">' + d + '</div><span class="status-emoji">' + statusEmojis + '</span>';
       
       el.addEventListener('click', (evt) => {
         const ch = getChecks();
