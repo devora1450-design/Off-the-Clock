@@ -142,7 +142,6 @@ body {
 .progress-fill { height: 100%; background: linear-gradient(90deg, #0284c7, #0d9488); border-radius: 7px; transition: width 0.6s ease-in-out; }
 .progress-text { font-size: 0.85em; color: #0284c7; text-align: right; font-weight: 800; }
 
-/* EMOJI BADGES FOR MILESTONES */
 .fun-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6); font-size: 0.85em; }
 .fun-row:last-child { border: none; }
 .fun-row .label-group { display: flex; align-items: center; gap: 6px; }
@@ -172,7 +171,7 @@ body {
 .btn-sync { background: #0d9488; color: #ffffff; border: none; padding: 12px 14px; border-radius: 10px; font-size: 0.85em; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%; transition: background 0.2s; }
 .btn-sync:active { transform: scale(0.98); }
 
-/* MODAL POPUP FOR FINANCIAL INPUT */
+/* MODAL POPUP */
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 16px;
@@ -204,31 +203,19 @@ body {
 .hol-legend .dot.off { background: #0d9488; }
 .hol-legend .dot.work { background: #cbd5e1; }
 
-/* CALENDAR GRID STYLING */
+/* SINGLE CALENDAR GRID STYLING */
 .calendar-section { display: block; width: 100%; min-height: 280px; }
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .cal-nav button { background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1em; cursor: pointer; font-weight: 700; }
 .cal-nav .month-label { font-size: 0.95em; font-weight: 700; color: #0f172a; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
 .cal-grid .day-header { text-align: center; font-size: 0.65em; color: #64748b; padding: 4px 0; font-weight: 700; }
-.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 4px; border-radius: 8px; font-size: 0.7em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; min-height: 52px; }
+.cal-grid .day-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; border-radius: 8px; font-size: 0.75em; cursor: pointer; background: rgba(248, 250, 252, 0.9); border: 1px solid #f1f5f9; position: relative; min-height: 48px; }
 .day-cell.empty { visibility: hidden; }
 .day-cell.weekend { background: #fff7ed; }
-.day-cell.holiday { background: #fef3c7; }
 .day-cell.today { border: 2px solid #0284c7; font-weight: bold; background: #e0f2fe; }
 .day-cell.checked { background: #dcfce7 !important; border-color: #86efac !important; }
-.day-cell .d-num { font-weight: 700; color: #0f172a; align-self: flex-start; }
-
-/* EMOJI RENDERING ENGINE FIX */
-.status-emoji {
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
-  font-size: 1.15em;
-  line-height: 1.2;
-  display: block;
-  text-align: center;
-  margin-top: 2px;
-  word-break: break-all;
-}
+.day-cell .d-num { font-weight: 700; color: #0f172a; }
 
 /* LISTS & CHIPS */
 .upcoming-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6); font-size: 0.85em; }
@@ -255,7 +242,6 @@ body {
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25) !important;
 }
 
-/* EMOJI ANIMATIONS */
 .legend { text-align: center; font-size: 0.72em; color: #0284c7; font-weight: 700; padding: 10px; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
 
 .float-emoji {
@@ -346,7 +332,7 @@ body {
     </select>
   </div>
   <div class="form-group hidden" id="genderGroup">
-    <label>Gender (affects retirement age in some countries)</label>
+    <label>Gender</label>
     <select id="inputGender">
       <option value="F">Female</option>
       <option value="M">Male</option>
@@ -430,14 +416,13 @@ body {
 
 <!-- MAIN APP SCREEN -->
 <div class="app hidden" id="appScreen">
-  <!-- Countdown Title & Live Clock Stacked at Top -->
   <header class="hero">
     <h1>Counting Down to the Beginning of the Rest of my Life</h1>
     <div class="retire-date" id="heroDate"></div>
     <div class="live-timer" id="clockDisplay">00d 00h 00m 00s</div>
   </header>
 
-  <!-- SINGLE Calendar Section directly below top header -->
+  <!-- ONLY ONE CALENDAR DEFINITION IN THE DOM -->
   <main class="calendar-section">
     <h2>Calendar Overview</h2>
     <div class="cal-nav">
@@ -476,7 +461,6 @@ body {
     <div id="upcomingList"></div>
   </div>
 
-  <!-- FINANCIAL CALCULATOR MODULE -->
   <div class="finance-section">
     <h2>💰 Road to $1 Million Freedom</h2>
     <div class="calc-card">
@@ -507,7 +491,6 @@ body {
 </div>
 
 <script>
-// FLOATING EMOJI ANIMATION ON CALENDAR CLICK
 function floatEmoji(x, y) {
   const emojis = ['🎉','🥳','🙌','✨','💪','🎊','🏖️','⭐','🚀','🌴','🍹'];
   const el = document.createElement('div');
@@ -519,7 +502,6 @@ function floatEmoji(x, y) {
   setTimeout(() => el.remove(), 1200);
 }
 
-// FINANCIAL MODAL CONTROLS
 const financialModal = document.getElementById('financialModal');
 document.getElementById('btnOpenFinancialModal').addEventListener('click', () => {
   financialModal.classList.remove('hidden');
@@ -528,7 +510,6 @@ document.getElementById('btnCloseFinancialModal').addEventListener('click', () =
   financialModal.classList.add('hidden');
 });
 
-// EASTER & HOLIDAY ALGORITHMS
 function getWesternEaster(year) {
   const a = year % 19, b = Math.floor(year / 100), c = year % 100;
   const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
@@ -685,7 +666,6 @@ const RELIGIOUS_HOLIDAYS = {
 
 const holidayOverrides = {};
 
-// SETUP ELEMENTS
 const setupScreen = document.getElementById('setupScreen');
 const appScreen = document.getElementById('appScreen');
 const inputCountry = document.getElementById('inputCountry');
@@ -713,7 +693,6 @@ const inputCustomAge = document.getElementById('inputCustomAge');
 const inputVacation = document.getElementById('inputVacation');
 const btnStart = document.getElementById('btnStart');
 
-// DREAMS PICKER LOGIC
 const dreamsPicker = document.getElementById('dreamsPicker');
 const dreamTags = dreamsPicker.querySelectorAll('.dream-tag');
 const selectedDreams = new Set();
@@ -725,7 +704,6 @@ dreamTags.forEach(tag => {
   });
 });
 
-// RELIGION PICKER LOGIC
 const religionPicker = document.getElementById('religionPicker');
 const religionTags = religionPicker.querySelectorAll('.dream-tag');
 const selectedReligions = new Set();
@@ -798,7 +776,6 @@ inputBirthMonth.addEventListener('change', checkReady);
 inputBirthDay.addEventListener('change', checkReady);
 inputBirthYear.addEventListener('change', checkReady);
 
-// FINANCIAL CALCULATOR LOGIC
 let computedMillionDate = null;
 
 function runFinancialCalculator(startVal, monthlyVal) {
@@ -896,7 +873,6 @@ btnStart.addEventListener('click', () => {
   location.reload();
 });
 
-// SET COUNTDOWN TO GOAL DATE WITH VISUAL SYNC CONFIRMATION
 document.getElementById('btnSyncMillion').addEventListener('click', () => {
   if (!computedMillionDate) return;
   const saved = localStorage.getItem('freedomclock_config');
@@ -914,28 +890,8 @@ document.getElementById('btnSyncMillion').addEventListener('click', () => {
   }
 });
 
-// EMOJI DYNAMIC RULE HELPERS
-function isLastDayOfMonth(date) {
-  const nextDay = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
-  return nextDay.getDate() === 1;
-}
-
-function isFinalMonth(date, target) {
-  return date.getFullYear() === target.getFullYear() && 
-         date.getMonth() === target.getMonth();
-}
-
-// MAP OF FUN EMOJIS FOR CALENDAR DAYS
-const DAY_EMOJIS = {
-  15: '🎉',
-  16: '😬',
-  17: '📝',
-  20: '🥳'
-};
-
 let timerInterval = null;
 
-// MAIN APP RUNNER
 function startApp(config) {
   setupScreen.classList.add('hidden');
   appScreen.classList.remove('hidden');
@@ -945,7 +901,6 @@ function startApp(config) {
   const RETIREMENT_DATE = new Date(config.retireDate);
   RETIREMENT_DATE.setHours(17, 0, 0, 0);
 
-  // Live Timer Countdown Loop
   if (timerInterval) clearInterval(timerInterval);
   function updateLiveClock() {
     const now = new Date();
@@ -1045,7 +1000,6 @@ function startApp(config) {
     }).join('');
   }
 
-  // MILESTONES WITH EMOJI BADGES
   document.getElementById('funList').innerHTML = [
     ['Months left', '~' + Math.round(calDaysLeft / 30.4), '🍼 Bye'],
     ['Weekends left', Math.floor(calDaysLeft / 7), '🎉 Yay'],
@@ -1080,19 +1034,8 @@ function startApp(config) {
       if (cellDate.getTime() === today.getTime()) el.classList.add('today');
       if (checks[key]) el.classList.add('checked');
 
-      // Assemble all status emojis for the day
-      let statusEmojis = '';
-      if (DAY_EMOJIS[d]) {
-        statusEmojis += DAY_EMOJIS[d] + ' ';
-      }
-      if (isLastDayOfMonth(cellDate)) {
-        statusEmojis += '🗓️❌ ';
-      }
-      if (isFinalMonth(cellDate, RETIREMENT_DATE)) {
-        statusEmojis += '🏁 ';
-      }
-
-      el.innerHTML = '<div class="d-num">' + d + '</div><span class="status-emoji">' + statusEmojis + '</span>';
+      // Simple, plain numeric cell rendering
+      el.innerHTML = '<div class="d-num">' + d + '</div>';
       
       el.addEventListener('click', (evt) => {
         const ch = getChecks();
@@ -1111,8 +1054,16 @@ function startApp(config) {
     }
   }
 
-  document.getElementById('prevMonth').addEventListener('click', () => { viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; } renderCal(); });
-  document.getElementById('nextMonth').addEventListener('click', () => { viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; } renderCal(); });
+  // Remove existing listeners before binding navigation to avoid duplicate calls
+  const prevBtn = document.getElementById('prevMonth');
+  const nextBtn = document.getElementById('nextMonth');
+  const newPrev = prevBtn.cloneNode(true);
+  const newNext = nextBtn.cloneNode(true);
+  prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+  nextBtn.parentNode.replaceChild(newNext, nextBtn);
+
+  newPrev.addEventListener('click', () => { viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; } renderCal(); });
+  newNext.addEventListener('click', () => { viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; } renderCal(); });
   renderCal();
 
   const upList = document.getElementById('upcomingList');
